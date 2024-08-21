@@ -1,6 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello world");
+var apiKey = builder.Configuration["WeatherApiKey"];
+
+app.MapGet("/", () => apiKey);
 
 app.Run();
