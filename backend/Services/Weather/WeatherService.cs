@@ -1,24 +1,22 @@
 
-public class WeatherService : IWeatherInterface
+public class WeatherService : WeatherInterface
 {
 
-    private readonly HttpClient httpClient;
+    private static readonly HttpClient httpClient = new();
 
-    private readonly string weatherApiKey =  "ASdads";
-
-    private readonly string weatherApiUrl = "https://api.openweathermap.org/data/3.0/onecall";
-
-    public async Task<IEnumerable<WeatherModel>> GetWeatherConditions(string lat, string lon, string? lang, string? units)
+    public static async Task<object> GetOneCallWeatherConditions(string lat, string lon, string? lang, string? units, string? weatherApiKey = "", string? weatherApiUrl = "" )
     {
 
         try
         {
-            var response = await httpClient.GetAsync($"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&lang={lang}&units={units}");
+
+            var response = await httpClient.GetAsync($"{weatherApiUrl}?lat={lat}&lon={lon}&lang={lang}&units={units}&appid={weatherApiKey}");
             response.EnsureSuccessStatusCode();
 
-            var weatherConditions = await response.Content.ReadFromJsonAsync<WeatherModel>()
+            var weatherConditions = await response.Content.ReadFromJsonAsync<object>();
            
-            return (IEnumerable<WeatherModel>)weatherConditions;
+           
+            return weatherConditions;
         
         }
         catch (System.Exception)

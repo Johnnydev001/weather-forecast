@@ -1,8 +1,14 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-var apiKey = builder.Configuration["WeatherApiKey"];
+WeatherRequestModel weatherRequestModel = new(){
+    lat = "",
+    lon = "",
+    lang = "",
+    units = ""
+};
 
-app.MapGet("/", () => apiKey);
+
+app.mapWeatherRoutes(builder.Configuration, weatherRequestModel);
 
 app.Run();
