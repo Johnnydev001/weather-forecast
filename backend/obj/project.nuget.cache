@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "1Uo9oTpNFxY=",
+  "dgSpecHash": "LWWnJrcQCtI=",
   "success": true,
   "projectFilePath": "/Users/joao.saraivadiconium.com/Documents/Learning/Web/weather-forecast/backend/backend.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/joao.saraivadiconium.com/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
+    "/Users/joao.saraivadiconium.com/.nuget/packages/system.text.json/8.0.4/system.text.json.8.0.4.nupkg.sha512"
+  ],
   "logs": []
 }
