@@ -1,25 +1,31 @@
 <template>
   <nav>
-    <ul role="navigation">
+    <ul role="navigation" class="nav-list">
       <li key="app-name">
         <h1>Weather forecast</h1>
       </li>
 
       <li key="search-field">
-        <section></section>
+        <button>
+          <input type="text">
+
+          <SearchIcon />
+          </input>
+        </button>
+
       </li>
 
       <li key="social-media">
-        <ul role="list">
+        <ul role="list" class="social-media-list">
           <li title="LinkedIn">
-            <Linkedin />
+            <LinkedinIcon />
           </li>
 
           <li title="Github">
-            <Github />
+            <GithubIcon />
           </li>
           <li title="Twitter/X">
-            <Twitter />
+            <TwitterIcon />
           </li>
         </ul>
       </li>
@@ -27,8 +33,28 @@
   </nav>
 </template>
 
-<script lang="ts">
-import Github from "~/assets/icons/github.vue";
-import Linkedin from "~/assets/icons/linkedin.vue";
-import Twitter from "~/assets/icons/twitter.vue";
+<script setup lang="ts">
+import GithubIcon from "~/assets/icons/github.vue";
+import LinkedinIcon from "~/assets/icons/linkedin.vue";
+import TwitterIcon from "~/assets/icons/twitter.vue";
+import SearchIcon from "~/assets/icons/search.vue";
 </script>
+
+
+<style lang="scss">
+.nav-list {
+
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .social-media-list {
+    list-style: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    column-gap: 1rem;
+  }
+}
+</style>

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jpedr\\OneDrive\\Documentos\\Coding\\learning\\joao\\weather-forecast\\backend\\backend.csproj": {}
+    "/Users/joao.saraivadiconium.com/Documents/Learning/Web/weather-forecast/backend/backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jpedr\\OneDrive\\Documentos\\Coding\\learning\\joao\\weather-forecast\\backend\\backend.csproj": {
+    "/Users/joao.saraivadiconium.com/Documents/Learning/Web/weather-forecast/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jpedr\\OneDrive\\Documentos\\Coding\\learning\\joao\\weather-forecast\\backend\\backend.csproj",
+        "projectUniqueName": "/Users/joao.saraivadiconium.com/Documents/Learning/Web/weather-forecast/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\jpedr\\OneDrive\\Documentos\\Coding\\learning\\joao\\weather-forecast\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\jpedr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jpedr\\OneDrive\\Documentos\\Coding\\learning\\joao\\weather-forecast\\backend\\obj\\",
+        "projectPath": "/Users/joao.saraivadiconium.com/Documents/Learning/Web/weather-forecast/backend/backend.csproj",
+        "packagesPath": "/Users/joao.saraivadiconium.com/.nuget/packages/",
+        "outputPath": "/Users/joao.saraivadiconium.com/Documents/Learning/Web/weather-forecast/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jpedr\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/joao.saraivadiconium.com/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -67,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
