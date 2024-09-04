@@ -2,7 +2,7 @@
   <Head>
     <Title>Weather forecast</Title>
   </Head>
-  <Body>
+  <Body class="app">
     <header>
       <Navigation />
     </header>
@@ -11,14 +11,21 @@
       <Hero/>
 
     </main>
-    <footer>
+    <!-- <footer>
 
       <Footer/>
-    </footer>
+    </footer> -->
   </Body>
 </template>
 
 <script>
-import Navigation from "~/components/navigation/navigation.vue";
 import Footer from "~/components/footer/footer.vue"
 </script>
+
+
+<style lang="css">
+html{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+</style>
