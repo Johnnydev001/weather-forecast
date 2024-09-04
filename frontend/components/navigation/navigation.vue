@@ -2,7 +2,8 @@
   <nav>
     <ul role="navigation" class="nav-list">
       <li key="app-name">
-        <h1>Weather forecast</h1>
+        <NuxtLink class="link" to="/" >     <h1>Weather forecast</h1></NuxtLink>
+   
       </li>
 
       <li key="search-field">
@@ -48,6 +49,12 @@ import SearchIcon from "~/assets/icons/search.vue";
   display: flex;
   align-items: center;
   justify-content: space-around;
+
+  .link {
+    text-decoration-color: #000000;
+    text-decoration: unset;  
+    color: #000000;
+  }
 
   .social-media-list {
     list-style: inherit;
