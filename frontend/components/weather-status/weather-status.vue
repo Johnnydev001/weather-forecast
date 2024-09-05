@@ -68,6 +68,7 @@ import WindIcon from '~/assets/icons/wind.vue';
 import PressureIcon from '~/assets/icons/pressure.vue';
 import UVIndexIcon from '~/assets/icons/sun.vue';
 import HumidityIcon from '~/assets/icons/humidity.vue'
+import weatherService from '~/services/weather/weather-service';
 
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
 import { ref } from 'vue';
@@ -84,6 +85,12 @@ const windSpeed = ref("30km/h")
 const humidity = ref("10%")
 const pressure = ref("0")
 const uvIndex = ref("2")
+
+try {
+    await weatherService.getOneCallWeather()
+} catch(error){
+    console.log('error client side', error)
+}
 
 </script>
 
