@@ -1,24 +1,45 @@
 export default {
 
-    async getOneCallWeather() {
+    async getOneCallWeather(queryParams = {lat : '', lon : '', lang: '', units: ''}) {
+
+        const {
+            lat,
+            lon,
+            lang, 
+            units
+        } = queryParams;
 
         const requestData = {
             method: 'GET',
             headers: {
-                'Content-type': 'application/json'
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             },
-        
+            withCredentials: true
+        }
+
+        let baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.ONE_CALL_WEATHER_API_URL}?lat=${lat}&lon=${lon}`;
+
+        if(lang){
+            baseEndpoint += `&lang=${lang}`
+        }
+        if(units){
+            baseEndpoint += `&units=${units}`
         }
 
         try {
-            const oneCallWeatherResponse = await fetch('http://localhost:5177/onecall?lat=1&lon=2', requestData );
+            const oneCallWeatherRequest = await fetch(baseEndpoint, requestData );
 
-            const responseData = await oneCallWeatherResponse.json()
+            if(oneCallWeatherRequest.status === 200 || oneCallWeatherRequest.ok){
+                const {current = {}}  = await oneCallWeatherRequest.json();
 
-            console.log(responseData)
+                return current;
+            }
+
+
 
         } catch (error) {
-            console.log('error serivce side', error)
+            console.log('Error calling the weather service', error)
         }
 
     }

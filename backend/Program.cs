@@ -1,15 +1,23 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options => {
-    options.AddPolicy("AllowSpecificOrigins", policy => {
-        policy.WithOrigins("http://localhost:5177").AllowAnyHeader();
-    });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNuxtApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000") // Allow Nuxt.js frontend
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials(); // Optional if your app needs to send cookies/authentication
+        });
 });
 
 var app = builder.Build();
 
-app.UseCors("AllowSpecificOrigins");
+app.UseCors("AllowNuxtApp");
 app.mapWeatherRoutes(builder.Configuration);
 
 app.Run();
+
+
 
