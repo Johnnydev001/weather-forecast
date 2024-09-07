@@ -9,7 +9,13 @@ export default defineNuxtConfig({
     plugins: [
       svgLoader(),
     ],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "@/assets/styles/main.scss";',
+        },
+      },
+    },
   },
-
  compatibilityDate: '2024-09-03',
 })

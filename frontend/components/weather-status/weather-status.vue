@@ -2,61 +2,64 @@
 
     <section role="grid" class="container">
 
-        <h1 class="date">{{ formatedTodayDate }}</h1>
 
-        <div class="temperature-container">
-            <h2 class="temperature">{{ temperature }}</h2>
+        <article class="sub-container">
 
-            <p class="feels-like-temperature">Feels like: {{ feelsLikeTemperature }}</p>
-        </div>
+            <img class="weather-illustration" src="~/assets/imgs/sun.png" alt="Weather summary image" />
 
-        <h3 class="weather-status">{{ weatherStatus }}</h3>
 
-        <article class="weather-container">
+            <article class="summary-container">
+                <h2 class="date">{{ formatedTodayDate }}</h2>
+                <h2 :title=feelsLikeTemperature class="temperature">{{ temperature }}</h2>
+                <h3 class="weather-status">{{ weatherStatus }}</h3>
+            </article>
 
-            <div class="sub-container">
-                <div class="condition">
-                    <WindIcon/>
+            <article class="weather-container">
 
-                    <div class="value">
-                        <span class="title">Wind</span>
-                        <span>{{ windSpeed }}</span>
-                    </div>
+                <div class="condition-container">
+                    <div class="condition">
+                        <WindIcon />
 
-                </div>
-
-                <div class="condition">
-                    <HumidityIcon/>
-                    <div class="value">
-                        <span class="title">Humidity</span>
-                        <span>{{ humidity }}</span>
+                        <div class="value">
+                            <span class="title">Wind</span>
+                            <span>{{ windSpeed }}</span>
+                        </div>
 
                     </div>
 
+                    <div class="condition">
+                        <HumidityIcon />
+                        <div class="value">
+                            <span class="title">Humidity</span>
+                            <span>{{ humidity }}</span>
 
+                        </div>
+
+
+                    </div>
                 </div>
-            </div>
 
-            <div class="sub-container">
-                <div class="condition">
-                    <PressureIcon/>
-                    <div class="value">
-                        <span class="title">Pressure</span>
-                        <span>{{ pressure }}</span>
+                <div class="condition-container">
+                    <div class="condition">
+                        <PressureIcon />
+                        <div class="value">
+                            <span class="title">Pressure</span>
+                            <span>{{ pressure }}</span>
+                        </div>
+
                     </div>
 
-                </div>
+                    <div class="condition">
+                        <UVIndexIcon />
+                        <div class="value">
+                            <span class="title">UV index</span>
+                            <span>{{ uvIndex }}</span>
+                        </div>
 
-                <div class="condition">
-                    <UVIndexIcon/>
-                    <div class="value">
-                        <span class="title">UV index</span>
-                        <span>{{ uvIndex }}</span>
                     </div>
-
                 </div>
-            </div>
 
+            </article>
         </article>
 
     </section>
@@ -79,7 +82,7 @@ const monthFromTodayDate = monthsMappedToNumbers.find((elem) => elem?.index === 
 const formatedTodayDate = ref(`Today, ${todayDate.getDay()}, ${monthFromTodayDate}`)
 
 const temperature = ref("29º")
-const feelsLikeTemperature = ref("30º")
+const feelsLikeTemperature = ref("Feels like: 30º")
 const weatherStatus = ref("sunny")
 const windSpeed = ref("30km/h")
 const humidity = ref("10%")
@@ -88,7 +91,7 @@ const uvIndex = ref("2")
 
 try {
     await weatherService.getOneCallWeather()
-} catch(error){
+} catch (error) {
     console.log('error client side', error)
 }
 
@@ -97,60 +100,107 @@ try {
 <style lang="scss">
 .container {
     display: grid;
+    row-gap: 1rem;
     text-align: center;
-    // color: #ffffff;
-    border: 1px solid #ffffff;
+    justify-items: center;
+    padding: 5rem;
+    background-color: #427bff;
+    color: #000000;
 
-    .date {
-        font-weight: 100;
-
-    }
-
-    .temperature-container {
-        .temperature {
-            font-weight: 700;
-            text-shadow: red;
-        }
-
-        .feels-like-temperature {
-            font-weight: 500;
-        }
-    }
-
-    .weather-status {
-        font-weight: 700;
-        text-transform: capitalize;
-    }
-
-    .weather-container {
-        text-align: center;
-        justify-content: center;
+    .sub-container {
+        background-color: #ffffff;
         display: grid;
+        row-gap: 1rem;
+        text-align: center;
+        justify-items: center;
+        padding: 2rem;
+        border: $border;
+        border-radius: 1rem;
 
-        .sub-container {
+        .weather-illustration {
+            aspect-ratio: 10/9;
+            object-fit: contain;
+            object-position: center;
+            max-width: 200px;
+        }
+
+        .summary-container {
             display: grid;
-            grid-template-columns: 10rem 10rem;
+            justify-items: center;
+            text-align: center;
+            align-items: center;
+            row-gap: 1.5rem;
 
-            .condition {
-                display: flex;
-                column-gap: 1rem;
-                align-items: center;
-                border: 0.5px solid #8e8e8e;
-                border-radius: 0.25rem;
-                padding: 0.75rem;
+            .date {
+                font-weight: 100;
+                font-size: 1rem;
+                margin: 0;
+            }
 
-                .value {
-                    display: grid;
-                    row-gap: 0.5rem;
+            .temperature {
+                font-weight: 500;
+                font-size: 4rem;
+                margin: 0;
+                text-shadow: -3px 6px 35px rgba(0, 0, 0, 0.1);
+            }
 
-                    .title {
-                        font-weight: 600;
-                    }
-                }
+            .weather-status {
+                font-weight: 300;
+                font-size: 2rem;
+                text-transform: capitalize;
+                margin: 0;
             }
         }
 
+        .weather-container {
+            margin-top: 2rem;
+            text-align: center;
+            justify-content: center;
+            display: grid;
 
+
+            .condition-container {
+                display: grid;
+                grid-template-columns: 10rem 10rem;
+                column-gap: 1rem;
+                margin: 1rem;
+
+                .condition {
+                    display: flex;
+                    column-gap: 1rem;
+                    align-items: center;
+                    border: 0.5px solid #000000;
+                    border-radius: 0.25rem;
+                    padding: 0.75rem;
+
+                    >svg {
+                        aspect-ratio: 1;
+                        object-fit: contain;
+                        width: 1.5rem;
+                        stroke: #000000;
+                    }
+
+                    .value {
+                        display: grid;
+                        row-gap: 0.5rem;
+
+                        .title {
+                            font-weight: 600;
+                        }
+                    }
+                }
+
+                .condition:first-child {
+                    border-left: none;
+                }
+
+                .condition:last-child {
+                    border-right: none;
+                }
+            }
+
+
+        }
     }
 
 }

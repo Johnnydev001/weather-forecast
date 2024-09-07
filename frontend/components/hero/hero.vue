@@ -1,17 +1,11 @@
 <template>
-
-    <div class="container">
+    <div class="hero-container">
         <WeatherStatus />
-
-
     </div>
-
-
-
 </template>
 
-<style>
-.container {
-
+<style lang="scss">
+.hero-container {
+    background-color: #427bff;
 }
 </style>

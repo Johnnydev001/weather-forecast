@@ -3,7 +3,7 @@
       <Title>Weather forecast</Title>
     </Head>
     <Body>
-      <header>
+      <header class="header">
         <Navigation />
       </header>
       <main >
@@ -17,3 +17,11 @@
       </footer>
     </Body>
 </template>
+
+<style lang="scss">
+.header {
+  background-color: #ffffff;
+}
+
+
+</style>

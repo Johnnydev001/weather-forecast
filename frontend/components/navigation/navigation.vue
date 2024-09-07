@@ -6,7 +6,7 @@
    
       </li>
 
-      <li key="search-field">
+      <!-- <li key="search-field">
         <button>
           <input type="text">
 
@@ -14,7 +14,7 @@
           </input>
         </button>
 
-      </li>
+      </li> -->
 
       <li key="social-media">
         <ul role="list" class="social-media-list">
@@ -43,12 +43,16 @@ import SearchIcon from "~/assets/icons/search.vue";
 
 
 <style lang="scss">
+nav {
+  background-color: #ffffff;
+}
 .nav-list {
 
   list-style: none;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin: 0;
 
   .link {
     text-decoration-color: #000000;
