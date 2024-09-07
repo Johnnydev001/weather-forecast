@@ -35,10 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import GithubIcon from "~/assets/icons/github.vue";
-import LinkedinIcon from "~/assets/icons/linkedin.vue";
-import TwitterIcon from "~/assets/icons/twitter.vue";
-import SearchIcon from "~/assets/icons/search.vue";
+import GithubIcon from "~/public/assets/icons/github.vue";
+import LinkedinIcon from "~/public/assets/icons/linkedin.vue";
+import TwitterIcon from "~/public/assets/icons/twitter.vue";
+import SearchIcon from "~/public/assets/icons/search.vue";
 </script>
 
 

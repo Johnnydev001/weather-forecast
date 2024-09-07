@@ -5,7 +5,7 @@
 
         <article class="sub-container">
 
-            <img class="weather-illustration" src="~/assets/imgs/sun.png" alt="Weather summary image" />
+            <img class="weather-illustration" src="~/public/assets/imgs/sun.png" alt="Weather summary image" />
 
 
             <article class="summary-container">
@@ -34,8 +34,6 @@
                             <span>{{ humidity }}</span>
 
                         </div>
-
-
                     </div>
                 </div>
 
@@ -67,10 +65,10 @@
 </template>
 
 <script setup lang="ts">
-import WindIcon from '~/assets/icons/wind.vue';
-import PressureIcon from '~/assets/icons/pressure.vue';
-import UVIndexIcon from '~/assets/icons/sun.vue';
-import HumidityIcon from '~/assets/icons/humidity.vue'
+import WindIcon from '~/public/assets/icons/wind.vue';
+import PressureIcon from '~/public/assets/icons/pressure.vue';
+import UVIndexIcon from '~/public/assets/icons/sun.vue';
+import HumidityIcon from '~/public/assets/icons/humidity.vue'
 import weatherService from '~/services/weather/weather-service';
 
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
@@ -104,8 +102,11 @@ try {
     text-align: center;
     justify-items: center;
     padding: 5rem;
-    background-color: #427bff;
     color: #000000;
+    background-image: url('public/assets/imgs/background-cloudy.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 
     .sub-container {
         background-color: #ffffff;

@@ -9,7 +9,7 @@
 .copyright {
     font-size: small;
     text-align: center;
-    margin-top: 5rem;
+    margin-top: 1rem;
 
 }
 </style>

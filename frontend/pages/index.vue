@@ -9,7 +9,6 @@ import hero from '~/components/hero/hero.vue';
 <style  lang="css">
 html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #427bff;
   margin: 0
 }
 </style>
