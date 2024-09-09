@@ -36,7 +36,7 @@ export default {
             }
 
         } catch (error) {
-            console.log('Error calling the weather service', error)
+            console.log('Error calling the weather service due to: ', error)
         }
 
     }

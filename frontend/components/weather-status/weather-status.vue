@@ -1,12 +1,11 @@
 <template>
 
-    <section role="grid" class="container">
+    <section class="container" :style="{ backgroundImage: `url('public/assets/imgs/background-cloudy.jpg')` }">
 
 
         <article class="sub-container">
 
             <img class="weather-illustration" src="~/public/assets/imgs/sun.png" alt="Weather summary image" />
-
 
             <article class="summary-container">
                 <h2 class="date">{{ formatedTodayDate }}</h2>
@@ -92,13 +91,15 @@ const navigator = ref(window?.navigator);
 const latitude = ref(0);
 const longitude = ref(0);
 
+const backgroundImage = ref('public/assets/imgs/background-cloudy.jpg');
+
 navigator?.geolocation?.getCurrentPosition((position) => {
   longitude.value = position?.coords?.longitude;
   latitude.value = position?.coords?.latitude;
 });
 
 try {
-    const weatherResponse = await weatherService.getOneCallWeather( {lat : latitude, lon : longitude, lang: 'pt', units: 'metric'} )
+    const weatherResponse = await weatherService.getOneCallWeather( {lat : latitude.value, lon : longitude.value, lang: 'pt', units: 'metric'} )
     if (weatherResponse){
       temperature.value = weatherResponse?.temperature;
       feelsLikeTemperature.value = weatherResponse?.feelsLikeTemperature;
@@ -123,7 +124,6 @@ try {
     justify-items: center;
     padding: 5rem;
     color: #000000;
-    background-image: url('public/assets/imgs/background-cloudy.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
