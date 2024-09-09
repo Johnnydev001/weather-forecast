@@ -1,6 +1,6 @@
 export default {
 
-    async getOneCallWeather(queryParams = {lat : '', lon : '', lang: '', units: ''}) {
+    async getOneCallWeather(queryParams = {lat : '', lon : '', lang: '', units: 'metric'}) {
 
         const {
             lat,
@@ -19,7 +19,6 @@ export default {
         }
 
         let baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.ONE_CALL_WEATHER_API_URL}?lat=${lat}&lon=${lon}`;
-
         if(lang){
             baseEndpoint += `&lang=${lang}`
         }
@@ -35,8 +34,6 @@ export default {
 
                 return current;
             }
-
-
 
         } catch (error) {
             console.log('Error calling the weather service', error)

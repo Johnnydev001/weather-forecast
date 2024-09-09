@@ -86,9 +86,29 @@ const windSpeed = ref("30km/h")
 const humidity = ref("10%")
 const pressure = ref("0")
 const uvIndex = ref("2")
+const cloudsPercentage = ref("0%")
+
+const navigator = ref(window?.navigator);
+const latitude = ref(0);
+const longitude = ref(0);
+
+navigator?.geolocation?.getCurrentPosition((position) => {
+  longitude.value = position?.coords?.longitude;
+  latitude.value = position?.coords?.latitude;
+});
 
 try {
-    await weatherService.getOneCallWeather()
+    const weatherResponse = await weatherService.getOneCallWeather( {lat : latitude, lon : longitude, lang: 'pt', units: 'metric'} )
+    if (weatherResponse){
+      temperature.value = weatherResponse?.temperature;
+      feelsLikeTemperature.value = weatherResponse?.feelsLikeTemperature;
+      weatherStatus.value = weatherResponse?.weatherStatus;
+      windSpeed.value = weatherResponse?.windSpeed;
+      humidity.value = weatherResponse?.humidity;
+      pressure.value = weatherResponse?.pressure;
+      cloudsPercentage.value = weatherResponse?.cloudsPercentage;
+    }
+
 } catch (error) {
     console.log('error client side', error)
 }
