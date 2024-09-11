@@ -6,7 +6,6 @@ public class WeatherService : WeatherInterface
 
     public static async Task<WeatherModel?> GetOneCallWeatherConditions(string lat, string lon, string? lang, string? units, string? weatherApiKey = "", string? weatherApiUrl = "")
     {
-
         try
         {
 
@@ -20,10 +19,10 @@ public class WeatherService : WeatherInterface
             return null;
 
         }
-        catch (System.Exception)
+        catch (System.Exception exception)
         {
         
-            throw;
+            throw new Exception("Failed to fetch the weather data from the API due to: ", exception);
         }
     }
 }

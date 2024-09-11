@@ -16,6 +16,7 @@ var app = builder.Build();
 
 app.UseCors("AllowNuxtApp");
 app.mapWeatherRoutes(builder.Configuration);
+app.mapLocationRoutes(builder.Configuration);
 
 app.Run();
 

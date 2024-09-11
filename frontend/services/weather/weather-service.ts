@@ -30,9 +30,7 @@ export default {
             const oneCallWeatherRequest = await fetch(baseEndpoint, requestData );
 
             if(oneCallWeatherRequest.status === 200 || oneCallWeatherRequest.ok){
-                const {current = {}}  = await oneCallWeatherRequest.json();
-
-                return current;
+                return await oneCallWeatherRequest.json();
             }
 
         } catch (error) {
