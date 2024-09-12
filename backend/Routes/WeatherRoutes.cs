@@ -5,7 +5,7 @@ public static class WeatherRoutes {
         string weatherApiKey = configuration["WeatherApiKey"] ?? "Failed to fetch weather api key";
         string weatherApiUrl = configuration["WeatherApiUrl"] ?? "Failed to fetch weather api url";
 
-        app.MapGet("/onecall", async (string lat = "", string lon = "", string? lang = "pt", string? units = "metric") => {
+        app.MapGet("/onecall", async (string lat, string lon, string? lang = "pt", string? units = "metric") => {
             try
             {
               return await WeatherService.GetOneCallWeatherConditions(lat, lon, lang, units, weatherApiKey, weatherApiUrl);
