@@ -13,8 +13,6 @@ public class LocationService : LocationInterface
         {   
             var response = await httpClient.GetAsync(locationApiFullUrl);
 
-            Console.WriteLine(response);
-
             if(response.IsSuccessStatusCode){
                 return await response.Content.ReadFromJsonAsync<LocationModel>();
             }
