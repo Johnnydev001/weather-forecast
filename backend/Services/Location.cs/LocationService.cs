@@ -11,9 +11,7 @@ public class LocationService : LocationInterface
 
         try
         {   
-            var response = await httpClient.GetAsync(locationApiFullUrl);
-
-            Console.WriteLine(response);
+            var response = await httpClient.GetAsync("https://us1.locationiq.com/v1/reverse?key=pk.d1bad7334d5cb03cbcc0f578042eea85&lat=51&lon=-0.12&format=json");
 
             if(response.IsSuccessStatusCode){
                 return await response.Content.ReadFromJsonAsync<LocationModel>();
