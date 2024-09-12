@@ -8,7 +8,6 @@ public class WeatherService : WeatherInterface
     {
         try
         {
-
             var response = await httpClient.GetAsync($"{weatherApiUrl}?lat={lat}&lon={lon}&lang={lang}&units={units}&appid={weatherApiKey}");
 
             if (response.IsSuccessStatusCode)

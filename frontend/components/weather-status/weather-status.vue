@@ -72,6 +72,7 @@ import weatherService from '~/services/weather/weather-service';
 
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
 import { ref } from 'vue';
+import locationService from '~/services/location/location-service';
 
 const todayDate = new Date();
 
@@ -98,6 +99,12 @@ navigator?.geolocation?.getCurrentPosition((position) => {
   latitude.value = position?.coords?.latitude;
 });
 
+try{
+    const locationResponse = await locationService.getLocationFromLatAndLon({lat: latitude.value, lon: longitude.value});
+} catch (error) {
+    console.log('Failed to get the location data from the service due to: ', error);
+}
+
 try {
     const weatherResponse = await weatherService.getOneCallWeather( {lat : latitude.value, lon : longitude.value, lang: 'pt', units: 'metric'} )
     if (weatherResponse){
@@ -111,7 +118,7 @@ try {
     }
 
 } catch (error) {
-    console.log('error client side', error)
+    console.log('Failed to get the weather data from the service due to: ', error)
 }
 
 </script>

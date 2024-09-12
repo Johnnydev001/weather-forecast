@@ -18,7 +18,7 @@ export default {
 
             }
 
-            const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.ONE_CALL_WEATHER_API_URL}?lat=${lat}&lon=${lon}`;
+            const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
 
             const locationResponse = await fetch(baseEndpoint, requestData);
 
