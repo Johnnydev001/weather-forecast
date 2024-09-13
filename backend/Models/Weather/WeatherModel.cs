@@ -1,11 +1,11 @@
 using System.Text.Json.Serialization;
 public class WeatherModel
 {
-   [JsonPropertyName("temperature")]
 
+   [JsonPropertyName("temperature")]
    public float temp { get; set; }
 
-   [JsonPropertyName("feelsLike")]
+   [JsonPropertyName("feelsLikeTemperature")]
    public float feels_like { get; set; }
 
    public float pressure { get; set; }
@@ -20,4 +20,6 @@ public class WeatherModel
    public float wind_speed { get; set; }
 
    public float humidity { get; set; }
+
+   public required string weather_status {get; set;}
 }
