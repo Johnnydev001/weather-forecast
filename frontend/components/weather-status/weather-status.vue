@@ -3,17 +3,22 @@
     <section class="container">
 
 
-        <article class="sub-container" >
+        <section class="sub-container">
+            <h1 class="location">{{ city + ', ' + country }}</h1>
+
 
             <img class="weather-illustration" src="~/public/assets/imgs/sun.png" alt="Weather summary image" />
 
-            <article class="summary-container">
-                <h2 class="date">{{ formatedTodayDate }}</h2>
-                <h2 title="Temperature" class="temperature">{{ temperature }}º</h2>
+            <section class="summary-container">
 
-                <h3 title="Feels like temperature" class="feels-like-temperature">Feels like: {{
-                    feelsLikeTemperature ? feelsLikeTemperature + 'º': ''}}</h3>
-            </article>
+                <h2 class="date">{{  formatedTodayDate }}</h2>
+
+                <h3 title="Temperature" class="temperature">{{ temperature }}º</h3>
+
+                <h4 title="Feels like temperature" class="feels-like-temperature">Feels like: {{
+                    feelsLikeTemperature ? feelsLikeTemperature + 'º': ''}}</h4>
+
+            </section>
 
             <article class="weather-container">
 
@@ -59,7 +64,7 @@
                 </div>
 
             </article>
-        </article>
+        </section>
 
     </section>
 
@@ -80,7 +85,10 @@ import { ref } from 'vue';
 const handleLocationRequest = async () => {
     try {
         const locationResponse = await locationService.getLocationFromLatAndLon({ lat: latitude.value, lon: longitude.value });
-        console.log(locationResponse)
+        if(locationResponse?.address){
+            country.value = locationResponse?.address?.country;
+            city.value = locationResponse?.address?.city;
+        }        
 
     } catch (error) {
         console.log('Failed to get the location data from the service due to: ', error);
@@ -166,6 +174,12 @@ await handleWeatherRequest();
         padding: 2rem;
         border: $border;
         border-radius: 1rem;
+
+        .location {
+            font-weight: 100;
+                font-size: 1.2rem;
+                margin: 0;
+        }
 
         .weather-illustration {
             aspect-ratio: 11/9;
