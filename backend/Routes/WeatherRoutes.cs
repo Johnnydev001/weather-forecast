@@ -8,7 +8,8 @@ public static class WeatherRoutes {
         app.MapGet("/onecall", async (string lat, string lon, string? lang = "pt", string? units = "metric") => {
             try
             {
-              return await WeatherService.GetOneCallWeatherConditions(lat, lon, lang, units, weatherApiKey, weatherApiUrl);
+                return await WeatherService.GetOneCallWeatherConditions(lat, lon, lang, units, weatherApiKey, weatherApiUrl);
+                
             }
             catch (Exception exception)
             {

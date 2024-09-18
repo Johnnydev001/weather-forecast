@@ -1,3 +1,3 @@
 public interface LocationInterface {
-    abstract static Task<LocationModel?> GetLocationByLatAndLon(string lat, string lon, string locationApiBaseUrl, string locationApiKey);
+    abstract static Task<List<LocationModel>?> GetLocationByLocationQuery(string query, string locationApiBaseUrl, string locationApiKey);
 }

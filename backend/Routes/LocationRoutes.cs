@@ -6,11 +6,12 @@ public static class LocationRoutes  {
         string locationApiKey = configuration["LocationApiKey"] ?? "Failed to get the location API key";
 
 
-        app.MapGet("/location", async (string lat = "", string lon = "") => {
+        app.MapGet("/location", async (string query) => {
 
             try
             {
-                return await LocationService.GetLocationByLatAndLon(lat, lon, locationApiBaseUrl, locationApiKey);
+                return await LocationService.GetLocationByLocationQuery(query, locationApiBaseUrl, locationApiKey);
+                
             }
             catch (Exception exception)
             {

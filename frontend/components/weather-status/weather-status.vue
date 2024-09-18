@@ -2,10 +2,12 @@
 
     <section class="container">
 
-
         <section class="sub-container">
-            <h1 class="location">{{ city + ', ' + country }}</h1>
+            <div>
+                <span class="location">{{ city ? city  +', ': '' }}</span>
+                <span class="location">{{ country   }}</span>
 
+            </div>
 
             <img class="weather-illustration" src="~/public/assets/imgs/sun.png" alt="Weather summary image" />
 
@@ -76,27 +78,35 @@ import PressureIcon from '~/public/assets/icons/pressure.vue';
 import UVIndexIcon from '~/public/assets/icons/sun.vue';
 import HumidityIcon from '~/public/assets/icons/humidity.vue'
 import weatherService from '~/services/weather/weather-service';
-import locationService from '~/services/location/location-service';
 
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
 import { ref } from 'vue';
 
 
-const handleLocationRequest = async () => {
+const handleLocationRequest = async (locationToFind: string) => {
     try {
-        const locationResponse = await locationService.getLocationFromLatAndLon({ lat: latitude.value, lon: longitude.value });
+
+        const locationResponse = await $fetch('/api/location', {
+            method: 'GET',
+            params: {
+                query: locationToFind
+            }
+        })
         if(locationResponse?.address){
             country.value = locationResponse?.address?.country;
-            city.value = locationResponse?.address?.city;
+            city.value = locationResponse?.address?.city || locationResponse?.address?.name;
+            latitude.value = locationResponse.lat;
+            longitude.value = locationResponse.lon;
         }        
 
     } catch (error) {
-        console.log('Failed to get the location data from the service due to: ', error);
+        console.log('Failed to get the location data from the server due to: ', error);
     }
 }
 
 const handleWeatherRequest = async () => {
     try {
+
         const weatherResponse = await weatherService.getOneCallWeather({ lat: latitude.value, lon: longitude.value })
         if (weatherResponse) {
             temperature.value = weatherResponse?.temperature;
@@ -114,7 +124,7 @@ const handleWeatherRequest = async () => {
 
 }
 
-const handleSetLatitude = () => {
+const handleSetCoordinates = () => {
     if (navigator?.value?.geolocation) {
         navigator?.value?.geolocation?.getCurrentPosition((position) => {
             longitude.value = position?.coords?.longitude;
@@ -123,9 +133,10 @@ const handleSetLatitude = () => {
     }
 }
 
+const props = defineProps(['locationToFind'])
 const navigator = ref(window?.navigator);
-const latitude = ref(0);
-const longitude = ref(0);
+const latitude = ref<string|number>(0);
+const longitude = ref<string|number>(0);
 
 const todayDate = new Date();
 
@@ -142,12 +153,12 @@ const cloudsPercentage = ref(0)
 
 const weatherStatus = ref("")
 
-const city = ref("");
-const country = ref("");
+const city = ref<string | undefined>("");
+const country = ref<string | undefined>("");
 
 
-handleSetLatitude();
-await handleLocationRequest();
+handleSetCoordinates();
+await handleLocationRequest(props?.locationToFind);
 await handleWeatherRequest();
 
 </script>
