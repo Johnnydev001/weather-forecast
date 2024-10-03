@@ -1,13 +1,13 @@
+import type { LocationRequestType, LocationResponseType } from "~/types/location/location-types";
+
 export default {
 
-
-    async getLocationFromLatAndLon(queryParams = {lat : '', lon : ''}){
+    async getLocationFromLocationQuery(queryParams: LocationRequestType): Promise<LocationResponseType | undefined | null>{
 
         try {
             
             const {
-                lat = '',
-                lon = ''
+                query = '',
             } = queryParams;
 
             const requestData = {
@@ -18,21 +18,32 @@ export default {
 
             }
 
-            const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
+           // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
 
-            const locationResponse = await fetch(baseEndpoint, requestData);
+            const locationResponse = await fetch(`http://localhost:5177/location?query=${query}`, requestData);
 
             if(locationResponse.ok && locationResponse.status == 200){
-                const {address} = await locationResponse.json();
 
-                return address;
+                const locationResponseJson = await locationResponse.json();
+
+                if(locationResponseJson?.length){
+                    return await locationResponseJson[0] ?? {
+                        address: {
+                            city: '',
+                            country: '',
+                            name: '',
+                        },
+                        lat: '',
+                        lon: ''
+                        
+                    }
+                }
+
             }
-
             return null;
-
-
+            
         } catch(e){
-            console.log("Error fetching the location data from the latitude and longitude")
+            console.log("Error fetching the location data")
         }
 
     }

@@ -165,6 +165,7 @@ await handleWeatherRequest();
 
 <style lang="scss">
 .container {
+    font-family: 'Roboto', sans-serif;
     display: grid;
     row-gap: 1rem;
     text-align: center;

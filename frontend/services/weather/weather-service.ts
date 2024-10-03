@@ -1,13 +1,15 @@
+import type { WeatherRequestType, WeatherResponseType } from "~/types/weather/weather-types";
+
 export default {
 
-    async getOneCallWeather(queryParams = {lat : '', lon : '', lang: '', units: 'metric'}) {
+    async getOneCallWeather(queryParams : WeatherRequestType): Promise<WeatherResponseType | undefined | null>   {
 
         const {
-            lat,
-            lon,
-            lang, 
-            units
-        } = queryParams;
+            lat = '',
+            lon = '',
+            lang = 'pt',
+            units = 'metric'
+        }: WeatherRequestType = queryParams;
 
         const requestData = {
             method: 'GET',
@@ -18,20 +20,23 @@ export default {
             withCredentials: true
         }
 
-        let baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.ONE_CALL_WEATHER_API_URL}?lat=${lat}&lon=${lon}`;
-        if(lang){
-            baseEndpoint += `&lang=${lang}`
-        }
-        if(units){
-            baseEndpoint += `&units=${units}`
-        }
+        // let baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.ONE_CALL_WEATHER_API_URL}?lat=${lat}&lon=${lon}`;
+    
+        // if(lang){
+        //     baseEndpoint += `&lang=${lang}`
+        // }
+        // if(units){
+        //     baseEndpoint += `&units=${units}`
+        // }
 
         try {
-            const oneCallWeatherRequest = await fetch(baseEndpoint, requestData );
+            const oneCallWeatherRequest = await fetch(`http://localhost:5177/onecall?lat=${lat}&lon=${lon}`, requestData );
 
             if(oneCallWeatherRequest.status === 200 || oneCallWeatherRequest.ok){
                 return await oneCallWeatherRequest.json();
             }
+
+            return null;
 
         } catch (error) {
             console.log('Error calling the weather service due to: ', error)

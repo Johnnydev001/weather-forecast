@@ -7,12 +7,8 @@
 <script setup lang="ts">
 import WeatherStatus from '~/components/weather-status/weather-status.vue';
 
-
 const route = useRoute();
 const locationToFind = ref<string|string[]|undefined>(route.params?.location ?? "")
-
-
-
 </script>
 <style lang="css">
 html,
