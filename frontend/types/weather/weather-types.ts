@@ -4,8 +4,7 @@ export type WeatherRequestType = {
     lang?: string;
     units?: string;
 }
-
-export type WeatherResponseType = {
+type CurrentType = {
     temperature: number;
     feelsLikeTemperature: number;
     weatherStatus: string;
@@ -13,4 +12,9 @@ export type WeatherResponseType = {
     humidity: number;
     pressure: number;
     cloudsPercentage: number;
+}
+
+export type WeatherResponseType = {
+    current:CurrentType;
+
 }

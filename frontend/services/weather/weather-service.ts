@@ -30,7 +30,7 @@ export default {
         // }
 
         try {
-            const oneCallWeatherRequest = await fetch(`http://localhost:5177/onecall?lat=${lat}&lon=${lon}`, requestData );
+            const oneCallWeatherRequest = await fetch(`http://localhost:5177/onecall?lat=${lat}&lon=${lon}&lang=${lang}&units=${units}`, requestData );
 
             if(oneCallWeatherRequest.status === 200 || oneCallWeatherRequest.ok){
                 return await oneCallWeatherRequest.json();

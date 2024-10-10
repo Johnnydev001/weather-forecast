@@ -30,4 +30,8 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0
 }
+footer {
+  background-color: #000000;
+  color: #ffffff;
+}
 </style>

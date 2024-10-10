@@ -15,3 +15,8 @@ export type LocationResponseType = {
     lon: string | number;
 }
 
+export type LocationByCoordinatesRequestType = {
+    lat: string | number;
+    lon: string | number;
+}
+

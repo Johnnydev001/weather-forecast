@@ -1,8 +1,15 @@
 <template>
     <div class="hero-container">
-        <WeatherStatus />
+        <WeatherStatus :locationToFind="props"/>
     </div>
 </template>
+
+<script lang="ts">
+import { defineProps } from 'vue';
+
+const props = defineProps(['locationToFind']);
+
+</script>
 
 <style lang="scss">
 .hero-container {

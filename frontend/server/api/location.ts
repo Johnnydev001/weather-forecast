@@ -1,9 +1,9 @@
-import locationService from "~/services/location/location-service";
+import {getLocationFromLocationQuery} from "~/services/location/location-service";
 import { LocationResponseType } from "~/types/location/location-types";
 
 export default defineEventHandler(async (event) => {
 
-    const queryFromPath = getQuery(event);
+    const queryFromPath = await getQuery(event);
 
     let locationResponseJson: LocationResponseType = {
         address: {
@@ -16,13 +16,12 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const locationResponse = await locationService.getLocationFromLocationQuery({ query: queryFromPath.query });
+        const locationResponse = await getLocationFromLocationQuery({ query: queryFromPath.query });
 
         if (locationResponse) {
             locationResponseJson.address = {
                 country: locationResponse?.address?.country,
                 city: locationResponse?.address?.city,
-          
                 name: locationResponse.address?.name
             }
             locationResponseJson.lat = locationResponse?.lat;

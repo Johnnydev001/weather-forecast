@@ -3,22 +3,23 @@
     <section class="container">
 
         <section class="sub-container">
-            <div>
-                <span class="location">{{ city ? city  +', ': '' }}</span>
-                <span class="location">{{ country   }}</span>
-
+            <div class="location-container">
+                <div >
+                    <span class="location">{{ city ? city  +', ': '' }}</span>
+                    <span class="location">{{ country   }}</span>
+                </div>
+                
+                <span class="date">{{  formatedTodayDate }} </span>
             </div>
 
             <img class="weather-illustration" src="~/public/assets/imgs/sun.png" alt="Weather summary image" />
 
             <section class="summary-container">
 
-                <h2 class="date">{{  formatedTodayDate }}</h2>
+                <h3 title="Temperature. Units - metric: Celsius" class="temperature">{{ temperature }}º</h3>
 
-                <h3 title="Temperature" class="temperature">{{ temperature }}º</h3>
-
-                <h4 title="Feels like temperature" class="feels-like-temperature">Feels like: {{
-                    feelsLikeTemperature ? feelsLikeTemperature + 'º': ''}}</h4>
+                <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature">Feels like: {{
+                    feelsLikeTemperature ? feelsLikeTemperature + 'º': '0º'}}</h4>
 
             </section>
 
@@ -46,11 +47,11 @@
                 </div>
 
                 <div class="condition-container">
-                    <div class="condition" title="The current air pressure in %">
+                    <div class="condition" title="Atmospheric pressure on the sea level, hPa">
                         <PressureIcon />
                         <div class="value">
                             <span class="title">Pressure</span>
-                            <span>{{ pressure }} %</span>
+                            <span>{{ pressure }} hPa</span>
                         </div>
 
                     </div>
@@ -77,13 +78,12 @@ import WindIcon from '~/public/assets/icons/wind.vue';
 import PressureIcon from '~/public/assets/icons/pressure.vue';
 import UVIndexIcon from '~/public/assets/icons/sun.vue';
 import HumidityIcon from '~/public/assets/icons/humidity.vue'
-import weatherService from '~/services/weather/weather-service';
 
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
 import { ref } from 'vue';
 
 
-const handleLocationRequest = async (locationToFind: string) => {
+const handleFindLocationByName = async (locationToFind: string) => {
     try {
 
         const locationResponse = await $fetch('/api/location', {
@@ -93,7 +93,7 @@ const handleLocationRequest = async (locationToFind: string) => {
             }
         })
         if(locationResponse?.address){
-            country.value = locationResponse?.address?.country;
+            country.value = locationResponse.address?.country;
             city.value = locationResponse?.address?.city || locationResponse?.address?.name;
             latitude.value = locationResponse.lat;
             longitude.value = locationResponse.lon;
@@ -107,7 +107,15 @@ const handleLocationRequest = async (locationToFind: string) => {
 const handleWeatherRequest = async () => {
     try {
 
-        const weatherResponse = await weatherService.getOneCallWeather({ lat: latitude.value, lon: longitude.value })
+        const weatherResponse = await $fetch('/api/weather', {
+          method: 'POST',
+          body: {
+            lat: latitude.value,
+            lon: longitude.value,
+            lang: 'pt',
+            units: 'metric'
+          }
+        })
         if (weatherResponse) {
             temperature.value = weatherResponse?.temperature;
             feelsLikeTemperature.value = weatherResponse?.feelsLikeTemperature;
@@ -124,16 +132,8 @@ const handleWeatherRequest = async () => {
 
 }
 
-const handleSetCoordinates = () => {
-    if (navigator?.value?.geolocation) {
-        navigator?.value?.geolocation?.getCurrentPosition((position) => {
-            longitude.value = position?.coords?.longitude;
-            latitude.value = position?.coords?.latitude;
-        });
-    }
-}
-
 const props = defineProps(['locationToFind'])
+
 const navigator = ref(window?.navigator);
 const latitude = ref<string|number>(0);
 const longitude = ref<string|number>(0);
@@ -156,9 +156,7 @@ const weatherStatus = ref("")
 const city = ref<string | undefined>("");
 const country = ref<string | undefined>("");
 
-
-handleSetCoordinates();
-await handleLocationRequest(props?.locationToFind);
+await handleFindLocationByName(props?.locationToFind);
 await handleWeatherRequest();
 
 </script>
@@ -185,13 +183,25 @@ await handleWeatherRequest();
         justify-items: center;
         padding: 2rem;
         border: $border;
-        border-radius: 1rem;
+        border-radius: 0.5rem;
 
-        .location {
-            font-weight: 100;
-                font-size: 1.2rem;
+        .location-container {
+            display: grid;
+            row-gap: 1rem;
+
+            .date {
+                font-weight: 100;
+                font-size: 1rem;
                 margin: 0;
+            }
+            .location {
+                font-weight: 100;
+                font-size: 1.3rem;
+                margin: 0;
+            }
         }
+
+       
 
         .weather-illustration {
             aspect-ratio: 11/9;
@@ -207,11 +217,7 @@ await handleWeatherRequest();
             align-items: center;
             row-gap: 1rem;
 
-            .date {
-                font-weight: 100;
-                font-size: 1rem;
-                margin: 0;
-            }
+            
 
             .temperature {
                 font-weight: 500;

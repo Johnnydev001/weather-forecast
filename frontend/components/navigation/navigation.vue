@@ -3,7 +3,7 @@
     <ul role="list" class="nav-list">
       <li key="app-name">
         <NuxtLink class="link" to="/" >
-        <h1>Weather forecast</h1>
+        <h1 class="app-name">Weather forecast</h1>
         </NuxtLink>
    
       </li>
@@ -17,19 +17,11 @@
 
       </li>
 
-      <li key="social-media">
-        <ul role="list" class="social-media-list">
-          <li title="LinkedIn">
-            <LinkedinIcon />
-          </li>
-
-          <li title="Github">
-            <GithubIcon />
-          </li>
-          <li title="Twitter/X">
-            <TwitterIcon />
-          </li>
-        </ul>
+      <li key="social-media" class="social-media-list">
+        <TwitterIcon />
+        <LinkedinIcon />
+        <GithubIcon />
+      
       </li>
     </ul>
   </nav>
@@ -59,9 +51,11 @@ const handleInputSearch = (event: HTMLButtonElement) => {
 
 <style lang="scss">
 nav {
-  background-color: #ffffff;
+  background-color: #005183;
+  color: #ffffff;
   font-family: 'Roboto', sans-serif;
 }
+
 .nav-list {
 
   list-style: none;
@@ -69,6 +63,11 @@ nav {
   align-items: center;
   justify-content: space-around;
   margin: 0;
+  color: inherit;
+
+  .app-name {
+    color: inherit;
+  }
 
   .search-container{
     display: flex;
@@ -107,7 +106,7 @@ nav {
   .link {
     text-decoration-color: #000000;
     text-decoration: unset;  
-    color: #000000;
+    color: inherit;
     font-size: 13px;
 
     > h1{
@@ -119,8 +118,20 @@ nav {
     list-style: inherit;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     column-gap: 1rem;
+    padding: 0.25rem;
+    border: 1px solid transparent;
+    border-radius: 1rem;
+
+    background-color: #f9f9f9;
+
+    >svg:hover {
+      stroke-width: 0.15rem;
+      stroke: #cacaca;
+      cursor: pointer;
+
+    }
   }
 }
 </style>

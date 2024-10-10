@@ -1,11 +1,9 @@
 <template>
-   <div class="hero-container">
-        <WeatherStatus :locationToFind="locationToFind" />
-    </div>
+    <Hero :locationToFind="locationToFind"/>
 </template>
 
 <script setup lang="ts">
-import WeatherStatus from '~/components/weather-status/weather-status.vue';
+import Hero from '~/components/hero/hero.vue';
 
 const route = useRoute();
 const locationToFind = ref<string|string[]|undefined>(route.params?.location ?? "")
@@ -14,9 +12,12 @@ const locationToFind = ref<string|string[]|undefined>(route.params?.location ?? 
 html,
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0
+    margin: 0;
+    background-color: #005183;
+    color: #ffffff;
 }
 .hero-container {
-    background-color: #427bff;
+    background-color: #005183;
+        color: #ffffff;
 }
 </style>

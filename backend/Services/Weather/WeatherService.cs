@@ -1,4 +1,6 @@
 
+using System.Text.Json.Serialization;
+
 public class WeatherService : WeatherInterface
 {
 
@@ -12,7 +14,7 @@ public class WeatherService : WeatherInterface
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<WeatherModel>();
+                return await DeserializeObj response.Content.ReadFromJsonAsync<WeatherModel>();
 
             }
             return null;
