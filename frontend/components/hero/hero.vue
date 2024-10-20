@@ -8,6 +8,7 @@
 import { defineProps } from 'vue';
 
 const props = defineProps(['locationToFind']);
+console.log(props)
 
 </script>
 

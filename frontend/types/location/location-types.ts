@@ -1,7 +1,7 @@
 type LocationAddressType = {
     city: string;
     country: string;
-    name: string;
+    name?: string;
  
 }
 
@@ -11,8 +11,8 @@ export type LocationRequestType = {
 
 export type LocationResponseType = {
     address: LocationAddressType;
-    lat: string | number;
-    lon: string | number;
+    lat?: string | number;
+    lon?: string | number;
 }
 
 export type LocationByCoordinatesRequestType = {
@@ -20,3 +20,8 @@ export type LocationByCoordinatesRequestType = {
     lon: string | number;
 }
 
+export type LocationByCoordinatesResponseType = {
+    address: LocationAddressType,
+    lat: string,
+    lon: string
+}

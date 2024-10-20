@@ -14,7 +14,7 @@ public class WeatherService : WeatherInterface
 
             if (response.IsSuccessStatusCode)
             {
-                return await DeserializeObj response.Content.ReadFromJsonAsync<WeatherModel>();
+                return await response.Content.ReadFromJsonAsync<WeatherModel>();
 
             }
             return null;

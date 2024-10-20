@@ -134,7 +134,6 @@ const handleWeatherRequest = async () => {
 
 const props = defineProps(['locationToFind'])
 
-const navigator = ref(window?.navigator);
 const latitude = ref<string|number>(0);
 const longitude = ref<string|number>(0);
 

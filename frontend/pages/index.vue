@@ -14,17 +14,17 @@ const longitude = ref(0);
 const handleFindLocationByCoordinates = async (latitude: number, longitude: number) => {
     try {
 
+        console.log('debug', latitude, longitude)
+
         const locationResponse = await $fetch('/api/location', {
-            method: 'GET',
-            params: {
-                query: locationToFind
+            method: 'POST',
+            body: {
+                lat: latitude,
+                lon: longitude
             }
         })
         if(locationResponse?.address){
-            country.value = locationResponse.address?.country;
-            city.value = locationResponse?.address?.city || locationResponse?.address?.name;
-            latitude.value = locationResponse.lat;
-            longitude.value = locationResponse.lon;
+            console.log("locationResponse", locationResponse)
         }        
 
     } catch (error) {
