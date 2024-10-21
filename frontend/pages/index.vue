@@ -53,7 +53,7 @@ handleFindLocationByCoordinates(latitude.value, longitude.value)
 html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  background-color: #005183;
+  background-color: #103d51;
   color: #ffffff;
 }
 </style>

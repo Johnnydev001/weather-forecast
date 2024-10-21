@@ -9,10 +9,7 @@
 .copyright {
     font-size: small;
     text-align: center;
-    margin-top: 1rem;
     font-family: 'Roboto', sans-serif;
-    background-color: #005183;
-    color: #ffffff;
 }
 </style>
 

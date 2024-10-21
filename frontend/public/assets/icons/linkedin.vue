@@ -1,6 +1,6 @@
 <template>
   <svg stroke-width="1"  width="20"
-  height="20" viewBox="0 0 24 24" stroke="black" fill="none" xmlns="http://www.w3.org/2000/svg">
+  height="20" viewBox="0 0 24 24"  fill="white" xmlns="http://www.w3.org/2000/svg">
     <g id="SVGRepo_bgCarrier" ></g>
     <g
       id="SVGRepo_tracerCarrier"

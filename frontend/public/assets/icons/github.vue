@@ -5,8 +5,6 @@
     height="20"
     viewBox="0 0 24 24"
     fill="white"
-    stroke="black"
-    stroke-width="1"
     class="ai ai-GithubFill"
   >
     <g clip-path="url(#clip0_100_4)">

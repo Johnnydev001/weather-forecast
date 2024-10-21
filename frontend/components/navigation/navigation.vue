@@ -51,9 +51,15 @@ const handleInputSearch = (event: HTMLButtonElement) => {
 
 <style lang="scss">
 nav {
-  background-color: #005183;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur( 10px );
+  -webkit-backdrop-filter: blur( 4px );
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
+  position: fixed;
+  z-index: 1;
+  justify-self: center;
+  width: 100%;
 }
 
 .nav-list {
@@ -67,6 +73,15 @@ nav {
 
   .app-name {
     color: inherit;
+    font-weight: 1000;
+
+  }
+
+  .app-name:hover {
+    cursor: pointer;
+    transition-duration: 200ms;
+    transform: scale(1.2);
+    transition-timing-function: ease;
   }
 
   .search-container{
@@ -124,12 +139,11 @@ nav {
     border: 1px solid transparent;
     border-radius: 1rem;
 
-    background-color: #f9f9f9;
-
     >svg:hover {
-      stroke-width: 0.15rem;
-      stroke: #cacaca;
       cursor: pointer;
+      transition-duration: 100ms;
+      transform: scale(1.2);
+      transition-timing-function: ease-in-out;
 
     }
   }

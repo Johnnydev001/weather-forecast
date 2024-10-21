@@ -167,22 +167,28 @@ await handleWeatherRequest();
     row-gap: 1rem;
     text-align: center;
     justify-items: center;
-    padding: 5rem;
+    padding: 10rem;
     color: #000000;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-image: url("public/assets/imgs/background-cloudy.jpg");
+    background-image: url("public/assets/imgs/background-rainy.jpg");
+    height: 100%;
 
     .sub-container {
-        background-color: #ffffff;
         display: grid;
         row-gap: 1rem;
         text-align: center;
         justify-items: center;
         padding: 2rem;
-        border: $border;
         border-radius: 0.5rem;
+        border: $border;
+
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur( 7px );
+        -webkit-backdrop-filter: blur( 10px );
+        color: #ffffff;
+        font-family: 'Roboto', sans-serif;
 
         .location-container {
             display: grid;
@@ -200,8 +206,6 @@ await handleWeatherRequest();
             }
         }
 
-       
-
         .weather-illustration {
             aspect-ratio: 11/9;
             object-fit: contain;
@@ -215,8 +219,6 @@ await handleWeatherRequest();
             text-align: center;
             align-items: center;
             row-gap: 1rem;
-
-            
 
             .temperature {
                 font-weight: 500;
@@ -246,7 +248,6 @@ await handleWeatherRequest();
             justify-content: center;
             display: grid;
 
-
             .condition-container {
                 display: grid;
                 grid-template-columns: 10rem 10rem;
@@ -257,16 +258,15 @@ await handleWeatherRequest();
                     display: flex;
                     column-gap: 1rem;
                     align-items: center;
-                    border: 0.5px solid #000000;
+                    border: 0.5px solid #ffffff;
                     border-radius: 0.25rem;
                     padding: 0.75rem;
-                    box-shadow: 0px 1px 4px gray;
 
                     >svg {
                         aspect-ratio: 1;
                         object-fit: contain;
                         width: 1.5rem;
-                        stroke: #000000;
+                        stroke: #ffffff;
                     }
 
                     .value {
@@ -279,13 +279,6 @@ await handleWeatherRequest();
                     }
                 }
 
-                .condition:first-child {
-                    border-left: none;
-                }
-
-                .condition:last-child {
-                    border-right: none;
-                }
             }
 
 
