@@ -18,13 +18,11 @@ export default defineEventHandler(async (event) => {
 
     }
 
-
-
 })
 
-async function getLocationFromQuery(event: any) {
+async function getLocationFromQuery(event: any): Promise<LocationResponseType | null | undefined> {
 
-    const queryFromPath = await getQuery(event);
+    const queryFromPath = getQuery(event);
 
     let locationResponseJson: LocationResponseType = {
         address: {
@@ -55,11 +53,9 @@ async function getLocationFromQuery(event: any) {
     }
 }
 
-async function getLocationFromCoordinates(event: any) {
+async function getLocationFromCoordinates(event: any): Promise<LocationResponseType | null | undefined> {
 
     const body = await readBody(event)
-
-    console.log('debug',body)
 
     const requestParams: LocationByCoordinatesRequestType = {
         lat: body?.lat ?? '',
@@ -78,6 +74,7 @@ async function getLocationFromCoordinates(event: any) {
         const locationResponse = await getLocationFromLocationCoordinates(requestParams );
 
         if (locationResponse) {
+
             locationResponseJson.address = {
                 country: locationResponse?.address?.country,
                 city: locationResponse?.address?.city,

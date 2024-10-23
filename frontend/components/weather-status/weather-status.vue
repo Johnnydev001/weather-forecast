@@ -134,6 +134,10 @@ const handleWeatherRequest = async () => {
 
 const props = defineProps(['locationToFind'])
 
+watch(() => props?.locationToFind, (newLocation) => {
+  console.log('Route location updated:', newLocation);
+});
+
 const latitude = ref<string|number>(0);
 const longitude = ref<string|number>(0);
 
@@ -185,8 +189,8 @@ await handleWeatherRequest();
         border: $border;
 
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur( 7px );
-        -webkit-backdrop-filter: blur( 10px );
+        backdrop-filter: blur( 15px );
+        -webkit-backdrop-filter: blur( 15px );
         color: #ffffff;
         font-family: 'Roboto', sans-serif;
 
@@ -196,7 +200,7 @@ await handleWeatherRequest();
 
             .date {
                 font-weight: 100;
-                font-size: 1rem;
+                font-size: 1.25rem;
                 margin: 0;
             }
             .location {
@@ -261,6 +265,7 @@ await handleWeatherRequest();
                     border: 0.5px solid #ffffff;
                     border-radius: 0.25rem;
                     padding: 0.75rem;
+
 
                     >svg {
                         aspect-ratio: 1;

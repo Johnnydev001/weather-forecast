@@ -43,10 +43,6 @@ export async function getLocationFromLocationQuery(queryParams: LocationRequestT
         } catch(e){
             console.log("Error fetching the location data by query from the backend")
         }
-
-    
-
-
 }
 
 export async function getLocationFromLocationCoordinates(requestParams: LocationByCoordinatesRequestType): Promise<LocationByCoordinatesResponseType | undefined | null>{
@@ -54,8 +50,8 @@ export async function getLocationFromLocationCoordinates(requestParams: Location
     try {
         
         const {
-            lat = 0,
-            lon = 0
+            lat = "",
+            lon = ""
         } = requestParams;
 
         const requestData = {
@@ -72,22 +68,7 @@ export async function getLocationFromLocationCoordinates(requestParams: Location
 
         if(locationResponse.ok && locationResponse.status == 200){
 
-            const locationResponseJson = await locationResponse.json();
-
-            console.log('locationResponseJson', locationResponseJson)
-
-            if(locationResponseJson?.length){
-                return await locationResponseJson[0] ?? {
-                    address: {
-                        city: '',
-                        country: '',
-                        name: '',
-                    },
-                    lat: '',
-                    lon: ''
-                    
-                }
-            }
+            return await locationResponse.json();
 
         }
         return null;

@@ -1,15 +1,20 @@
 <template>
     <div class="hero-container">
-        <WeatherStatus :locationToFind="props"/>
+        <WeatherStatus :locationToFind="locationToFind"/>
     </div>
 </template>
 
-<script lang="ts">
-import { defineProps } from 'vue';
+<script setup lang="ts">
 
-const props = defineProps(['locationToFind']);
-console.log(props)
+const props = defineProps({
+  locationToFind: String,
+});
 
+const locationToFind = ref(props?.locationToFind);
+
+watch(() => props?.locationToFind, (newLocation) => {
+  locationToFind.value = newLocation;
+});
 </script>
 
 <style lang="scss">

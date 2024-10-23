@@ -18,10 +18,17 @@
       </li>
 
       <li key="social-media" class="social-media-list">
-        <TwitterIcon />
-        <LinkedinIcon />
-        <GithubIcon />
-      
+        <a class="social-media-link" href="https://x.com/JohnnySaraiva00" >
+         <TwitterIcon />
+       </a>
+        <a class="social-media-link" href="https://www.linkedin.com/in/jo%C3%A3o-saraiva-ab662b197/">
+          <LinkedinIcon />
+        </a>
+
+        <a class="social-media-link" href="https://github.com/Johnnydev001">
+          <GithubIcon />
+        </a>
+
       </li>
     </ul>
   </nav>
@@ -53,7 +60,7 @@ const handleInputSearch = (event: HTMLButtonElement) => {
 nav {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur( 10px );
-  -webkit-backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 10px );
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
   position: fixed;
@@ -69,6 +76,7 @@ nav {
   align-items: center;
   justify-content: space-around;
   margin: 0;
+  padding: 0;
   color: inherit;
 
   .app-name {
@@ -139,13 +147,20 @@ nav {
     border: 1px solid transparent;
     border-radius: 1rem;
 
-    >svg:hover {
-      cursor: pointer;
-      transition-duration: 100ms;
-      transform: scale(1.2);
-      transition-timing-function: ease-in-out;
+    .social-media-link {
+      padding: 0;
+      margin: 0;
 
+      >svg:hover {
+        cursor: pointer;
+        transition-duration: 100ms;
+        transform: scale(1.2);
+        transition-timing-function: ease-in-out;
+
+      }
     }
+
+
   }
 }
 </style>

@@ -13,9 +13,6 @@ const longitude = ref(0);
 
 const handleFindLocationByCoordinates = async (latitude: number, longitude: number) => {
     try {
-
-        console.log('debug', latitude, longitude)
-
         const locationResponse = await $fetch('/api/location', {
             method: 'POST',
             body: {
@@ -23,6 +20,7 @@ const handleFindLocationByCoordinates = async (latitude: number, longitude: numb
                 lon: longitude
             }
         })
+
         if(locationResponse?.address){
             console.log("locationResponse", locationResponse)
         }        
@@ -32,21 +30,26 @@ const handleFindLocationByCoordinates = async (latitude: number, longitude: numb
     }
 }
 
-const handleSetCoordinates = () => {
-    if (navigator?.value?.geolocation) {
-        navigator?.value?.geolocation?.getCurrentPosition((position) => {
-            if(position?.coords?.latitude && position?.coords?.longitude){
-                latitude.value = position?.coords?.latitude
-            }
-            if(position?.coords?.longitude){
-                longitude.value = position?.coords?.longitude
-            }
-        });
-    }
+const handleSetCoordinates =  () => {
+  if (navigator?.value?.geolocation) {
+    navigator?.value?.geolocation?.getCurrentPosition(
+        (position) => {
+          latitude.value = position.coords.latitude;
+          longitude.value = position.coords.longitude;
+        },
+        (error) => {
+          console.error("Error fetching location due to:", error);
+        }
+    );
+  } else {
+    console.error("Geolocation is not supported by this browser.");
+  }
 }
-
 handleSetCoordinates()
-handleFindLocationByCoordinates(latitude.value, longitude.value)
+watch([latitude, longitude], ([newLatitude, newLongitude]) => {
+  handleFindLocationByCoordinates(newLatitude, newLongitude)
+
+})
 
 </script>
 <style  lang="css">

@@ -11,29 +11,29 @@ public static class LocationRoutes  {
             try
             {
                 return await LocationService.GetLocationByLocationQuery(query, locationAutocompleteApiBaseUrl, locationApiKey);
-                
+
             }
             catch (Exception exception)
             {
                 
-                throw new Exception("Failed to fetch the location data from the location service due to: ", exception);
+                throw new Exception("Failed to fetch the location data by query from the location service due to: ", exception);
             }
-
-
         });
 
         app.MapGet("/location-by-coordinates", async (string lat = "", string lon = "") => {
 
             try
             {
-                Console.WriteLine("lat, lon", lat, lon);
-                return await LocationService.GetLocationByLocationCoordinates(lat,lon, locationReverseApiBaseUrl, locationApiKey);
+                double parsedLat = double.Parse(lat,System.Globalization.CultureInfo.InvariantCulture);
+                double parsedLon = double.Parse(lon,System.Globalization.CultureInfo.InvariantCulture);
+
+                return await LocationService.GetLocationByLocationCoordinates(parsedLat,parsedLon, locationReverseApiBaseUrl, locationApiKey);
                 
             }
             catch (Exception exception)
             {
-                
-                throw new Exception("Failed to fetch the location data from the location service due to: ", exception);
+
+                throw new Exception("Failed to fetch the location data by coordinates from the location service due to: ", exception);
             }
 
 
