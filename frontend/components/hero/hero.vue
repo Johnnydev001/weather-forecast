@@ -6,9 +6,7 @@
 
 <script setup lang="ts">
 
-const props = defineProps({
-  locationToFind: String,
-});
+const props = defineProps(['locationToFind']);
 
 const locationToFind = ref(props?.locationToFind);
 

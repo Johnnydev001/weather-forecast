@@ -135,7 +135,9 @@ const handleWeatherRequest = async () => {
 const props = defineProps(['locationToFind'])
 
 watch(() => props?.locationToFind, (newLocation) => {
-  console.log('Route location updated:', newLocation);
+    if(newLocation){
+        city.value = newLocation;
+    }
 });
 
 const latitude = ref<string|number>(0);
@@ -159,7 +161,12 @@ const weatherStatus = ref("")
 const city = ref<string | undefined>("");
 const country = ref<string | undefined>("");
 
-await handleFindLocationByName(props?.locationToFind);
+const router = useRoute()
+
+if(!router.redirectedFrom){
+    await handleFindLocationByName(props?.locationToFind);
+
+}
 await handleWeatherRequest();
 
 </script>

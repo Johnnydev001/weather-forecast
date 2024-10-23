@@ -10,7 +10,7 @@
 
       <li key="search-field" class="search-container">
 
-        <input type="text" placeholder="Search location..." class="search-input" @change="handleInputChange">
+        <input type="text" placeholder="Search location..." :value="textInput" class="search-input" @change="handleInputChange">
         <button class="search-button" @click="handleInputSearch">
           <SearchIcon/>
         </button>
@@ -43,14 +43,15 @@ import {ref} from "vue"
 
 const textInput = ref("")
 
-const handleInputChange = (event: HTMLInputElement) => {
-  event.preventDefault();
-  textInput.value = event.target.value;
+const handleInputChange = (event: { target: { value: string; }; }) => {
+  textInput.value = event.target.value
 }
 
-const handleInputSearch = (event: HTMLButtonElement) => {
-  event.preventDefault();
-  console.log(textInput.value)
+const handleInputSearch = () => {
+  
+  if(textInput.value){
+    navigateTo(`/${textInput.value}`)
+  }
 }
 
 </script>

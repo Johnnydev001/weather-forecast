@@ -1,5 +1,5 @@
 import {getLocationFromLocationQuery, getLocationFromLocationCoordinates} from "~/services/location/location-service";
-import { LocationByCoordinatesRequestType, LocationResponseType } from "~/types/location/location-types";
+import { LocationByCoordinatesRequestType, LocationAddressType, LocationResponseType } from "~/types/location/location-types";
 
 export default defineEventHandler(async (event) => {
 
@@ -53,7 +53,7 @@ async function getLocationFromQuery(event: any): Promise<LocationResponseType | 
     }
 }
 
-async function getLocationFromCoordinates(event: any): Promise<LocationResponseType | null | undefined> {
+async function getLocationFromCoordinates(event: any): Promise<LocationAddressType | null | undefined> {
 
     const body = await readBody(event)
 
@@ -62,12 +62,12 @@ async function getLocationFromCoordinates(event: any): Promise<LocationResponseT
         lon: body?.lon ?? ''
     }
 
-    let locationResponseJson: LocationResponseType = {
-        address: {
+    let locationResponseJson: LocationAddressType = {
+     
             country: '',
             city: '',
             name: ''
-        },
+   
     }
 
     try {
@@ -75,9 +75,11 @@ async function getLocationFromCoordinates(event: any): Promise<LocationResponseT
 
         if (locationResponse) {
 
-            locationResponseJson.address = {
+            locationResponseJson = {
+                
+                name: locationResponse?.address?.name,
                 country: locationResponse?.address?.country,
-                city: locationResponse?.address?.city,
+                city: locationResponse?.address?.city,     
             }
         }
         return locationResponseJson;

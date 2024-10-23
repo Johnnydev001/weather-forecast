@@ -4,6 +4,7 @@
 
 <script setup lang="ts">
 import Hero from '~/components/hero/hero.vue';
+import type { LocationAddressType } from '~/types/location/location-types';
 
 const locationToFind = ref("")
 const navigator = ref(window?.navigator)
@@ -11,19 +12,15 @@ const navigator = ref(window?.navigator)
 const latitude = ref(0);
 const longitude = ref(0);
 
-const handleFindLocationByCoordinates = async (latitude: number, longitude: number) => {
+const handleFindLocationByCoordinates = async (lat: number, lon: number): Promise<LocationAddressType | undefined | null> => {
     try {
-        const locationResponse = await $fetch('/api/location', {
+        return await $fetch('/api/location', {
             method: 'POST',
             body: {
-                lat: latitude,
-                lon: longitude
+                lat: lat,
+                lon: lon
             }
         })
-
-        if(locationResponse?.address){
-            console.log("locationResponse", locationResponse)
-        }        
 
     } catch (error) {
         console.log('Failed to get the location data from the server due to: ', error);
@@ -46,9 +43,12 @@ const handleSetCoordinates =  () => {
   }
 }
 handleSetCoordinates()
-watch([latitude, longitude], ([newLatitude, newLongitude]) => {
-  handleFindLocationByCoordinates(newLatitude, newLongitude)
-
+watch([latitude, longitude], async ([newLatitude, newLongitude]) => {
+  const locationByCoordinates = await handleFindLocationByCoordinates(newLatitude, newLongitude);
+  if(locationByCoordinates){
+    locationToFind.value = locationByCoordinates?.city || locationByCoordinates?.name || "";
+    navigateTo(`/${locationToFind.value}`)
+  }
 })
 
 </script>
