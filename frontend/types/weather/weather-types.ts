@@ -4,17 +4,22 @@ export type WeatherRequestType = {
     lang?: string;
     units?: string;
 }
+
+type WeatherType = {
+    main: string;
+    description: string;
+}
 type CurrentType = {
-    temperature: number;
-    feelsLikeTemperature: number;
-    weatherStatus: string;
-    windSpeed: number;
+    temp: number;
+    feels_like: number;
+    wind_speed: number;
     humidity: number;
     pressure: number;
-    cloudsPercentage: number;
+    clouds: number;
+    weather: Array<WeatherType>;
 }
 
 export type WeatherResponseType = {
-    current:CurrentType;
+    current: CurrentType;
 
 }

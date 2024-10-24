@@ -2,25 +2,30 @@
   <nav>
     <ul role="list" class="nav-list">
       <li key="app-name">
-        <NuxtLink class="link" to="/" >
-        <h1 class="app-name">Weather forecast</h1>
+        <NuxtLink class="app-logo-link" to="/">
+          <WeatherIcon />
         </NuxtLink>
-   
+
       </li>
 
-      <li key="search-field" class="search-container">
+      <li key="search-field">
 
-        <input type="text" placeholder="Search location..." :value="textInput" class="search-input" @change="handleInputChange">
-        <button class="search-button" @click="handleInputSearch">
-          <SearchIcon/>
-        </button>
+        <form class="search-container" @submit="handleInputSearch">
+          <input type="text" placeholder="Search location..." :value="textInput" class="search-input"
+            @change="handleInputChange">
+          <button class="search-button">
+            <SearchIcon />
+          </button>
+        </form>
+
+
 
       </li>
 
       <li key="social-media" class="social-media-list">
-        <a class="social-media-link" href="https://x.com/JohnnySaraiva00" >
-         <TwitterIcon />
-       </a>
+        <a class="social-media-link" href="https://x.com/JohnnySaraiva00">
+          <TwitterIcon />
+        </a>
         <a class="social-media-link" href="https://www.linkedin.com/in/jo%C3%A3o-saraiva-ab662b197/">
           <LinkedinIcon />
         </a>
@@ -39,7 +44,8 @@ import GithubIcon from "~/public/assets/icons/github.vue";
 import LinkedinIcon from "~/public/assets/icons/linkedin.vue";
 import TwitterIcon from "~/public/assets/icons/twitter.vue";
 import SearchIcon from "~/public/assets/icons/search.vue";
-import {ref} from "vue"
+import { ref } from "vue"
+import WeatherIcon from "~/public/assets/icons/weather.vue";
 
 const textInput = ref("")
 
@@ -47,9 +53,9 @@ const handleInputChange = (event: { target: { value: string; }; }) => {
   textInput.value = event.target.value
 }
 
-const handleInputSearch = () => {
-  
-  if(textInput.value){
+const handleInputSearch = (event: HTMLFormElement) => {
+  event?.preventDefault();
+  if (textInput.value) {
     navigateTo(`/${textInput.value}`)
   }
 }
@@ -60,14 +66,15 @@ const handleInputSearch = () => {
 <style lang="scss">
 nav {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur( 10px );
-  -webkit-backdrop-filter: blur( 10px );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
   position: fixed;
   z-index: 1;
   justify-self: center;
   width: 100%;
+  padding: 0.5rem;
 }
 
 .nav-list {
@@ -80,24 +87,27 @@ nav {
   padding: 0;
   color: inherit;
 
-  .app-name {
-    color: inherit;
-    font-weight: 1000;
+  .app-logo-link {
 
+    >svg {
+      color: #ffffff;
+      stroke: #ffffff;
+      width: 3rem;
+    }
+
+    >svg:hover {
+      cursor: pointer;
+      transition-duration: 200ms;
+      transform: scale(1.2);
+      transition-timing-function: ease;
+    }
   }
 
-  .app-name:hover {
-    cursor: pointer;
-    transition-duration: 200ms;
-    transform: scale(1.2);
-    transition-timing-function: ease;
-  }
-
-  .search-container{
+  .search-container {
     display: flex;
     align-items: center;
     width: 300px;
-    border: 0.5px solid #000000;
+    border: $border;
     border-radius: 0.25rem;
     overflow: hidden;
     background-color: #f9f9f9;
@@ -111,7 +121,7 @@ nav {
 
     }
 
-    .search-button > svg{
+    .search-button>svg {
       background: #ffffff;
       color: #000000;
     }
@@ -129,11 +139,11 @@ nav {
 
   .link {
     text-decoration-color: #000000;
-    text-decoration: unset;  
+    text-decoration: unset;
     color: inherit;
     font-size: 13px;
 
-    > h1{
+    >h1 {
       font-weight: 500;
     }
   }

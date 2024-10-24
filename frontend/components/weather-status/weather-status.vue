@@ -1,6 +1,6 @@
 <template>
 
-    <section class="container">
+    <section class="container" :style="containerStyle" >
 
         <section class="sub-container">
             <div class="location-container">
@@ -12,7 +12,7 @@
                 <span class="date">{{  formatedTodayDate }} </span>
             </div>
 
-            <img class="weather-illustration" src="~/public/assets/imgs/sun.png" alt="Weather summary image" />
+            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="weatherDescription" :title="weatherDescription"/>
 
             <section class="summary-container">
 
@@ -82,6 +82,37 @@ import HumidityIcon from '~/public/assets/icons/humidity.vue'
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
 import { ref } from 'vue';
 
+const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: boolean) => {
+
+    switch (weatherMainStatus) {
+        case 'clouds':
+            return isIcon ? '/assets/imgs/cloud.png' : '/assets/imgs/background-cloudy.jpg';
+    
+        case 'windy':
+            return isIcon ? '/assets/imgs/wind.png' : '/assets/imgs/background-windy.jpg';
+
+        case 'sunny':
+            return isIcon ? '/assets/imgs/sun.png' : '/assets/imgs/background-sunny.jpg';
+
+        case 'rain':
+            return isIcon ? '/assets/imgs/rain.png' : '/assets/imgs/background-rainy.jpg';
+
+        case 'snow':
+            return isIcon ? '/assets/imgs/snow.png' : '/assets/imgs/background-snowy.jpg';
+
+        case 'thunderstorm':
+            return isIcon ? '/assets/imgs/rain.png' : '/assets/imgs/background-thunder.jpg';
+
+        case 'clear':
+            return isIcon ? '/assets/imgs/sun.png' : '/assets/imgs/background-sunny.jpg';
+
+        case 'drizzle':
+            return isIcon ? '~/public/assets/imgs/rain.png' : '/assets/imgs/background-drizzle.jpg';
+    
+        default:
+               return isIcon ? '/assets/imgs/sun.png' : '/assets/imgs/background-sunny.jpg';;
+    }
+}
 
 const handleFindLocationByName = async (locationToFind: string) => {
     try {
@@ -119,11 +150,13 @@ const handleWeatherRequest = async () => {
         if (weatherResponse) {
             temperature.value = weatherResponse?.temperature;
             feelsLikeTemperature.value = weatherResponse?.feelsLikeTemperature;
-            weatherStatus.value = weatherResponse?.weatherStatus;
             windSpeed.value = weatherResponse?.windSpeed;
             humidity.value = weatherResponse?.humidity;
             pressure.value = weatherResponse?.pressure;
             cloudsPercentage.value = weatherResponse?.cloudsPercentage;
+            weatherMainStatus.value = weatherResponse?.weatherMainStatus?.toLowerCase();
+            weatherDescription.value = weatherResponse?.weatherDescription?.toUpperCase();
+
         }
 
     } catch (error) {
@@ -133,12 +166,6 @@ const handleWeatherRequest = async () => {
 }
 
 const props = defineProps(['locationToFind'])
-
-watch(() => props?.locationToFind, (newLocation) => {
-    if(newLocation){
-        city.value = newLocation;
-    }
-});
 
 const latitude = ref<string|number>(0);
 const longitude = ref<string|number>(0);
@@ -156,22 +183,36 @@ const pressure = ref(0)
 const uvIndex = ref(0)
 const cloudsPercentage = ref(0)
 
-const weatherStatus = ref("")
+const weatherMainStatus = ref("")
+const weatherDescription = ref("")
 
 const city = ref<string | undefined>("");
 const country = ref<string | undefined>("");
+const iconByWeatherStatus = computed(() => (
+    getImageUrlByWeatherStatus(weatherMainStatus.value, true)
+))
+
+const containerStyle = computed(() => ({
+  backgroundImage: `url(${getImageUrlByWeatherStatus(weatherMainStatus.value, false)})`,
+}))
 
 const router = useRoute()
 
+
+watch(() => props?.locationToFind, (newLocation) => {
+    if(newLocation){
+        city.value = newLocation;
+    }
+});
+
 if(!router.redirectedFrom){
     await handleFindLocationByName(props?.locationToFind);
-
 }
 await handleWeatherRequest();
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped >
 .container {
     font-family: 'Roboto', sans-serif;
     display: grid;
@@ -183,7 +224,6 @@ await handleWeatherRequest();
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-image: url("public/assets/imgs/background-rainy.jpg");
     height: 100%;
 
     .sub-container {
@@ -207,11 +247,11 @@ await handleWeatherRequest();
 
             .date {
                 font-weight: 100;
-                font-size: 1.25rem;
+                font-size: 1.1rem;
                 margin: 0;
             }
             .location {
-                font-weight: 100;
+                font-weight: 500;
                 font-size: 1.3rem;
                 margin: 0;
             }
@@ -233,7 +273,7 @@ await handleWeatherRequest();
 
             .temperature {
                 font-weight: 500;
-                font-size: 4rem;
+                font-size: 3.5rem;
                 margin: 0;
                 text-shadow: 1px 2px 2px gray;
 

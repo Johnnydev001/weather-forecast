@@ -6,16 +6,15 @@ export default defineEventHandler(async (event) => {
 
     const bodyFromRequest: WeatherRequestType = await readBody(event);
 
-    let weatherResponseJson= {
-
+    let weatherResponseJson = {
             temperature: 0,
             feelsLikeTemperature: 0,
-            weatherStatus: '',
             windSpeed: 0,
             humidity: 0,
             pressure: 0,
-            cloudsPercentage: 0
-
+            cloudsPercentage: 0,
+            weatherMainStatus: '',
+            weatherDescription: ''
     }
 
     try {
@@ -23,13 +22,15 @@ export default defineEventHandler(async (event) => {
 
         if (weatherResponse) {
 
-            weatherResponseJson.temperature = weatherResponse?.current?.temperature;
-            weatherResponseJson.feelsLikeTemperature = weatherResponse?.current?.feelsLikeTemperature;
-            weatherResponseJson.weatherStatus = weatherResponse?.current?.weatherStatus;
-            weatherResponseJson.windSpeed = weatherResponse?.current?.windSpeed;
+            console.log('weatherResponse',weatherResponse.current.weather)
+            weatherResponseJson.temperature = weatherResponse?.current?.temp;
+            weatherResponseJson.feelsLikeTemperature = weatherResponse?.current?.feels_like;
+            weatherResponseJson.windSpeed = weatherResponse?.current?.wind_speed;
             weatherResponseJson.humidity = weatherResponse?.current?.humidity;
             weatherResponseJson.pressure = weatherResponse?.current?.pressure;
-            weatherResponseJson.cloudsPercentage = weatherResponse?.current?.cloudsPercentage;
+            weatherResponseJson.cloudsPercentage = weatherResponse?.current?.clouds;
+            weatherResponseJson.weatherMainStatus = weatherResponse?.current?.weather[0]?.main;
+            weatherResponseJson.weatherDescription = weatherResponse?.current?.weather[0]?.description
 
         }
         return weatherResponseJson;
