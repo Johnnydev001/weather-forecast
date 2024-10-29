@@ -5,8 +5,8 @@
         <section class="sub-container">
             <div class="location-container">
                 <div >
-                    <span class="location">{{ city ? city  +', ': '' }}</span>
-                    <span class="location">{{ country   }}</span>
+                    <span class="location-city">{{ city ? city  +', ': '' }}</span>
+                    <span class="location-country">{{ country   }}</span>
                 </div>
                 
                 <span class="date">{{  formatedTodayDate }} </span>
@@ -86,31 +86,31 @@ const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: boolean) 
 
     switch (weatherMainStatus) {
         case 'clouds':
-            return isIcon ? '/assets/imgs/cloud.png' : '/assets/imgs/background-cloudy.jpg';
+            return isIcon ? '/assets/imgs/cloudy.svg' : '/assets/imgs/background-cloudy.jpg';
     
         case 'windy':
-            return isIcon ? '/assets/imgs/wind.png' : '/assets/imgs/background-windy.jpg';
+            return isIcon ? '/assets/imgs/wind.svg' : '/assets/imgs/background-windy.jpg';
 
         case 'sunny':
-            return isIcon ? '/assets/imgs/sun.png' : '/assets/imgs/background-sunny.jpg';
+            return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';
 
         case 'rain':
-            return isIcon ? '/assets/imgs/rain.png' : '/assets/imgs/background-rainy.jpg';
+            return isIcon ? '/assets/imgs/cloud-rain.svg' : '/assets/imgs/background-rainy.jpg';
 
         case 'snow':
-            return isIcon ? '/assets/imgs/snow.png' : '/assets/imgs/background-snowy.jpg';
+            return isIcon ? '/assets/imgs/snowflake.svg' : '/assets/imgs/background-snowy.jpg';
 
         case 'thunderstorm':
-            return isIcon ? '/assets/imgs/rain.png' : '/assets/imgs/background-thunder.jpg';
+            return isIcon ? '/assets/imgs/cloud-lightning.svg' : '/assets/imgs/background-thunder.jpg';
 
         case 'clear':
-            return isIcon ? '/assets/imgs/sun.png' : '/assets/imgs/background-sunny.jpg';
+            return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';
 
         case 'drizzle':
-            return isIcon ? '~/public/assets/imgs/rain.png' : '/assets/imgs/background-drizzle.jpg';
+            return isIcon ? '~/public/assets/imgs/cloud-drizzle.svg' : '/assets/imgs/background-drizzle.jpg';
     
         default:
-               return isIcon ? '/assets/imgs/sun.png' : '/assets/imgs/background-sunny.jpg';;
+               return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';;
     }
 }
 
@@ -213,21 +213,34 @@ await handleWeatherRequest();
 </script>
 
 <style lang="scss" scoped >
+@media only screen and (max-width: 768px) {
+    .condition-container {
+    display: flex !important;
+    flex-direction: column;
+  }
+} 
+
 .container {
     font-family: 'Roboto', sans-serif;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     row-gap: 1rem;
     text-align: center;
     justify-items: center;
-    padding: 10rem;
+    padding: 5rem 10rem 15rem 10rem;
     color: #000000;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    justify-content: center;
+    align-items: center;
     height: 100%;
 
     .sub-container {
-        display: grid;
+        min-width: 10rem;
+ 
+        display: flex;
+        flex-direction: column;
         row-gap: 1rem;
         text-align: center;
         justify-items: center;
@@ -235,6 +248,7 @@ await handleWeatherRequest();
         border-radius: 0.5rem;
         border: $border;
 
+        background: rgb(0, 0, 30,0.1);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur( 15px );
         -webkit-backdrop-filter: blur( 15px );
@@ -250,7 +264,12 @@ await handleWeatherRequest();
                 font-size: 1.1rem;
                 margin: 0;
             }
-            .location {
+            .location-city {
+                font-weight: 500;
+                font-size: 1.3rem;
+                margin: 0;
+            }
+            .location-country {
                 font-weight: 500;
                 font-size: 1.3rem;
                 margin: 0;
@@ -261,7 +280,15 @@ await handleWeatherRequest();
             aspect-ratio: 11/9;
             object-fit: contain;
             object-position: center;
-            max-width: 200px;
+            stroke: white;
+            fill: white;
+            width: 200px;
+            align-self: center;
+
+            > svg {
+                stroke: white;
+                fill: white;
+            }
         }
 
         .summary-container {
@@ -298,20 +325,26 @@ await handleWeatherRequest();
             text-align: center;
             justify-content: center;
             display: grid;
+            container-name: condition-container;
+            container-type: inline-size;
 
             .condition-container {
                 display: grid;
-                grid-template-columns: 10rem 10rem;
+                grid-template-columns: 1fr 1fr;
                 column-gap: 1rem;
                 margin: 1rem;
 
                 .condition {
+
                     display: flex;
                     column-gap: 1rem;
                     align-items: center;
                     border: 0.5px solid #ffffff;
                     border-radius: 0.25rem;
                     padding: 0.75rem;
+                
+                    backdrop-filter: blur(10px);
+                    --webkit-backdrop-filter: blur(10px);
 
 
                     >svg {

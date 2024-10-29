@@ -65,6 +65,7 @@ const handleInputSearch = (event: HTMLFormElement) => {
 
 <style lang="scss">
 nav {
+  background-color: rgb(255,255,255,0.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -92,7 +93,7 @@ nav {
     >svg {
       color: #ffffff;
       stroke: #ffffff;
-      width: 3rem;
+      width: 2rem;
     }
 
     >svg:hover {
@@ -106,7 +107,6 @@ nav {
   .search-container {
     display: flex;
     align-items: center;
-    width: 300px;
     border: $border;
     border-radius: 0.25rem;
     overflow: hidden;
