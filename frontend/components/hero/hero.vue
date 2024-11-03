@@ -19,5 +19,6 @@ watch(() => props?.locationToFind, (newLocation) => {
 .hero-container {
     font-family: 'Roboto', sans-serif;
     background-color: #427bff;
+    height: 100%;
 }
 </style>

@@ -11,7 +11,7 @@
       <li key="search-field">
 
         <form class="search-container" @submit="handleInputSearch">
-          <input type="text" placeholder="Search location..." :value="textInput" class="search-input"
+          <input type="text" placeholder="Search..." :value="textInput" class="search-input"
             @change="handleInputChange">
           <button class="search-button">
             <SearchIcon />
@@ -112,13 +112,13 @@ nav {
     overflow: hidden;
     background-color: #f9f9f9;
 
+
     .search-input {
-      flex: 1;
       border: none;
       padding: 10px;
       font-size: 16px;
       outline: none;
-
+      max-width: 130px;
     }
 
     .search-button>svg {

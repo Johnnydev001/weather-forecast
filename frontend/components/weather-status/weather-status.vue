@@ -16,10 +16,14 @@
 
             <section class="summary-container">
 
-                <h3 title="Temperature. Units - metric: Celsius" class="temperature">{{ temperature }}º</h3>
+                <h3 title="Temperature. Units - metric: Celsius" class="temperature" :style="{ color: temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }" >{{ temperature }}º</h3>
 
-                <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature">Feels like: {{
+                <div class="feels-like-temperature-container">
+                    <span>Feels like:</span>
+                    <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature"  :style="{ color: feelsLikeTemperature && feelsLikeTemperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }"> {{
                     feelsLikeTemperature ? feelsLikeTemperature + 'º': '0º'}}</h4>
+                </div>
+                
 
             </section>
 
@@ -44,9 +48,7 @@
 
                         </div>
                     </div>
-                </div>
 
-                <div class="condition-container">
                     <div class="condition" title="Atmospheric pressure on the sea level, hPa">
                         <PressureIcon />
                         <div class="value">
@@ -66,6 +68,9 @@
                     </div>
                 </div>
 
+                <WeatherForecast/>
+
+
             </article>
         </section>
 
@@ -78,41 +83,11 @@ import WindIcon from '~/public/assets/icons/wind.vue';
 import PressureIcon from '~/public/assets/icons/pressure.vue';
 import UVIndexIcon from '~/public/assets/icons/sun.vue';
 import HumidityIcon from '~/public/assets/icons/humidity.vue'
+import WeatherForecast from '~/components/weather-forecast/weather-forecast.vue'
 
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
 import { ref } from 'vue';
-
-const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: boolean) => {
-
-    switch (weatherMainStatus) {
-        case 'clouds':
-            return isIcon ? '/assets/imgs/cloudy.svg' : '/assets/imgs/background-cloudy.jpg';
-    
-        case 'windy':
-            return isIcon ? '/assets/imgs/wind.svg' : '/assets/imgs/background-windy.jpg';
-
-        case 'sunny':
-            return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';
-
-        case 'rain':
-            return isIcon ? '/assets/imgs/cloud-rain.svg' : '/assets/imgs/background-rainy.jpg';
-
-        case 'snow':
-            return isIcon ? '/assets/imgs/snowflake.svg' : '/assets/imgs/background-snowy.jpg';
-
-        case 'thunderstorm':
-            return isIcon ? '/assets/imgs/cloud-lightning.svg' : '/assets/imgs/background-thunder.jpg';
-
-        case 'clear':
-            return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';
-
-        case 'drizzle':
-            return isIcon ? '~/public/assets/imgs/cloud-drizzle.svg' : '/assets/imgs/background-drizzle.jpg';
-    
-        default:
-               return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';;
-    }
-}
+import {getImageUrlByWeatherStatus} from '~/utils/utils'
 
 const handleFindLocationByName = async (locationToFind: string) => {
     try {
@@ -213,7 +188,7 @@ await handleWeatherRequest();
 </script>
 
 <style lang="scss" scoped >
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 300px) {
     .condition-container {
     display: flex !important;
     flex-direction: column;
@@ -227,7 +202,7 @@ await handleWeatherRequest();
     row-gap: 1rem;
     text-align: center;
     justify-items: center;
-    padding: 5rem 10rem 15rem 10rem;
+    padding: 0rem 10rem 15rem 10rem;
     color: #000000;
     background-repeat: no-repeat;
     background-position: center;
@@ -237,7 +212,9 @@ await handleWeatherRequest();
     height: 100%;
 
     .sub-container {
-        min-width: 10rem;
+        min-width: 15rem;
+        max-width: 30rem;
+        width: 100%;
  
         display: flex;
         flex-direction: column;
@@ -245,7 +222,7 @@ await handleWeatherRequest();
         text-align: center;
         justify-items: center;
         padding: 2rem;
-        border-radius: 0.5rem;
+        border-radius: $radius;
         border: $border;
 
         background: rgb(0, 0, 30,0.1);
@@ -277,7 +254,7 @@ await handleWeatherRequest();
         }
 
         .weather-illustration {
-            aspect-ratio: 11/9;
+            aspect-ratio: 16/9;
             object-fit: contain;
             object-position: center;
             stroke: white;
@@ -300,16 +277,20 @@ await handleWeatherRequest();
 
             .temperature {
                 font-weight: 500;
-                font-size: 3.5rem;
+                font-size: 2.5rem;
                 margin: 0;
-                text-shadow: 1px 2px 2px gray;
-
+                text-shadow: 1px 1px 1px #ffffff;
             }
 
-            .feels-like-temperature {
+            .feels-like-temperature-container {
+                display: flex;
+                gap: 0.5rem;
+
+                .feels-like-temperature {
                 font-weight: 500;
-                font-size: 1.5rem;
+                font-size: 1rem;
                 margin: 0;
+            }
             }
 
             .weather-status {
@@ -331,7 +312,7 @@ await handleWeatherRequest();
             .condition-container {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                column-gap: 1rem;
+                gap: 1rem;
                 margin: 1rem;
 
                 .condition {
@@ -340,12 +321,10 @@ await handleWeatherRequest();
                     column-gap: 1rem;
                     align-items: center;
                     border: 0.5px solid #ffffff;
-                    border-radius: 0.25rem;
+                    border-radius: $radius;
                     padding: 0.75rem;
+                    background-color: rgb(255,255,255,0.1);
                 
-                    backdrop-filter: blur(10px);
-                    --webkit-backdrop-filter: blur(10px);
-
 
                     >svg {
                         aspect-ratio: 1;

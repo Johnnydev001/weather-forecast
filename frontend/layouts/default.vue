@@ -20,8 +20,12 @@ html,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
+
 }
 
+main {
+  height: 120vh;
+}
 footer {
   background-color: rgb(255,255,255,0.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

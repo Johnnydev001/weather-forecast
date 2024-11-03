@@ -9,6 +9,7 @@ type WeatherType = {
     main: string;
     description: string;
 }
+
 type CurrentType = {
     temp: number;
     feels_like: number;
@@ -21,5 +22,14 @@ type CurrentType = {
 
 export type WeatherResponseType = {
     current: CurrentType;
+}
 
+export type NextWeatherForecastType = {
+    temp: number;
+    feels_like: number;
+    pressure: number;
+    weather: WeatherType;
+    clouds?: number;
+    wind_speed?: number;
+    humidity: number;
 }
