@@ -20,12 +20,21 @@ type CurrentType = {
     weather: Array<WeatherType>;
 }
 
+type TemperatureType = {
+    temp_min: number;
+    temp_max: number
+}
+
+type WeatherForecastType = {
+    weather: Array<WeatherType>;
+    main: TemperatureType;
+    date: string;
+}
+
 export type WeatherResponseType = {
     current: CurrentType;
 }
 
-export type WeatherForecastType = {
-    temp_min: number;
-    temp_max: number;
-    weather: Array<WeatherType>;
+export type WeatherForecastResponseType = {
+    list: Array<WeatherForecastType>;
 }

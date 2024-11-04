@@ -1,42 +1,42 @@
-import weatherService from "~/services/weather/weather-service";
-import {WeatherForecastType, WeatherRequestType, WeatherResponseType} from "~/types/weather/weather-types";
-import {readBody} from "#imports";
+import { getCurrentWeather, getForecastWeather } from "~/services/weather/weather-service";
+import { WeatherForecastResponseType, WeatherRequestType, WeatherResponseType } from "~/types/weather/weather-types";
+import { readBody } from "#imports";
 
 export default defineEventHandler(async (event) => {
 
-    const {weatherType} = getQuery(event);
+    const { weatherType = 'current' } = getQuery(event);
 
     switch (weatherType) {
         case 'current':
-            return await getCurrentWeather(event);
+            return await callGetCurrentWeather(event);
 
         case 'forecast':
-            return await getForecastWeather(event);
+            return await callGetForecastWeather(event);
 
         default:
-            return await getCurrentWeather(event);
+            return await callGetCurrentWeather(event);
 
     }
 
 })
 
-const getCurrentWeather = async (event ) => {
+const callGetCurrentWeather = async (event) => {
 
     const bodyFromRequest: WeatherRequestType = await readBody(event);
 
     let weatherResponseJson = {
-            temperature: 0,
-            feelsLikeTemperature: 0,
-            windSpeed: 0,
-            humidity: 0,
-            pressure: 0,
-            cloudsPercentage: 0,
-            weatherMainStatus: '',
-            weatherDescription: ''
+        temperature: 0,
+        feelsLikeTemperature: 0,
+        windSpeed: 0,
+        humidity: 0,
+        pressure: 0,
+        cloudsPercentage: 0,
+        weatherMainStatus: '',
+        weatherDescription: ''
     }
 
     try {
-        const weatherResponse: WeatherResponseType | undefined | null = await weatherService.getCurrentWeather( bodyFromRequest );
+        const weatherResponse: WeatherResponseType | undefined | null = await getCurrentWeather(bodyFromRequest);
 
         if (weatherResponse) {
 
@@ -53,38 +53,35 @@ const getCurrentWeather = async (event ) => {
         return weatherResponseJson;
 
     } catch (error) {
-        console.log('Failed to get the current weather data from the service due to: ', error);
+        console.error('Failed to get the current weather data from the service due to: ', error);
     }
 }
 
-const getForecastWeather = async (event) => {
+const callGetForecastWeather = async (event) => {
 
     const bodyFromRequest: WeatherRequestType = await readBody(event);
 
-    let weatherForecastResponseJson = {
-            maxTemperature: 0,
-            minTemperature: 0,
-            weatherMainStatus: '',
-            weatherDescription: ''
-    }
-
     try {
-        const weatherResponse: WeatherForecastType | undefined | null = await weatherService.getForecastWeather( bodyFromRequest );
 
-        console.log('forecastWeatherResponse', weatherResponse)
+        const forecastResponse = await getForecastWeather(bodyFromRequest);
 
-        if (weatherResponse) {
+        const mappedForecastResponse: WeatherForecastResponseType = forecastResponse?.list?.map(elem => {
+            return {
+                main: {
+                    tempMin: elem?.main?.temp_min,
+                    tempMax: elem?.main?.temp_max
+                },
+                weather: elem?.weather,
+                date: elem?.dt
+            }
+        })
 
-            weatherForecastResponseJson.maxTemperature = weatherResponse?.temp_max;
-            weatherForecastResponseJson.minTemperature = weatherResponse?.temp_min;
-            weatherForecastResponseJson.weatherMainStatus = weatherResponse?.weather[0]?.main || '';
-            weatherForecastResponseJson.weatherDescription = weatherResponse?.weather[0]?.description || '';
+        return mappedForecastResponse;
 
-        }
-        return weatherForecastResponseJson;
+
 
     } catch (error) {
-        console.log('Failed to get the forecast weather data from the service due to: ', error);
+        console.error('Failed to get the forecast weather data from the service due to: ', error);
     }
 }
 

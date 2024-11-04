@@ -37,7 +37,7 @@ export async function getCurrentWeather(queryParams: WeatherRequestType): Promis
         return null;
 
     } catch (error) {
-        console.log('Error calling the weather service due to: ', error)
+        console.error('Error calling the weather service due to: ', error)
     }
 
 }
@@ -79,7 +79,7 @@ export async function getForecastWeather(queryParams: WeatherRequestType): Promi
         return null;
 
     } catch (error) {
-        console.log('Error calling the weather service due to: ', error)
+        console.error('Error calling the weather service due to: ', error)
     }
 
 }

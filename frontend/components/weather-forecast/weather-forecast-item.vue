@@ -1,13 +1,18 @@
 <template>
 
-
     <div class="forecast-item">
+
         <div class="summary">
-            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus"
-                :alt="props?.forecast?.weather?.description" :title="props?.forecast?.weather?.description" />
+            <div>
+
+                {{ new Date(props?.item?.date).getDate() }}
+
+            </div>
+            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="props?.item?.weather?.description"
+                :title="props?.item?.weather?.description" />
 
             <span>
-                {{ capitalizeWord(props?.forecast?.weather?.description) }}
+                {{ props?.item?.weather?.description }}
             </span>
 
         </div>
@@ -17,7 +22,7 @@
                 <span>Min:</span>
                 <div class="value">
                     <span>
-                        {{ props?.forecast?.minTemp }}
+                        {{ props?.item?.minTemp }}
                     </span>
 
                     <span>
@@ -32,7 +37,7 @@
 
                 <div class="value">
                     <span>
-                        {{ props?.forecast?.maxTemp }}
+                        {{ props?.item?.maxTemp }}
                     </span>
                     <span>
                         ºC
@@ -48,7 +53,7 @@
 
 <script setup lang="ts">
 
-const props = defineProps(['forecast']);
+const props = defineProps(['item']);
 const iconByWeatherStatus = computed(() => (
     getImageUrlByWeatherStatus(props?.forecast?.main, true)
 ))

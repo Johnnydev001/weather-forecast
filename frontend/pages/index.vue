@@ -23,7 +23,7 @@ const handleFindLocationByCoordinates = async (lat: number, lon: number): Promis
         })
 
     } catch (error) {
-        console.log('Failed to get the location data from the server due to: ', error);
+      console.error('Failed to get the location data from the server due to: ', error);
     }
 }
 

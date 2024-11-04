@@ -41,7 +41,7 @@ export async function getLocationFromLocationQuery(queryParams: LocationRequestT
             return null;
             
         } catch(e){
-            console.log("Error fetching the location data by query from the backend")
+            console.error("Error fetching the location data by query from the backend due to", e)
         }
 }
 

@@ -1,29 +1,33 @@
 <template>
 
-    <section class="container" :style="containerStyle" >
+    <section class="container" :style="containerStyle">
 
         <section class="sub-container">
             <div class="location-container">
-                <div >
-                    <span class="location-city">{{ city ? city  +', ': '' }}</span>
-                    <span class="location-country">{{ country   }}</span>
+                <div>
+                    <span class="location-city">{{ city ? city + ', ' : '' }}</span>
+                    <span class="location-country">{{ country }}</span>
                 </div>
-                
-                <span class="date">{{  formatedTodayDate }} </span>
+
+                <span class="date">{{ formatedTodayDate }} </span>
             </div>
 
-            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="weatherDescription" :title="weatherDescription"/>
+            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="weatherDescription"
+                :title="weatherDescription" />
 
             <section class="summary-container">
 
-                <h3 title="Temperature. Units - metric: Celsius" class="temperature" :style="{ color: temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }" >{{ temperature }}º</h3>
+                <h3 title="Temperature. Units - metric: Celsius" class="temperature"
+                    :style="{ color: temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">{{ temperature }}º</h3>
 
                 <div class="feels-like-temperature-container">
                     <span>Feels like:</span>
-                    <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature"  :style="{ color: feelsLikeTemperature && feelsLikeTemperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }"> {{
-                    feelsLikeTemperature ? feelsLikeTemperature + 'º': '0º'}}</h4>
+                    <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature"
+                        :style="{ color: feelsLikeTemperature && feelsLikeTemperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">
+                        {{
+                            feelsLikeTemperature ? feelsLikeTemperature + 'º' : '0º' }}</h4>
                 </div>
-                
+
 
             </section>
 
@@ -68,8 +72,7 @@
                     </div>
                 </div>
 
-                <WeatherForecast/>
-
+                <WeatherForecast v-if="weatherForecast.length" :weatherForecast="weatherForecast" />
 
             </article>
         </section>
@@ -87,7 +90,7 @@ import WeatherForecast from '~/components/weather-forecast/weather-forecast.vue'
 
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
 import { ref } from 'vue';
-import {getImageUrlByWeatherStatus} from '~/utils/utils'
+import { getImageUrlByWeatherStatus } from '~/utils/utils'
 
 const handleFindLocationByName = async (locationToFind: string) => {
     try {
@@ -98,15 +101,15 @@ const handleFindLocationByName = async (locationToFind: string) => {
                 query: locationToFind
             }
         })
-        if(locationResponse?.address){
+        if (locationResponse?.address) {
             country.value = locationResponse.address?.country;
             city.value = locationResponse?.address?.city || locationResponse?.address?.name;
             latitude.value = locationResponse.lat;
             longitude.value = locationResponse.lon;
-        }        
+        }
 
     } catch (error) {
-        console.log('Failed to get the location data from the server due to: ', error);
+        console.error('Failed to get the location data from the server due to: ', error);
     }
 }
 
@@ -114,18 +117,20 @@ const handleWeatherRequest = async () => {
     try {
 
         const weatherResponse = await $fetch('/api/weather', {
-          method: 'POST',
-          params: {
-            weatherType: 'current'
-          },
-          body: {
-            lat: latitude.value,
-            lon: longitude.value,
-            lang: 'pt',
-            units: 'metric'
-          }
+            method: 'POST',
+            params: {
+                weatherType: 'current'
+            },
+            body: {
+                lat: latitude.value,
+                lon: longitude.value,
+                lang: 'pt',
+                units: 'metric'
+            }
         })
+
         if (weatherResponse) {
+
             temperature.value = weatherResponse?.temperature;
             feelsLikeTemperature.value = weatherResponse?.feelsLikeTemperature;
             windSpeed.value = weatherResponse?.windSpeed;
@@ -138,7 +143,7 @@ const handleWeatherRequest = async () => {
         }
 
     } catch (error) {
-        console.log('Failed to get the weather data from the service due to: ', error)
+        console.error('Failed to get the current weather data from the service due to: ', error)
     }
 
 }
@@ -147,29 +152,30 @@ const handleWeatherForecastRequest = async () => {
     try {
 
         const forecastWeatherResponse = await $fetch('/api/weather', {
-          method: 'POST',
-          params: {
-            weatherType: 'forecast'
-          },
-          body: {
-            lat: latitude.value,
-            lon: longitude.value,
-            lang: 'pt',
-            units: 'metric'
-          }
+            method: 'POST',
+            params: {
+                weatherType: 'forecast'
+            },
+            body: {
+                lat: latitude.value,
+                lon: longitude.value,
+                lang: 'pt',
+                units: 'metric',
+                cnt: 5
+            }
         })
-        console.log('forecastWeatherResponse', forecastWeatherResponse)
+        weatherForecast.value = forecastWeatherResponse;
 
     } catch (error) {
-        console.log('Failed to get the weather data from the service due to: ', error)
+        console.error('Failed to get the forecast weather data from the service due to: ', error)
     }
 
 }
 
 const props = defineProps(['locationToFind'])
 
-const latitude = ref<string|number>(0);
-const longitude = ref<string|number>(0);
+const latitude = ref<string | number>(0);
+const longitude = ref<string | number>(0);
 
 const todayDate = new Date();
 
@@ -186,7 +192,7 @@ const cloudsPercentage = ref(0)
 
 const weatherMainStatus = ref("")
 const weatherDescription = ref("")
-const weatherForecast = ref(null)
+const weatherForecast = ref([])
 
 const city = ref<string | undefined>("");
 const country = ref<string | undefined>("");
@@ -195,19 +201,18 @@ const iconByWeatherStatus = computed(() => (
 ))
 
 const containerStyle = computed(() => ({
-  backgroundImage: `url(${getImageUrlByWeatherStatus(weatherMainStatus.value, false)})`,
+    backgroundImage: `url(${getImageUrlByWeatherStatus(weatherMainStatus.value, false)})`,
 }))
 
 const router = useRoute()
 
-
 watch(() => props?.locationToFind, (newLocation) => {
-    if(newLocation){
+    if (newLocation) {
         city.value = newLocation;
     }
 });
 
-if(!router.redirectedFrom){
+if (!router.redirectedFrom) {
     await handleFindLocationByName(props?.locationToFind);
 }
 await handleWeatherRequest();
@@ -215,13 +220,13 @@ await handleWeatherForecastRequest();
 
 </script>
 
-<style lang="scss" scoped >
+<style lang="scss" scoped>
 @media only screen and (max-width: 425px) {
     .condition-container {
-    display: flex !important;
-    flex-direction: column;
-  }
-} 
+        display: flex !important;
+        flex-direction: column;
+    }
+}
 
 .container {
     font-family: 'Roboto', sans-serif;
@@ -243,7 +248,7 @@ await handleWeatherForecastRequest();
         min-width: 15rem;
         max-width: 30rem;
         width: 100%;
- 
+
         display: flex;
         flex-direction: column;
         row-gap: 1rem;
@@ -253,10 +258,10 @@ await handleWeatherForecastRequest();
         border-radius: $radius;
         border: $border;
 
-        background: rgb(0, 0, 30,0.1);
+        background: rgb(0, 0, 30, 0.1);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur( 15px );
-        -webkit-backdrop-filter: blur( 15px );
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         color: #ffffff;
         font-family: 'Roboto', sans-serif;
 
@@ -269,11 +274,13 @@ await handleWeatherForecastRequest();
                 font-size: 1.1rem;
                 margin: 0;
             }
+
             .location-city {
                 font-weight: 500;
                 font-size: 1.3rem;
                 margin: 0;
             }
+
             .location-country {
                 font-weight: 500;
                 font-size: 1.3rem;
@@ -290,7 +297,7 @@ await handleWeatherForecastRequest();
             width: 200px;
             align-self: center;
 
-            > svg {
+            >svg {
                 stroke: white;
                 fill: white;
             }
@@ -315,10 +322,10 @@ await handleWeatherForecastRequest();
                 gap: 0.5rem;
 
                 .feels-like-temperature {
-                font-weight: 500;
-                font-size: 1rem;
-                margin: 0;
-            }
+                    font-weight: 500;
+                    font-size: 1rem;
+                    margin: 0;
+                }
             }
 
             .weather-status {
@@ -351,8 +358,8 @@ await handleWeatherForecastRequest();
                     border: 0.5px solid #ffffff;
                     border-radius: $radius;
                     padding: 0.75rem;
-                    background-color: rgb(255,255,255,0.1);
-                
+                    background-color: rgb(255, 255, 255, 0.1);
+
                     >svg {
                         aspect-ratio: 1;
                         object-fit: contain;

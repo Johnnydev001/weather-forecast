@@ -49,7 +49,7 @@ async function getLocationFromQuery(event: any): Promise<LocationResponseType | 
         return locationResponseJson;
 
     } catch (error) {
-        console.log('Failed to get the location data through query from the service due to: ', error);
+        console.error('Failed to get the location data through query from the service due to: ', error);
     }
 }
 
