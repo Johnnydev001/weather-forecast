@@ -1,4 +1,4 @@
-import type { WeatherRequestType, WeatherResponseType } from "~/types/weather/weather-types";
+import type { WeatherRequestType, WeatherResponseType, WeatherForecastType } from "~/types/weather/weather-types";
 
 export async function getCurrentWeather(queryParams: WeatherRequestType): Promise<WeatherResponseType | undefined | null> {
 
@@ -42,7 +42,7 @@ export async function getCurrentWeather(queryParams: WeatherRequestType): Promis
 
 }
 
-export async function getForecastWeather(queryParams: WeatherRequestType): Promise<WeatherResponseType | undefined | null> {
+export async function getForecastWeather(queryParams: WeatherRequestType): Promise<WeatherForecastType | undefined | null> {
 
     const {
         lat = '',

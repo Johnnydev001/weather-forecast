@@ -44,12 +44,13 @@ public class ForecastWeather
    public TemperatureModel main { get; set; }
 }
 
-
 public class ForecastWeatherModel
 {
-   public IList<ForecastWeather?> weather { get; set; }
+   
+   public IList<ForecastWeather?> list { get; set; }
 
 }
+
 
 
 

@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
             return await getForecastWeather(event);
 
         default:
-            break;
+            return await getCurrentWeather(event);
 
     }
 
@@ -53,7 +53,7 @@ const getCurrentWeather = async (event ) => {
         return weatherResponseJson;
 
     } catch (error) {
-        console.log('Failed to get the weather data from the service due to: ', error);
+        console.log('Failed to get the current weather data from the service due to: ', error);
     }
 }
 
@@ -71,6 +71,8 @@ const getForecastWeather = async (event) => {
     try {
         const weatherResponse: WeatherForecastType | undefined | null = await weatherService.getForecastWeather( bodyFromRequest );
 
+        console.log('forecastWeatherResponse', weatherResponse)
+
         if (weatherResponse) {
 
             weatherForecastResponseJson.maxTemperature = weatherResponse?.temp_max;
@@ -82,7 +84,7 @@ const getForecastWeather = async (event) => {
         return weatherForecastResponseJson;
 
     } catch (error) {
-        console.log('Failed to get the weather data from the service due to: ', error);
+        console.log('Failed to get the forecast weather data from the service due to: ', error);
     }
 }
 
