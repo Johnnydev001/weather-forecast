@@ -1,8 +1,26 @@
 import weatherService from "~/services/weather/weather-service";
-import {WeatherRequestType, WeatherResponseType} from "~/types/weather/weather-types";
+import {WeatherForecastType, WeatherRequestType, WeatherResponseType} from "~/types/weather/weather-types";
 import {readBody} from "#imports";
 
 export default defineEventHandler(async (event) => {
+
+    const {weatherType} = getQuery(event);
+
+    switch (weatherType) {
+        case 'current':
+            return await getCurrentWeather(event);
+
+        case 'forecast':
+            return await getForecastWeather(event);
+
+        default:
+            break;
+
+    }
+
+})
+
+const getCurrentWeather = async (event ) => {
 
     const bodyFromRequest: WeatherRequestType = await readBody(event);
 
@@ -18,11 +36,10 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const weatherResponse: WeatherResponseType | undefined | null = await weatherService.getOneCallWeather( bodyFromRequest );
+        const weatherResponse: WeatherResponseType | undefined | null = await weatherService.getCurrentWeather( bodyFromRequest );
 
         if (weatherResponse) {
 
-            console.log('weatherResponse',weatherResponse.current.weather)
             weatherResponseJson.temperature = weatherResponse?.current?.temp;
             weatherResponseJson.feelsLikeTemperature = weatherResponse?.current?.feels_like;
             weatherResponseJson.windSpeed = weatherResponse?.current?.wind_speed;
@@ -38,6 +55,34 @@ export default defineEventHandler(async (event) => {
     } catch (error) {
         console.log('Failed to get the weather data from the service due to: ', error);
     }
+}
 
+const getForecastWeather = async (event) => {
 
-})
+    const bodyFromRequest: WeatherRequestType = await readBody(event);
+
+    let weatherForecastResponseJson = {
+            maxTemperature: 0,
+            minTemperature: 0,
+            weatherMainStatus: '',
+            weatherDescription: ''
+    }
+
+    try {
+        const weatherResponse: WeatherForecastType | undefined | null = await weatherService.getForecastWeather( bodyFromRequest );
+
+        if (weatherResponse) {
+
+            weatherForecastResponseJson.maxTemperature = weatherResponse?.temp_max;
+            weatherForecastResponseJson.minTemperature = weatherResponse?.temp_min;
+            weatherForecastResponseJson.weatherMainStatus = weatherResponse?.weather[0]?.main || '';
+            weatherForecastResponseJson.weatherDescription = weatherResponse?.weather[0]?.description || '';
+
+        }
+        return weatherForecastResponseJson;
+
+    } catch (error) {
+        console.log('Failed to get the weather data from the service due to: ', error);
+    }
+}
+

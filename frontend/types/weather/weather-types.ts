@@ -24,8 +24,8 @@ export type WeatherResponseType = {
     current: CurrentType;
 }
 
-export type NextWeatherForecastType = {
-    minTemp: number;
-    maxTemp: number;
-    weather: WeatherType;
+export type WeatherForecastType = {
+    temp_min: number;
+    temp_max: number;
+    weather: Array<WeatherType>;
 }

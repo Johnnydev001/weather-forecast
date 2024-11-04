@@ -115,6 +115,42 @@ const handleWeatherRequest = async () => {
 
         const weatherResponse = await $fetch('/api/weather', {
           method: 'POST',
+          params: {
+            weatherType: 'current'
+          },
+          body: {
+            lat: latitude.value,
+            lon: longitude.value,
+            lang: 'pt',
+            units: 'metric'
+          }
+        })
+        if (weatherResponse) {
+            temperature.value = weatherResponse?.temperature;
+            feelsLikeTemperature.value = weatherResponse?.feelsLikeTemperature;
+            windSpeed.value = weatherResponse?.windSpeed;
+            humidity.value = weatherResponse?.humidity;
+            pressure.value = weatherResponse?.pressure;
+            cloudsPercentage.value = weatherResponse?.cloudsPercentage;
+            weatherMainStatus.value = weatherResponse?.weatherMainStatus?.toLowerCase();
+            weatherDescription.value = weatherResponse?.weatherDescription?.toUpperCase();
+
+        }
+
+    } catch (error) {
+        console.log('Failed to get the weather data from the service due to: ', error)
+    }
+
+}
+
+const handleWeatherForecastRequest = async () => {
+    try {
+
+        const weatherResponse = await $fetch('/api/weather', {
+          method: 'POST',
+          params: {
+            weatherType: 'forecast'
+          },
           body: {
             lat: latitude.value,
             lon: longitude.value,

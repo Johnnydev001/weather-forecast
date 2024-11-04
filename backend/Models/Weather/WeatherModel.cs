@@ -1,10 +1,18 @@
-public class Weather {
-   public string main {get; set;}
-
-   public string description {get; set;}
+public class TemperatureModel
+{
+   public float temp_min { get; set; }
+   public float temp_max { get; set; }
 }
 
-public class CurrentModel {
+public class Weather
+{
+   public string main { get; set; }
+
+   public string description { get; set; }
+}
+
+public class CurrentModel
+{
 
    public float temp { get; set; }
 
@@ -20,12 +28,28 @@ public class CurrentModel {
 
    public float humidity { get; set; }
 
-   public IList<Weather?> weather {get; set;}
+   public IList<Weather?> weather { get; set; }
 }
 
-public class WeatherModel
+public class CurrentWeatherModel
 {
-   public CurrentModel current {get; set;}
-   
+   public CurrentModel current { get; set; }
+
 }
+
+public class ForecastWeather
+{
+   public IList<Weather?> weather { get; set; }
+
+   public TemperatureModel main { get; set; }
+}
+
+
+public class ForecastWeatherModel
+{
+   public IList<ForecastWeather?> weather { get; set; }
+
+}
+
+
 

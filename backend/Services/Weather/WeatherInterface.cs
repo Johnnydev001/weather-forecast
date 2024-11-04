@@ -1,3 +1,6 @@
-public interface WeatherInterface {
-    abstract static Task<WeatherModel?> GetOneCallWeatherConditions(string lat = "", string lon = "", string? lang = "", string? units = "", string? weatherApiKey = "", string? weatherApiUrl = "");
+public interface WeatherInterface
+{
+    abstract static Task<CurrentWeatherModel?> GetCurrentWeather(string lat = "", string lon = "", string? lang = "", string? units = "", string? weatherApiKey = "", string? currentWeatherApiUrl = "");
+    abstract static Task<ForecastWeatherModel?> GetForecastWeather(string lat = "", string lon = "", string? lang = "", string? units = "", string? weatherApiKey = "", string? forecastWeatherApiUrl = "");
+
 }
