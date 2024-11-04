@@ -6,8 +6,8 @@
             Next five days forecast:
         </h4>
 
-        <ul class="list" >
-            <li  v-for="forecast in nextFiveForecasts">
+        <ul class="list">
+            <li v-for="forecast in nextFiveForecasts">
 
                 <WeatherForecastItem :forecast="forecast" />
 
@@ -24,27 +24,55 @@ const nextFiveForecasts = ref([{
         main: 'clouds',
         description: 'descp',
     },
-    clouds: 10,
-    wind_speed: 15,
-    humidity: 15,
-    pressure: 10
+    minTemp: 10,
+    maxTemp: 15,
 },
 {
     weather: {
         main: 'clouds',
         description: 'descp',
     },
-    clouds: 10,
-    wind_speed: 15,
-    humidity: 15,
-    pressure: 10
+    minTemp: 10,
+    maxTemp: 15,
+},
+{
+    weather: {
+        main: 'clouds',
+        description: 'descp',
+    },
+    minTemp: 10,
+    maxTemp: 15,
+}, {
+    weather: {
+        main: 'clouds',
+        description: 'descp',
+    },
+    minTemp: 10,
+    maxTemp: 15,
+},
+{
+    weather: {
+        main: 'rain',
+        description: 'descp',
+    },
+    minTemp: 20,
+    maxTemp: 25,
 }])
 
 
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 425px) {
+    .list {
+        display: flex !important;
+        flex-direction: column;
+
+    }
+}
+
 .forecast-container {
+
     border-top: $border;
     margin-top: 1rem;
 
@@ -54,9 +82,20 @@ const nextFiveForecasts = ref([{
     }
 
     .list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 1rem;
+        max-width: 425px;
+
+        text-align: center;
+        justify-content: center;
+
         list-style: none;
-        display: flex;
-        gap: 0.5rem;
+
+        justify-items: center;
+        padding: 0;
+
+
     }
 
 }

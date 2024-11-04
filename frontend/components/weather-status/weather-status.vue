@@ -188,7 +188,7 @@ await handleWeatherRequest();
 </script>
 
 <style lang="scss" scoped >
-@media only screen and (max-width: 300px) {
+@media only screen and (max-width: 425px) {
     .condition-container {
     display: flex !important;
     flex-direction: column;
@@ -221,7 +221,7 @@ await handleWeatherRequest();
         row-gap: 1rem;
         text-align: center;
         justify-items: center;
-        padding: 2rem;
+        padding: 4rem;
         border-radius: $radius;
         border: $border;
 
@@ -325,7 +325,6 @@ await handleWeatherRequest();
                     padding: 0.75rem;
                     background-color: rgb(255,255,255,0.1);
                 
-
                     >svg {
                         aspect-ratio: 1;
                         object-fit: contain;

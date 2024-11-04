@@ -25,11 +25,7 @@ export type WeatherResponseType = {
 }
 
 export type NextWeatherForecastType = {
-    temp: number;
-    feels_like: number;
-    pressure: number;
+    minTemp: number;
+    maxTemp: number;
     weather: WeatherType;
-    clouds?: number;
-    wind_speed?: number;
-    humidity: number;
 }

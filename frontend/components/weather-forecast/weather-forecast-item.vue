@@ -2,28 +2,42 @@
 
 
     <div class="forecast-item">
-        <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="props?.forecast?.weather?.description"
-            :title="props?.forecast?.weather?.description" />
-
         <div class="summary">
+            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus"
+                :alt="props?.forecast?.weather?.description" :title="props?.forecast?.weather?.description" />
+
             <span>
-                {{ props?.forecast?.weather?.description }}
+                {{ capitalizeWord(props?.forecast?.weather?.description) }}
             </span>
 
-            <div class="metrics">
+        </div>
 
-                <span>
-                    {{ props?.forecast?.wind_speed }}
-                </span>
+        <div class="condition-container">
+            <div class="condition">
+                <span>Min:</span>
+                <div class="value">
+                    <span>
+                        {{ props?.forecast?.minTemp }}
+                    </span>
 
-                <span>
-                    {{ props?.forecast?.humidity }}
-                </span>
+                    <span>
+                        ºC
+                    </span>
 
+                </div>
+            </div>
 
-                <span>
-                    {{ props?.forecast?.pressure }}
-                </span>
+            <div class="condition">
+                <span>Max:</span>
+
+                <div class="value">
+                    <span>
+                        {{ props?.forecast?.maxTemp }}
+                    </span>
+                    <span>
+                        ºC
+                    </span>
+                </div>
             </div>
 
         </div>
@@ -43,24 +57,71 @@ const iconByWeatherStatus = computed(() => (
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 736px) {
+    .condition-container {
+        display: flex !important;
+        flex-direction: column;
+    }
+}
+
 .forecast-item {
-    border: $border;
     padding: 1rem;
-    border-radius: $radius;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    max-width: fit-content;
 
     .summary {
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+
+        .weather-illustration {
+            aspect-ratio: 16/9;
+            object-fit: contain;
+            object-position: center;
+            stroke: white;
+            fill: white;
+            min-width: 50px;
+            align-self: center;
+
+            >svg {
+                stroke: white;
+                fill: white;
+            }
+        }
+    }
+
+    .condition-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 1rem;
 
-        .metrics {
+        .condition {
+
             display: flex;
-            text-align: center;
-            justify-content: center;
+            column-gap: 1rem;
+            align-items: center;
+            border-radius: $radius;
+            padding: 0.75rem;
+            background-color: rgb(255, 255, 255, 0.1);
+
+            >svg {
+                aspect-ratio: 1;
+                object-fit: contain;
+                width: 1.5rem;
+                stroke: #ffffff;
+            }
+
+            .value {
+                display: flex;
+
+                .title {
+                    font-weight: 600;
+                }
+            }
         }
+
     }
 }
 </style>

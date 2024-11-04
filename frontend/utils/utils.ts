@@ -29,3 +29,5 @@ export const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: bo
                return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';;
     }
 }
+
+export const capitalizeWord = (word: string) => (word.charAt(0)?.toUpperCase() + word.slice(1))
