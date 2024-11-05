@@ -27,11 +27,11 @@ public class WeatherService : WeatherInterface
         }
     }
 
-      public static async Task<ForecastWeatherModel?> GetForecastWeather(string lat, string lon, string? lang, string? units, string? weatherApiKey = "", string? forecastWeatherApiUrl = "")
+      public static async Task<ForecastWeatherModel?> GetForecastWeather(string lat, string lon, string? lang, string? units, string? weatherApiKey = "", string? forecastWeatherApiUrl = "", int cnt = 5)
     {
         try
         {
-            var response = await httpClient.GetAsync($"{forecastWeatherApiUrl}?lat={lat}&lon={lon}&lang={lang}&units={units}&appid={weatherApiKey}");
+            var response = await httpClient.GetAsync($"{forecastWeatherApiUrl}?lat={lat}&lon={lon}&lang={lang}&units={units}&appid={weatherApiKey}&cnt={cnt}");
 
             if (response.IsSuccessStatusCode)
             {

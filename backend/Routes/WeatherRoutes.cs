@@ -20,10 +20,10 @@ public static class WeatherRoutes {
             }
         });
 
-        app.MapGet("/forecast-weather", async (string lat, string lon, string? lang = "pt", string? units = "metric") => {
+        app.MapGet("/forecast-weather", async (string lat, string lon, string? lang = "pt", string? units = "metric", int cnt = 5) => {
             try
             {
-                return await WeatherService.GetForecastWeather(lat, lon, lang, units, weatherApiKey, forecastWeatherApiUrl);
+                return await WeatherService.GetForecastWeather(lat, lon, lang, units, weatherApiKey, forecastWeatherApiUrl, cnt);
                 
             }
             catch (Exception exception)
