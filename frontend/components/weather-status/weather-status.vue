@@ -72,7 +72,7 @@
                     </div>
                 </div>
 
-                <WeatherForecast v-if="weatherForecast.length" :weatherForecast="weatherForecast" />
+                <WeatherForecast :weatherForecast="weatherForecast" />
 
             </article>
         </section>
@@ -95,19 +95,21 @@ import { getImageUrlByWeatherStatus } from '~/utils/utils'
 const handleFindLocationByName = async (locationToFind: string) => {
     try {
 
-        const locationResponse = await $fetch('/api/location', {
-            method: 'GET',
-            params: {
-                query: locationToFind
-            }
-        })
-        if (locationResponse?.address) {
-            country.value = locationResponse.address?.country;
-            city.value = locationResponse?.address?.city || locationResponse?.address?.name;
-            latitude.value = locationResponse.lat;
-            longitude.value = locationResponse.lon;
-        }
+        const { data: locationResponse }  = await useAsyncData('location', () =>
+            $fetch('/api/location', {
+                method: 'GET',
+                params: {
+                    query: locationToFind
+                }
+            })
+        )
 
+        if (locationResponse?.value?.address) {
+            country.value = locationResponse?.value?.address?.country;
+            city.value = locationResponse?.value?.address?.city || locationResponse?.value?.address?.name;
+            latitude.value = locationResponse?.value?.lat;
+            longitude.value = locationResponse?.value?.lon;
+        }
     } catch (error) {
         console.error('Failed to get the location data from the server due to: ', error);
     }
@@ -116,29 +118,34 @@ const handleFindLocationByName = async (locationToFind: string) => {
 const handleWeatherRequest = async () => {
     try {
 
-        const weatherResponse = await $fetch('/api/weather', {
-            method: 'POST',
-            params: {
-                weatherType: 'current'
-            },
-            body: {
-                lat: latitude.value,
-                lon: longitude.value,
-                lang: 'pt',
-                units: 'metric'
-            }
-        })
+        const { data: weatherResponse } = await useAsyncData('current', () =>
 
-        if (weatherResponse) {
+            $fetch('/api/weather', {
+                method: 'POST',
+                params: {
+                    weatherType: 'current'
+                },
+                body: {
+                    lat: latitude.value,
+                    lon: longitude.value,
+                    lang: 'pt',
+                    units: 'metric'
+                }
+            }),
+            {
+                watch: [latitude, longitude]
+            })
 
-            temperature.value = weatherResponse?.temperature;
-            feelsLikeTemperature.value = weatherResponse?.feelsLikeTemperature;
-            windSpeed.value = weatherResponse?.windSpeed;
-            humidity.value = weatherResponse?.humidity;
-            pressure.value = weatherResponse?.pressure;
-            cloudsPercentage.value = weatherResponse?.cloudsPercentage;
-            weatherMainStatus.value = weatherResponse?.weatherMainStatus?.toLowerCase();
-            weatherDescription.value = weatherResponse?.weatherDescription?.toUpperCase();
+        if (weatherResponse.value) {
+
+            temperature.value = weatherResponse?.value?.temperature;
+            feelsLikeTemperature.value = weatherResponse?.value?.feelsLikeTemperature;
+            windSpeed.value = weatherResponse?.value?.windSpeed;
+            humidity.value = weatherResponse?.value?.humidity;
+            pressure.value = weatherResponse?.value?.pressure;
+            cloudsPercentage.value = weatherResponse?.value?.cloudsPercentage;
+            weatherMainStatus.value = weatherResponse?.value?.weatherMainStatus?.toLowerCase();
+            weatherDescription.value = weatherResponse?.value?.weatherDescription?.toUpperCase();
 
         }
 
@@ -151,7 +158,7 @@ const handleWeatherRequest = async () => {
 const handleWeatherForecastRequest = async () => {
     try {
 
-        const forecastWeatherResponse = await $fetch('/api/weather', {
+        const { data: forecastWeatherResponse } = await useAsyncData('forecast', () => $fetch('/api/weather', {
             method: 'POST',
             params: {
                 weatherType: 'forecast'
@@ -163,8 +170,13 @@ const handleWeatherForecastRequest = async () => {
                 units: 'metric',
                 cnt: 5
             }
+        }), {
+            watch: [latitude, longitude]
         })
-        weatherForecast.value = forecastWeatherResponse;
+        if (forecastWeatherResponse.value) {
+            weatherForecast.value = forecastWeatherResponse.value;
+
+        }
 
     } catch (error) {
         console.error('Failed to get the forecast weather data from the service due to: ', error)
@@ -192,7 +204,7 @@ const cloudsPercentage = ref(0)
 
 const weatherMainStatus = ref("")
 const weatherDescription = ref("")
-const weatherForecast = ref([])
+const weatherForecast = useState('weatherForecast', () => null)
 
 const city = ref<string | undefined>("");
 const country = ref<string | undefined>("");
@@ -216,7 +228,7 @@ if (!router.redirectedFrom) {
     await handleFindLocationByName(props?.locationToFind);
 }
 await handleWeatherRequest();
-await handleWeatherForecastRequest();
+await handleWeatherForecastRequest()
 
 </script>
 

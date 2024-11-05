@@ -48,7 +48,8 @@ export async function getForecastWeather(queryParams: WeatherRequestType): Promi
         lat = '',
         lon = '',
         lang = 'pt',
-        units = 'metric'
+        units = 'metric',
+        cnt = 5
     }: WeatherRequestType = queryParams;
 
     const requestData = {
@@ -70,7 +71,7 @@ export async function getForecastWeather(queryParams: WeatherRequestType): Promi
     // }
 
     try {
-        const oneCallWeatherRequest = await fetch(`http://localhost:5177/forecast-weather?lat=${lat}&lon=${lon}&lang=${lang}&units=${units}`, requestData);
+        const oneCallWeatherRequest = await fetch(`http://localhost:5177/forecast-weather?lat=${lat}&lon=${lon}&lang=${lang}&units=${units}&cnt=${cnt}`, requestData);
 
         if (oneCallWeatherRequest.status === 200 || oneCallWeatherRequest.ok) {
             return await oneCallWeatherRequest.json();

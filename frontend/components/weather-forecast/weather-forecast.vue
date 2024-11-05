@@ -1,13 +1,13 @@
 <template>
 
-    <section class="forecast-container" v-if="nextFiveForecasts.length">
+    <section class="forecast-container" >
 
         <h4  class="title">
             Next five days forecast:
         </h4>
 
         <ul class="list">
-            <li v-for="item in nextFiveForecasts.slice(1,5)">
+            <li v-for="item in weatherForecast">
 
                 <WeatherForecastItem :item="item" />
 
@@ -19,15 +19,8 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['weatherForecast'])
-const nextFiveForecasts = ref(props?.weatherForecast || [])
+const weatherForecast = useState('weatherForecast')
 
-watch(() => props?.weatherForecast, (weatherForecast) => {
-    console.log(weatherForecast)
-    if(weatherForecast){
-        nextFiveForecasts.value = weatherForecast;
-    }
-})
 
 </script>
 

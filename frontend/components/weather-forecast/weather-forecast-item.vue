@@ -5,14 +5,14 @@
         <div class="summary">
             <div>
 
-                {{ new Date(props?.item?.date).getDate() }}
+                {{ new Date(itemToShow?.value?.date).getDate() }}
 
             </div>
-            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="props?.item?.weather?.description"
-                :title="props?.item?.weather?.description" />
+            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="itemToShow?.value?.weather?.description"
+                :title="itemToShow?.weather?.description" />
 
             <span>
-                {{ props?.item?.weather?.description }}
+                {{ itemToShow?.value?.weather?.description }}
             </span>
 
         </div>
@@ -22,7 +22,7 @@
                 <span>Min:</span>
                 <div class="value">
                     <span>
-                        {{ props?.item?.minTemp }}
+                        {{ itemToShow?.value?.minTemp }}
                     </span>
 
                     <span>
@@ -37,7 +37,7 @@
 
                 <div class="value">
                     <span>
-                        {{ props?.item?.maxTemp }}
+                        {{ itemToShow?.value?.maxTemp }}
                     </span>
                     <span>
                         ºC
@@ -54,9 +54,22 @@
 <script setup lang="ts">
 
 const props = defineProps(['item']);
-const iconByWeatherStatus = computed(() => (
-    getImageUrlByWeatherStatus(props?.forecast?.main, true)
-))
+const {item} = props;
+const itemToShow = ref<any>({})
+
+watch(() => item, (newItemToShow) => {
+    if(newItemToShow){
+        console.log(newItemToShow)
+
+        itemToShow.value = newItemToShow;
+    }
+})
+
+const iconByWeatherStatus = computed(() => {
+
+    return getImageUrlByWeatherStatus(itemToShow?.value?.main, true)
+}
+)
 
 
 </script>

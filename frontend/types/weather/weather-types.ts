@@ -3,6 +3,7 @@ export type WeatherRequestType = {
     lon: string | number;
     lang?: string;
     units?: string;
+    cnt?: number;
 }
 
 type WeatherType = {

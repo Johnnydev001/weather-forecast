@@ -53,7 +53,7 @@ const callGetCurrentWeather = async (event) => {
         return weatherResponseJson;
 
     } catch (error) {
-        console.error('Failed to get the current weather data from the service due to: ', error);
+       throw createError(`Failed to get the current weather data from the service due to: ${error}`)
     }
 }
 
@@ -65,7 +65,7 @@ const callGetForecastWeather = async (event) => {
 
         const forecastResponse = await getForecastWeather(bodyFromRequest);
 
-        const mappedForecastResponse: WeatherForecastResponseType = forecastResponse?.list?.map(elem => {
+        return forecastResponse?.list?.map(elem => {
             return {
                 main: {
                     tempMin: elem?.main?.temp_min,
@@ -76,12 +76,8 @@ const callGetForecastWeather = async (event) => {
             }
         })
 
-        return mappedForecastResponse;
-
-
-
     } catch (error) {
-        console.error('Failed to get the forecast weather data from the service due to: ', error);
+        throw createError(`Failed to get the forecast weather data from the service due to: ${error}`)
     }
 }
 
