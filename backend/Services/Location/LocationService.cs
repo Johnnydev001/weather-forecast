@@ -48,8 +48,6 @@ public class LocationService : LocationInterface
 
         string locationApiFullUrl = $"{locationApiBaseUrl}?key={locationApiKey}&lat={lat}&lon={lon}&format=json";
 
-        Console.WriteLine(locationApiFullUrl);
-
         try
         {
             var response = await httpClient.GetAsync(locationApiFullUrl);

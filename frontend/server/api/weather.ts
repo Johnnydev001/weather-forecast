@@ -32,7 +32,8 @@ const callGetCurrentWeather = async (event) => {
         pressure: 0,
         cloudsPercentage: 0,
         weatherMainStatus: '',
-        weatherDescription: ''
+        weatherDescription: '',
+        daily : [{}]
     }
 
     try {
@@ -47,7 +48,8 @@ const callGetCurrentWeather = async (event) => {
             weatherResponseJson.pressure = weatherResponse?.current?.pressure;
             weatherResponseJson.cloudsPercentage = weatherResponse?.current?.clouds;
             weatherResponseJson.weatherMainStatus = weatherResponse?.current?.weather[0]?.main;
-            weatherResponseJson.weatherDescription = weatherResponse?.current?.weather[0]?.description
+            weatherResponseJson.weatherDescription = weatherResponse?.current?.weather[0]?.description;
+            weatherResponseJson.daily = weatherResponse?.daily;
 
         }
         return weatherResponseJson;

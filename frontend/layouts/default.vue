@@ -24,7 +24,7 @@ body {
 }
 
 main {
-  height: 100vh;
+  min-height: 140vh;
 }
 footer {
   background-color: rgb(255,255,255,0.1);

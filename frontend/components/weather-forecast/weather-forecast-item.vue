@@ -1,18 +1,21 @@
 <template>
 
-    <div class="forecast-item" v-if="itemToShow">
+    <div class="forecast-item">
 
         <div class="summary">
-            <div>
 
-                {{ new Date(itemToShow?.value?.date).getDate() }}
+            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="props?.item?.weather[0]?.description"
+                :title="props?.item?.weather[0]?.description" />
+
+            <div :style="{ display: 'flex', columnGap: '0.5rem', alignItems: 'center' }">
+                <span>Day:</span>
+                <time :datetime="new Date(props?.item?.dt * 1000).toDateString()">
+                    {{ new Date(props?.item?.dt * 1000).getDate() }}
+                </time>
 
             </div>
-            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="itemToShow?.value?.weather[0]?.description"
-                :title="itemToShow?.value?.weather[0]?.description" />
-
             <span>
-                {{ itemToShow?.value?.weather[0]?.description }}
+                {{ capitalizeWord(props?.item?.weather[0]?.description) }}
             </span>
 
         </div>
@@ -21,12 +24,12 @@
             <div class="condition">
                 <span>Min:</span>
                 <div class="value">
-                    <span>
-                        {{ itemToShow?.value?.main?.tempMin }}
-                    </span>
-
-                    <span>
-                        ºC
+                    <span
+                        :style="{ color: props?.item?.temp?.min > 18 ? 'orange' : 'rgb(100, 177, 255)', display: 'flex', columnGap: '0.25rem' }">
+                        <span>
+                            {{ props?.item?.temp?.min }}
+                        </span>
+                        <span>ºC</span>
                     </span>
 
                 </div>
@@ -36,12 +39,12 @@
                 <span>Max:</span>
 
                 <div class="value">
-                    <span>
-                        {{ itemToShow?.value?.main?.tempMax }}
+                    <span
+                        :style="{ color: props?.item?.temp?.max > 18 ? 'orange' : 'rgb(100, 177, 255)', display: 'flex', columnGap: '0.25rem' }">
+                        <span> {{ props?.item?.temp?.max }}</span>
+                        <span>ºC</span>
                     </span>
-                    <span>
-                        ºC
-                    </span>
+
                 </div>
             </div>
 
@@ -53,19 +56,10 @@
 
 <script setup lang="ts">
 
-const props = defineProps({
-    item: {
-        type: Object,
-        required: true
-    }
-});
-const itemToShow = computed(() => props?.item)
+const props = defineProps(['item']);
 
-const iconByWeatherStatus = computed( () => getImageUrlByWeatherStatus(itemToShow?.value?.weather[0]?.main, true))
+const iconByWeatherStatus = computed(() => getImageUrlByWeatherStatus(props?.item?.weather[0]?.main, true))
 
-watchEffect(() => {
-    console.log(itemToShow?.value?.main)
-})
 
 </script>
 

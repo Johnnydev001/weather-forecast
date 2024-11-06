@@ -118,9 +118,9 @@ const handleFindLocationByName = async (locationToFind: string) => {
 const handleWeatherRequest = async () => {
     try {
 
-        const { data: weatherResponse } = await useAsyncData('current', () =>
+        const { data: weatherResponse } = await useAsyncData('current', async () =>
 
-            $fetch('/api/weather', {
+            await $fetch('/api/weather', {
                 method: 'POST',
                 params: {
                     weatherType: 'current'
@@ -128,13 +128,15 @@ const handleWeatherRequest = async () => {
                 body: {
                     lat: latitude.value,
                     lon: longitude.value,
-                    lang: 'pt',
+                    lang: 'en',
                     units: 'metric'
                 }
             }),
             {
                 watch: [latitude, longitude]
-            })
+            }
+        
+        )
 
         if (weatherResponse.value) {
 
@@ -146,7 +148,7 @@ const handleWeatherRequest = async () => {
             cloudsPercentage.value = weatherResponse?.value?.cloudsPercentage;
             weatherMainStatus.value = weatherResponse?.value?.weatherMainStatus?.toLowerCase();
             weatherDescription.value = weatherResponse?.value?.weatherDescription?.toUpperCase();
-
+            weatherForecast.value = weatherResponse?.value?.daily?.splice(1,5);
         }
 
     } catch (error) {
@@ -204,7 +206,7 @@ const cloudsPercentage = ref(0)
 
 const weatherMainStatus = ref("")
 const weatherDescription = ref("")
-const weatherForecast = useState('weatherForecast', () => null)
+const weatherForecast = useState('weatherForecast', () => [])
 
 const city = ref<string | undefined>("");
 const country = ref<string | undefined>("");
@@ -228,7 +230,7 @@ if (!router.redirectedFrom) {
     await handleFindLocationByName(props?.locationToFind);
 }
 await handleWeatherRequest();
-await handleWeatherForecastRequest()
+//await handleWeatherForecastRequest()
 
 </script>
 

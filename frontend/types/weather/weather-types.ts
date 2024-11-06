@@ -22,8 +22,8 @@ type CurrentType = {
 }
 
 type TemperatureType = {
-    temp_min: number;
-    temp_max: number
+    min: number;
+    max: number
 }
 
 type WeatherForecastType = {
@@ -32,8 +32,15 @@ type WeatherForecastType = {
     date: string;
 }
 
+type DailyWeatherType = {
+    dt: number;
+    temp: TemperatureType;
+    weather: Array<WeatherType>;
+}
+
 export type WeatherResponseType = {
     current: CurrentType;
+    daily: Array<DailyWeatherType>;
 }
 
 export type WeatherForecastResponseType = {

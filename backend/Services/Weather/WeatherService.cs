@@ -10,7 +10,7 @@ public class WeatherService : WeatherInterface
     {
         try
         {
-            var response = await httpClient.GetAsync($"{currentWeatherApiUrl}?lat={lat}&lon={lon}&lang={lang}&units={units}&appid={weatherApiKey}");
+            var response = await httpClient.GetAsync($"{currentWeatherApiUrl}?lat={lat}&lon={lon}&lang={lang}&units={units}&appid={weatherApiKey}&exclude=minutely,hourly,alerts");
 
             if (response.IsSuccessStatusCode)
             {

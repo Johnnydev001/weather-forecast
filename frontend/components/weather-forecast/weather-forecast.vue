@@ -1,9 +1,9 @@
 <template>
 
-    <section class="forecast-container" >
+    <section class="forecast-container">
 
-        <h4  class="title">
-            Next hourly forecast:
+        <h4 class="title">
+            Next 5 days forecast:
         </h4>
 
         <ul class="list">
@@ -14,23 +14,53 @@
             </li>
         </ul>
 
+
+
     </section>
 
 </template>
 
 <script setup lang="ts">
-const weatherForecast = useState('weatherForecast')
+const props = defineProps(['weatherForecast'])
+const weatherForecast = computed(() => props?.weatherForecast)
 
 
 </script>
 
 <style lang="scss" scoped>
-@media only screen and (max-width: 425px) {
+@media only screen and (max-width: 580px) {
     .list {
         display: flex !important;
         flex-direction: column;
 
     }
+
+    .list li:nth-child(odd) {
+        border: none;
+    }
+}
+
+::-webkit-scrollbar {
+    max-width: 1px;
+    height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #dcdcdc;
+    /* Color of the scrollbar track */
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+    background-color: #0b487d;
+    border-radius: $radius;
+    border: $border;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
 }
 
 .forecast-container {
@@ -43,21 +73,30 @@ const weatherForecast = useState('weatherForecast')
         font-size: 1.1rem;
     }
 
+
     .list {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        background-color: rgb(255, 255, 255, 0.1);
+        border-radius: $radius;
+        display: flex;
         margin: 1rem;
-        max-width: 425px;
+        max-width: 25rem;
+        overflow-x: auto;
+
+        ::-webkit-scrollbar {
+            width: 20px;
+        }
 
         text-align: center;
-        justify-content: center;
 
         list-style: none;
 
         justify-items: center;
         padding: 0;
 
+    }
 
+    .list li:nth-child(odd) {
+        border-right: $border;
     }
 
 }
