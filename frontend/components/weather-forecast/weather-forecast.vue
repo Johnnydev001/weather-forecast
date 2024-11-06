@@ -82,10 +82,6 @@ const weatherForecast = computed(() => props?.weatherForecast)
         max-width: 25rem;
         overflow-x: auto;
 
-        ::-webkit-scrollbar {
-            width: 20px;
-        }
-
         text-align: center;
 
         list-style: none;
