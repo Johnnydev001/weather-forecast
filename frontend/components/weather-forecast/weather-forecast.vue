@@ -3,7 +3,7 @@
     <section class="forecast-container" >
 
         <h4  class="title">
-            Next five days forecast:
+            Next hourly forecast:
         </h4>
 
         <ul class="list">

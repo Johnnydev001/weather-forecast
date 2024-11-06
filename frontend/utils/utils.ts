@@ -1,6 +1,6 @@
 export const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: boolean) => {
 
-    switch (weatherMainStatus) {
+    switch (weatherMainStatus.toLowerCase()) {
         case 'clouds':
             return isIcon ? '/assets/imgs/cloudy.svg' : '/assets/imgs/background-cloudy.jpg';
     
@@ -30,4 +30,7 @@ export const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: bo
     }
 }
 
-export const capitalizeWord = (word: string) => (word.charAt(0)?.toUpperCase() + word.slice(1))
+export const capitalizeWord = (word: string) => {
+    console.log('word', word);
+    return word.charAt(0)?.toUpperCase() + word.slice(1);
+}

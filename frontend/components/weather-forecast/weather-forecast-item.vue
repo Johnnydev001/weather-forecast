@@ -1,6 +1,6 @@
 <template>
 
-    <div class="forecast-item">
+    <div class="forecast-item" v-if="itemToShow">
 
         <div class="summary">
             <div>
@@ -8,11 +8,11 @@
                 {{ new Date(itemToShow?.value?.date).getDate() }}
 
             </div>
-            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="itemToShow?.value?.weather?.description"
-                :title="itemToShow?.weather?.description" />
+            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="itemToShow?.value?.weather[0]?.description"
+                :title="itemToShow?.value?.weather[0]?.description" />
 
             <span>
-                {{ itemToShow?.value?.weather?.description }}
+                {{ itemToShow?.value?.weather[0]?.description }}
             </span>
 
         </div>
@@ -22,7 +22,7 @@
                 <span>Min:</span>
                 <div class="value">
                     <span>
-                        {{ itemToShow?.value?.minTemp }}
+                        {{ itemToShow?.value?.main?.tempMin }}
                     </span>
 
                     <span>
@@ -37,7 +37,7 @@
 
                 <div class="value">
                     <span>
-                        {{ itemToShow?.value?.maxTemp }}
+                        {{ itemToShow?.value?.main?.tempMax }}
                     </span>
                     <span>
                         ºC
@@ -53,24 +53,19 @@
 
 <script setup lang="ts">
 
-const props = defineProps(['item']);
-const {item} = props;
-const itemToShow = ref<any>({})
-
-watch(() => item, (newItemToShow) => {
-    if(newItemToShow){
-        console.log(newItemToShow)
-
-        itemToShow.value = newItemToShow;
+const props = defineProps({
+    item: {
+        type: Object,
+        required: true
     }
+});
+const itemToShow = computed(() => props?.item)
+
+const iconByWeatherStatus = computed( () => getImageUrlByWeatherStatus(itemToShow?.value?.weather[0]?.main, true))
+
+watchEffect(() => {
+    console.log(itemToShow?.value?.main)
 })
-
-const iconByWeatherStatus = computed(() => {
-
-    return getImageUrlByWeatherStatus(itemToShow?.value?.main, true)
-}
-)
-
 
 </script>
 
