@@ -32,11 +32,11 @@ const weatherForecast = computed(() => props?.weatherForecast)
     .list {
         display: flex !important;
         flex-direction: column;
-
+        border-right: none !important;
     }
 
-    .list li:nth-child(odd) {
-        border: none;
+    .list li {
+        border-right: none !important;
     }
 }
 
@@ -95,7 +95,7 @@ const weatherForecast = computed(() => props?.weatherForecast)
 
     }
 
-    .list li:nth-child(odd) {
+    .list li {
         border-right: $border;
     }
 

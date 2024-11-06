@@ -24,7 +24,13 @@ body {
 }
 
 main {
-  min-height: 140vh;
+  height: 120vh;
+}
+
+@media only screen and (max-width: 580px){
+  main {
+    height: 160vh;
+  }
 }
 footer {
   background-color: rgb(255,255,255,0.1);
