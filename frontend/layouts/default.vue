@@ -23,13 +23,10 @@ body {
 
 }
 
-main {
-  height: 120vh;
-}
 
 @media only screen and (max-width: 580px){
   main {
-    height: 160vh;
+    height: min-content;
   }
 }
 footer {

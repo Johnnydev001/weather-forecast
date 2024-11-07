@@ -19,19 +19,5 @@ public static class WeatherRoutes {
 
             }
         });
-
-        app.MapGet("/forecast-weather", async (string lat, string lon, string? lang = "pt", string? units = "metric", int cnt = 5) => {
-            try
-            {
-                return await WeatherService.GetForecastWeather(lat, lon, lang, units, weatherApiKey, forecastWeatherApiUrl, cnt);
-                
-            }
-            catch (Exception exception)
-            {
-                
-                throw new Exception("Failed to fetch the weather forecast data from the weather service due to: ", exception);
-
-            }
-        });
     }
 }

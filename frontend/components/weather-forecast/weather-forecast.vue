@@ -24,20 +24,15 @@
 const props = defineProps(['weatherForecast'])
 const weatherForecast = computed(() => props?.weatherForecast)
 
-
 </script>
 
 <style lang="scss" scoped>
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: 600px) {
     .list {
         display: flex !important;
         flex-direction: column;
-        border-right: none !important;
     }
 
-    .list li {
-        border-right: none !important;
-    }
 }
 
 ::-webkit-scrollbar {
@@ -75,7 +70,6 @@ const weatherForecast = computed(() => props?.weatherForecast)
 
 
     .list {
-        background-color: rgb(255, 255, 255, 0.1);
         border-radius: $radius;
         display: flex;
         margin: 1rem;
@@ -89,10 +83,6 @@ const weatherForecast = computed(() => props?.weatherForecast)
         justify-items: center;
         padding: 0;
 
-    }
-
-    .list li {
-        border-right: $border;
     }
 
 }

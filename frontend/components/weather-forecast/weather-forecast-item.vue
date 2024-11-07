@@ -25,7 +25,7 @@
                 <span>Min:</span>
                 <div class="value">
                     <span
-                        :style="{ color: props?.item?.temp?.min > 18 ? 'orange' : 'rgb(100, 177, 255)', display: 'flex', columnGap: '0.25rem', fontWeight: 800 }">
+                        :style="{ color: props?.item?.temp?.min > 18 ? 'orange' : '#0b487d', display: 'flex', columnGap: '0.25rem', fontWeight: 800 }">
                         <span>
                             {{ props?.item?.temp?.min }}
                         </span>
@@ -40,7 +40,7 @@
 
                 <div class="value">
                     <span
-                        :style="{ color: props?.item?.temp?.max > 18 ? 'orange' : 'rgb(100, 177, 255)', display: 'flex', columnGap: '0.25rem', fontWeight: 800 }">
+                        :style="{ color: props?.item?.temp?.max > 18 ? 'orange' : '#0b487d', display: 'flex', columnGap: '0.25rem', fontWeight: 800 }">
                         <span> {{ props?.item?.temp?.max }}</span>
                         <span>ºC</span>
                     </span>
@@ -77,6 +77,9 @@ const iconByWeatherStatus = computed(() => getImageUrlByWeatherStatus(props?.ite
     flex-direction: column;
     gap: 1rem;
     max-width: fit-content;
+    margin: 1rem;
+    background-color: rgb(255, 255, 255, 0.1);
+    border-radius: $radius;
 
     .summary {
         display: flex;

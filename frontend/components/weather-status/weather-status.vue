@@ -2,86 +2,91 @@
 
     <section class="container" :style="containerStyle">
 
-        <section class="sub-container">
-            <div class="location-container">
-                <div>
-                    <span class="location-city">{{ city ? city + ', ' : '' }}</span>
-                    <span class="location-country">{{ country }}</span>
-                </div>
-
-                <span class="date">{{ formatedTodayDate }} </span>
-            </div>
-
-            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="weatherDescription"
-                :title="weatherDescription" />
-
-            <section class="summary-container">
-
-                <h3 title="Temperature. Units - metric: Celsius" class="temperature"
-                    :style="{ color: temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">{{ temperature }}º</h3>
-
-                <div class="feels-like-temperature-container">
-                    <span>Feels like:</span>
-                    <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature"
-                        :style="{ color: feelsLikeTemperature && feelsLikeTemperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">
-                        {{
-                            feelsLikeTemperature ? feelsLikeTemperature + 'º' : '0º' }}</h4>
-                </div>
-
-
-            </section>
-
-            <article class="weather-container">
-
-                <div class="condition-container">
-                    <div class="condition" title="The current wind speed in km/h">
-                        <WindIcon />
-
-                        <div class="value">
-                            <span class="title">Wind speed</span>
-                            <span>{{ windSpeed }} KM/H</span>
+                <section class="sub-container">
+                    <div class="location-container">
+                        <div>
+                            <span class="location-city">{{ city ? city + ', ' : '' }}</span>
+                            <span class="location-country">{{ country }}</span>
                         </div>
 
+                        <span class="date">{{ formatedTodayDate }} </span>
                     </div>
 
-                    <div class="condition" title="The current humidity of the air in %">
-                        <HumidityIcon />
-                        <div class="value">
-                            <span class="title">Humidity</span>
-                            <span>{{ humidity }} %</span>
+                    <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="weatherDescription"
+                        :title="weatherDescription" />
 
-                        </div>
-                    </div>
+                    <section class="summary-container">
 
-                    <div class="condition" title="Atmospheric pressure on the sea level, hPa">
-                        <PressureIcon />
-                        <div class="value">
-                            <span class="title">Pressure</span>
-                            <span>{{ pressure }} hPa</span>
-                        </div>
+                        <h3 title="Temperature. Units - metric: Celsius" class="temperature"
+                            :style="{ color: temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">{{ temperature }}º
+                        </h3>
 
-                    </div>
-
-                    <div class="condition" title="The current UV index">
-                        <UVIndexIcon />
-                        <div class="value">
-                            <span class="title">UV index</span>
-                            <span>{{ uvIndex }}</span>
+                        <div class="feels-like-temperature-container">
+                            <span>Feels like:</span>
+                            <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature"
+                                :style="{ color: feelsLikeTemperature && feelsLikeTemperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">
+                                {{
+                                    feelsLikeTemperature ? feelsLikeTemperature + 'º' : '0º' }}</h4>
                         </div>
 
-                    </div>
-                </div>
 
-                <WeatherForecast :weatherForecast="weatherForecast" />
+                    </section>
 
-            </article>
-        </section>
+                    <article class="weather-container">
+
+                        <div class="condition-container">
+                            <div class="condition" title="The current wind speed in km/h">
+                                <WindIcon />
+
+                                <div class="value">
+                                    <span class="title">Wind speed</span>
+                                    <span>{{ windSpeed }} KM/H</span>
+                                </div>
+
+                            </div>
+
+                            <div class="condition" title="The current humidity of the air in %">
+                                <HumidityIcon />
+                                <div class="value">
+                                    <span class="title">Humidity</span>
+                                    <span>{{ humidity }} %</span>
+
+                                </div>
+                            </div>
+
+                            <div class="condition" title="Atmospheric pressure on the sea level, hPa">
+                                <PressureIcon />
+                                <div class="value">
+                                    <span class="title">Pressure</span>
+                                    <span>{{ pressure }} hPa</span>
+                                </div>
+
+                            </div>
+
+                            <div class="condition" title="The current UV index">
+                                <UVIndexIcon />
+                                <div class="value">
+                                    <span class="title">UV index</span>
+                                    <span>{{ uvIndex }}</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div v-if="weatherForecast.length">
+                            <WeatherForecast :weatherForecast="weatherForecast" />
+                        </div>
+
+                    </article>
+                </section>
+
+
 
     </section>
 
 </template>
 
-<script setup lang="ts">
+<script async setup lang="ts">
 import WindIcon from '~/public/assets/icons/wind.vue';
 import PressureIcon from '~/public/assets/icons/pressure.vue';
 import UVIndexIcon from '~/public/assets/icons/sun.vue';
@@ -95,7 +100,7 @@ import { getImageUrlByWeatherStatus } from '~/utils/utils'
 const handleFindLocationByName = async (locationToFind: string) => {
     try {
 
-        const { data: locationResponse }  = await useAsyncData('location', () =>
+        const { data: locationResponse } = await useAsyncData('location', () =>
             $fetch('/api/location', {
                 method: 'GET',
                 params: {
@@ -135,7 +140,7 @@ const handleWeatherRequest = async () => {
             {
                 watch: [latitude, longitude]
             }
-        
+
         )
 
         if (weatherResponse.value) {
@@ -148,40 +153,11 @@ const handleWeatherRequest = async () => {
             cloudsPercentage.value = weatherResponse?.value?.cloudsPercentage;
             weatherMainStatus.value = weatherResponse?.value?.weatherMainStatus?.toLowerCase();
             weatherDescription.value = weatherResponse?.value?.weatherDescription?.toUpperCase();
-            weatherForecast.value = weatherResponse?.value?.daily?.splice(1,5);
+            weatherForecast.value = weatherResponse?.value?.daily?.splice(1, 5);
         }
 
     } catch (error) {
         console.error('Failed to get the current weather data from the service due to: ', error)
-    }
-
-}
-
-const handleWeatherForecastRequest = async () => {
-    try {
-
-        const { data: forecastWeatherResponse } = await useAsyncData('forecast', () => $fetch('/api/weather', {
-            method: 'POST',
-            params: {
-                weatherType: 'forecast'
-            },
-            body: {
-                lat: latitude.value,
-                lon: longitude.value,
-                lang: 'pt',
-                units: 'metric',
-                cnt: 5
-            }
-        }), {
-            watch: [latitude, longitude]
-        })
-        if (forecastWeatherResponse.value) {
-            weatherForecast.value = forecastWeatherResponse.value;
-
-        }
-
-    } catch (error) {
-        console.error('Failed to get the forecast weather data from the service due to: ', error)
     }
 
 }
@@ -230,7 +206,6 @@ if (!router.redirectedFrom) {
     await handleFindLocationByName(props?.locationToFind);
 }
 await handleWeatherRequest();
-//await handleWeatherForecastRequest()
 
 </script>
 
@@ -249,7 +224,7 @@ await handleWeatherRequest();
     row-gap: 1rem;
     text-align: center;
     justify-items: center;
-    padding: 0rem 10rem 15rem 10rem;
+    padding: 5rem 10rem 15rem 10rem;
     color: #000000;
     background-repeat: no-repeat;
     background-position: center;

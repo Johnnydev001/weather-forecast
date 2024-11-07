@@ -23,7 +23,7 @@ export const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: bo
             return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';
 
         case 'drizzle':
-            return isIcon ? '~/public/assets/imgs/cloud-drizzle.svg' : '/assets/imgs/background-drizzle.jpg';
+            return isIcon ? '/assets/imgs/cloud-rain.svg' : '/assets/imgs/background-drizzle.jpg';
     
         default:
                return isIcon ? '/assets/imgs/sun.svg' : '/assets/imgs/background-sunny.jpg';;
@@ -31,6 +31,5 @@ export const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: bo
 }
 
 export const capitalizeWord = (word: string) => {
-    console.log('word', word);
     return word.charAt(0)?.toUpperCase() + word.slice(1);
 }

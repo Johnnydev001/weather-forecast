@@ -47,21 +47,6 @@ public class CurrentWeatherModel
 
 }
 
-public class ForecastWeather
-{
-   public IList<Weather?> weather { get; set; }
-
-   public TemperatureModel main { get; set; }
-
-   public int dt { get; set; }
-}
-
-public class ForecastWeatherModel
-{
-
-   public IList<ForecastWeather?> list { get; set; }
-
-}
 
 
 
