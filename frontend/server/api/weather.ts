@@ -1,5 +1,5 @@
-import { getCurrentWeather, getForecastWeather } from "~/services/weather/weather-service";
-import { WeatherForecastResponseType, WeatherRequestType, WeatherResponseType } from "~/types/weather/weather-types";
+import { getCurrentWeather } from "~/services/weather/weather-service";
+import { WeatherRequestType, WeatherResponseType } from "~/types/weather/weather-types";
 import { readBody } from "#imports";
 
 export default defineEventHandler(async (event) => {
@@ -9,9 +9,6 @@ export default defineEventHandler(async (event) => {
     switch (weatherType) {
         case 'current':
             return await callGetCurrentWeather(event);
-
-        case 'forecast':
-            return await callGetForecastWeather(event);
 
         default:
             return await callGetCurrentWeather(event);
@@ -24,62 +21,33 @@ const callGetCurrentWeather = async (event) => {
 
     const bodyFromRequest: WeatherRequestType = await readBody(event);
 
-    let weatherResponseJson = {
-        temperature: 0,
-        feelsLikeTemperature: 0,
-        windSpeed: 0,
-        humidity: 0,
-        pressure: 0,
-        cloudsPercentage: 0,
-        weatherMainStatus: '',
-        weatherDescription: '',
-        daily : [{}]
-    }
-
     try {
         const weatherResponse: WeatherResponseType | undefined | null = await getCurrentWeather(bodyFromRequest);
 
-        if (weatherResponse) {
+        if (!Object.entries(weatherResponse).length) {
 
-            weatherResponseJson.temperature = weatherResponse?.current?.temp;
-            weatherResponseJson.feelsLikeTemperature = weatherResponse?.current?.feels_like;
-            weatherResponseJson.windSpeed = weatherResponse?.current?.wind_speed;
-            weatherResponseJson.humidity = weatherResponse?.current?.humidity;
-            weatherResponseJson.pressure = weatherResponse?.current?.pressure;
-            weatherResponseJson.cloudsPercentage = weatherResponse?.current?.clouds;
-            weatherResponseJson.weatherMainStatus = weatherResponse?.current?.weather[0]?.main;
-            weatherResponseJson.weatherDescription = weatherResponse?.current?.weather[0]?.description;
-            weatherResponseJson.daily = weatherResponse?.daily;
-
+            return createError({
+                status: 404,
+                statusMessage: 'No weather data was found for the given location'
+            })
         }
-        return weatherResponseJson;
+
+        return {
+            temperature: weatherResponse?.current?.temp,
+            feelsLikeTemperature: weatherResponse?.current?.feels_like,
+            windSpeed: weatherResponse?.current?.wind_speed,
+            humidity: weatherResponse?.current?.humidity,
+            pressure: weatherResponse?.current?.pressure,
+            cloudsPercentage: weatherResponse?.current?.clouds,
+            weatherMainStatus: weatherResponse?.current?.weather[0]?.main,
+            weatherDescription: weatherResponse?.current?.weather[0]?.description,
+            daily: weatherResponse?.daily,
+        };
 
     } catch (error) {
-       throw createError(`Failed to get the current weather data from the service due to: ${error}`)
-    }
-}
-
-const callGetForecastWeather = async (event) => {
-
-    const bodyFromRequest: WeatherRequestType = await readBody(event);
-
-    try {
-
-        const forecastResponse = await getForecastWeather(bodyFromRequest);
-
-        return forecastResponse?.list?.map(elem => {
-            return {
-                main: {
-                    tempMin: elem?.main?.temp_min,
-                    tempMax: elem?.main?.temp_max
-                },
-                weather: elem?.weather,
-                date: elem?.dt
-            }
+        return createError({
+            status: error?.statusCode || error?.status,
+            statusMessage: 'Failed to get the weather data'
         })
-
-    } catch (error) {
-        throw createError(`Failed to get the forecast weather data from the service due to: ${error}`)
     }
 }
-

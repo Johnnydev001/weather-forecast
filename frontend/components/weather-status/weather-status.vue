@@ -2,83 +2,89 @@
 
     <section class="container" :style="containerStyle">
 
-                <section class="sub-container">
-                    <div class="location-container">
-                        <div>
-                            <span class="location-city">{{ city ? city + ', ' : '' }}</span>
-                            <span class="location-country">{{ country }}</span>
+
+        <section class="sub-container">
+
+            <aside v-if="weatherForecastErrorMessage" role="alert" class="error-msg">
+                {{ weatherForecastErrorMessage }}
+            </aside>
+
+            <div class="location-container">
+                <div>
+                    <span class="location-city">{{ city ? city + ', ' : '' }}</span>
+                    <span class="location-country">{{ country }}</span>
+                </div>
+
+                <span class="date">{{ formatedTodayDate }} </span>
+            </div>
+
+            <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="weatherDescription"
+                :title="weatherDescription" />
+
+            <section class="summary-container">
+
+                <h3 title="Temperature. Units - metric: Celsius" class="temperature"
+                    :style="{ color: temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">{{ temperature }}º
+                </h3>
+
+                <div class="feels-like-temperature-container">
+                    <span>Feels like:</span>
+                    <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature"
+                        :style="{ color: feelsLikeTemperature && feelsLikeTemperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">
+                        {{
+                            feelsLikeTemperature ? feelsLikeTemperature + 'º' : '0º' }}</h4>
+                </div>
+
+
+            </section>
+
+            <article class="weather-container">
+
+                <div class="condition-container">
+                    <div class="condition" title="The current wind speed in km/h">
+                        <WindIcon />
+
+                        <div class="value">
+                            <span class="title">Wind speed</span>
+                            <span>{{ windSpeed }} KM/H</span>
                         </div>
 
-                        <span class="date">{{ formatedTodayDate }} </span>
                     </div>
 
-                    <NuxtImg class="weather-illustration" :src="iconByWeatherStatus" :alt="weatherDescription"
-                        :title="weatherDescription" />
+                    <div class="condition" title="The current humidity of the air in %">
+                        <HumidityIcon />
+                        <div class="value">
+                            <span class="title">Humidity</span>
+                            <span>{{ humidity }} %</span>
 
-                    <section class="summary-container">
+                        </div>
+                    </div>
 
-                        <h3 title="Temperature. Units - metric: Celsius" class="temperature"
-                            :style="{ color: temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">{{ temperature }}º
-                        </h3>
-
-                        <div class="feels-like-temperature-container">
-                            <span>Feels like:</span>
-                            <h4 title="Feels like temperature. Units - metric: Celsius" class="feels-like-temperature"
-                                :style="{ color: feelsLikeTemperature && feelsLikeTemperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">
-                                {{
-                                    feelsLikeTemperature ? feelsLikeTemperature + 'º' : '0º' }}</h4>
+                    <div class="condition" title="Atmospheric pressure on the sea level, hPa">
+                        <PressureIcon />
+                        <div class="value">
+                            <span class="title">Pressure</span>
+                            <span>{{ pressure }} hPa</span>
                         </div>
 
+                    </div>
 
-                    </section>
-
-                    <article class="weather-container">
-
-                        <div class="condition-container">
-                            <div class="condition" title="The current wind speed in km/h">
-                                <WindIcon />
-
-                                <div class="value">
-                                    <span class="title">Wind speed</span>
-                                    <span>{{ windSpeed }} KM/H</span>
-                                </div>
-
-                            </div>
-
-                            <div class="condition" title="The current humidity of the air in %">
-                                <HumidityIcon />
-                                <div class="value">
-                                    <span class="title">Humidity</span>
-                                    <span>{{ humidity }} %</span>
-
-                                </div>
-                            </div>
-
-                            <div class="condition" title="Atmospheric pressure on the sea level, hPa">
-                                <PressureIcon />
-                                <div class="value">
-                                    <span class="title">Pressure</span>
-                                    <span>{{ pressure }} hPa</span>
-                                </div>
-
-                            </div>
-
-                            <div class="condition" title="The current UV index">
-                                <UVIndexIcon />
-                                <div class="value">
-                                    <span class="title">UV index</span>
-                                    <span>{{ uvIndex }}</span>
-                                </div>
-
-                            </div>
+                    <div class="condition" title="The current UV index">
+                        <UVIndexIcon />
+                        <div class="value">
+                            <span class="title">UV index</span>
+                            <span>{{ uvIndex }}</span>
                         </div>
 
-                        <div v-if="weatherForecast.length">
-                            <WeatherForecast :weatherForecast="weatherForecast" />
-                        </div>
+                    </div>
+                </div>
 
-                    </article>
-                </section>
+                <div v-if="weatherForecast.length">
+                    <WeatherForecast :weatherForecast="weatherForecast" />
+                </div>
+
+            </article>
+        </section>
 
 
 
@@ -123,7 +129,7 @@ const handleFindLocationByName = async (locationToFind: string) => {
 const handleWeatherRequest = async () => {
     try {
 
-        const { data: weatherResponse } = await useAsyncData('current', async () =>
+        const { data: weatherResponse, error } = await useAsyncData('current', async () =>
 
             await $fetch('/api/weather', {
                 method: 'POST',
@@ -142,19 +148,25 @@ const handleWeatherRequest = async () => {
             }
 
         )
-
-        if (weatherResponse.value) {
-
-            temperature.value = weatherResponse?.value?.temperature;
-            feelsLikeTemperature.value = weatherResponse?.value?.feelsLikeTemperature;
-            windSpeed.value = weatherResponse?.value?.windSpeed;
-            humidity.value = weatherResponse?.value?.humidity;
-            pressure.value = weatherResponse?.value?.pressure;
-            cloudsPercentage.value = weatherResponse?.value?.cloudsPercentage;
-            weatherMainStatus.value = weatherResponse?.value?.weatherMainStatus?.toLowerCase();
-            weatherDescription.value = weatherResponse?.value?.weatherDescription?.toUpperCase();
-            weatherForecast.value = weatherResponse?.value?.daily?.splice(1, 5);
+        if (error?.value) {
+            weatherForecastErrorMessage.value = error?.value?.statusMessage ?? 'Failed to get the weather forecast data'
         }
+        else {
+            if (weatherResponse?.value) {
+
+                temperature.value = weatherResponse?.value?.temperature;
+                feelsLikeTemperature.value = weatherResponse?.value?.feelsLikeTemperature;
+                windSpeed.value = weatherResponse?.value?.windSpeed;
+                humidity.value = weatherResponse?.value?.humidity;
+                pressure.value = weatherResponse?.value?.pressure;
+                cloudsPercentage.value = weatherResponse?.value?.cloudsPercentage;
+                weatherMainStatus.value = weatherResponse?.value?.weatherMainStatus?.toLowerCase();
+                weatherDescription.value = weatherResponse?.value?.weatherDescription?.toUpperCase();
+                weatherForecast.value = weatherResponse?.value?.daily?.splice(1, 5);
+            }
+        }
+
+
 
     } catch (error) {
         console.error('Failed to get the current weather data from the service due to: ', error)
@@ -183,6 +195,7 @@ const cloudsPercentage = ref(0)
 const weatherMainStatus = ref("")
 const weatherDescription = ref("")
 const weatherForecast = useState('weatherForecast', () => [])
+const weatherForecastErrorMessage = ref("")
 
 const city = ref<string | undefined>("");
 const country = ref<string | undefined>("");
@@ -253,6 +266,15 @@ await handleWeatherRequest();
         -webkit-backdrop-filter: blur(15px);
         color: #ffffff;
         font-family: 'Roboto', sans-serif;
+
+        .error-msg{
+            color: rgb(242, 242, 242);
+            font-weight: 500;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            border-radius: $radius;
+            background-color: #dc3545;
+        }
 
         .location-container {
             display: grid;

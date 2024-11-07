@@ -25,7 +25,7 @@
                 <span>Min:</span>
                 <div class="value">
                     <span
-                        :style="{ color: props?.item?.temp?.min > 18 ? 'orange' : '#0b487d', display: 'flex', columnGap: '0.25rem', fontWeight: 800 }">
+                        :style="{ color: props?.item?.temp?.min > 18 ? 'orange' : '#ffffff', display: 'flex', columnGap: '0.25rem', fontWeight: 800 }">
                         <span>
                             {{ props?.item?.temp?.min }}
                         </span>
@@ -40,7 +40,7 @@
 
                 <div class="value">
                     <span
-                        :style="{ color: props?.item?.temp?.max > 18 ? 'orange' : '#0b487d', display: 'flex', columnGap: '0.25rem', fontWeight: 800 }">
+                        :style="{ color: props?.item?.temp?.max > 18 ? 'orange' : '#ffffff', display: 'flex', columnGap: '0.25rem', fontWeight: 800 }">
                         <span> {{ props?.item?.temp?.max }}</span>
                         <span>ºC</span>
                     </span>
