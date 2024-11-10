@@ -33,7 +33,6 @@ jobs:
 
       - name: list directory content
         run: |
-          cd .output
           ls -a
 
       - name: Upload artifact for deployment job
