@@ -21,25 +21,18 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: setup working directory
-        run: cd frontend
-
       - name: npm install, build, and test
+        working-directory: frontend
         run: |
-          cd ./frontend
           npm install
           npm run build --if-present
           npm run test --if-present
-
-      - name: list directory content
-        run: |
-          ls -a
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .output
+          path: output
 
   deploy:
     runs-on: ubuntu-latest
@@ -69,4 +62,4 @@ jobs:
         with:
           app-name: 'weather-forecast-frontend-app'
           slot-name: 'Production'
-          package: .output
+          package: output
