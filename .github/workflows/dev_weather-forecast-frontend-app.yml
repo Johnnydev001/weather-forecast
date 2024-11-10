@@ -22,7 +22,7 @@ jobs:
           node-version: '18.x'
 
       - name: setup working directory
-        working-directory: ./frontend
+        run: cd frontend
 
       - name: npm install, build, and test
         run: |
@@ -32,7 +32,6 @@ jobs:
           npm run test --if-present
 
       - name: list directory content
-        working-directory: ./frontend
         run: |
           cd .output
           ls -a
