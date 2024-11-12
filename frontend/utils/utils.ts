@@ -1,6 +1,6 @@
-export const getImageUrlByWeatherStatus = (weatherMainStatus: string, isIcon: boolean) => {
+export const getImageUrlByWeatherStatus = (weatherMainStatus: string | undefined, isIcon: boolean) => {
 
-    switch (weatherMainStatus.toLowerCase()) {
+    switch (weatherMainStatus?.toLowerCase()) {
         case 'clouds':
             return isIcon ? '/assets/imgs/cloudy.svg' : '/assets/imgs/background-cloudy.jpg';
     

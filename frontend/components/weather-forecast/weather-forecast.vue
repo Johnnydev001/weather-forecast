@@ -13,9 +13,6 @@
 
             </li>
         </ul>
-
-
-
     </section>
 
 </template>

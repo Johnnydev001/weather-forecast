@@ -29,6 +29,8 @@ const route = useRoute();
 const routeLocation = computed(() => route?.params?.location);
 
 </script>
+
+
 <style lang="css">
 html,
 body {

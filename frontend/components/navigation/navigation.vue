@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <ul role="list" class="nav-list">
+    <ul role="navigation" class="nav-list">
       <li key="app-name">
         <NuxtLink class="app-logo-link" to="/">
           <WeatherIcon />
@@ -17,9 +17,6 @@
             <SearchIcon />
           </button>
         </form>
-
-
-
       </li>
 
       <li key="social-media" class="social-media-list">

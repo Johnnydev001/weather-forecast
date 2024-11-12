@@ -26,7 +26,7 @@ type TemperatureType = {
     max: number
 }
 
-type DailyWeatherType = {
+export type DailyWeatherType = {
     dt: number;
     temp: TemperatureType;
     weather: Array<WeatherType>;

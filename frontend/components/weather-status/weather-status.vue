@@ -24,7 +24,7 @@
             <section class="summary-container">
 
                 <h3 title="Temperature. Units - metric: Celsius" class="temperature"
-                    :style="{ color: temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">{{ temperature }}º
+                    :style="{ color: temperature && temperature > 18 ? 'orange' : 'rgb(100, 177, 255)' }">{{ temperature }}º
                 </h3>
 
                 <div class="feels-like-temperature-container">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
 
-                <div v-if="weatherForecast.length">
+                <div v-if="weatherForecast?.length">
                     <WeatherForecast :weatherForecast="weatherForecast" />
                 </div>
 
@@ -102,6 +102,7 @@ import WeatherForecast from '~/components/weather-forecast/weather-forecast.vue'
 import { monthsMappedToNumbers } from '~/utils/constants/constants';
 import { ref } from 'vue';
 import { getImageUrlByWeatherStatus } from '~/utils/utils'
+import type { DailyWeatherType } from '~/types/weather/weather-types';
 
 const handleFindLocationByName = async (locationToFind: string) => {
     try {
@@ -115,7 +116,7 @@ const handleFindLocationByName = async (locationToFind: string) => {
             })
         )
 
-        if (locationResponse?.value?.address) {
+        if (locationResponse?.value && 'address' in locationResponse.value) {
             country.value = locationResponse?.value?.address?.country;
             city.value = locationResponse?.value?.address?.city || locationResponse?.value?.address?.name;
             latitude.value = locationResponse?.value?.lat;
@@ -151,19 +152,16 @@ const handleWeatherRequest = async () => {
         if (error?.value) {
             weatherForecastErrorMessage.value = error?.value?.statusMessage ?? 'Failed to get the weather forecast data'
         }
-        else {
-            if (weatherResponse?.value) {
-
-                temperature.value = weatherResponse?.value?.temperature;
-                feelsLikeTemperature.value = weatherResponse?.value?.feelsLikeTemperature;
-                windSpeed.value = weatherResponse?.value?.windSpeed;
-                humidity.value = weatherResponse?.value?.humidity;
-                pressure.value = weatherResponse?.value?.pressure;
-                cloudsPercentage.value = weatherResponse?.value?.cloudsPercentage;
-                weatherMainStatus.value = weatherResponse?.value?.weatherMainStatus?.toLowerCase();
-                weatherDescription.value = weatherResponse?.value?.weatherDescription?.toUpperCase();
-                weatherForecast.value = weatherResponse?.value?.daily?.splice(1, 5);
-            }
+        else if (weatherResponse?.value && 'temperature' in weatherResponse.value) {
+            temperature.value = weatherResponse.value.temperature;
+            feelsLikeTemperature.value = weatherResponse.value.feelsLikeTemperature;
+            windSpeed.value = weatherResponse.value.windSpeed;
+            humidity.value = weatherResponse.value.humidity;
+            pressure.value = weatherResponse.value.pressure;
+            cloudsPercentage.value = weatherResponse.value.cloudsPercentage;
+            weatherMainStatus.value = weatherResponse.value.weatherMainStatus?.toLowerCase();
+            weatherDescription.value = weatherResponse.value.weatherDescription?.toUpperCase();
+            weatherForecast.value = weatherResponse.value.daily?.splice(1, 5);
         }
 
 
@@ -176,25 +174,25 @@ const handleWeatherRequest = async () => {
 
 const props = defineProps(['locationToFind'])
 
-const latitude = ref<string | number>(0);
-const longitude = ref<string | number>(0);
+const latitude = ref<string | number| undefined>(0);
+const longitude = ref<string | number | undefined>(0);
 
 const todayDate = new Date();
 
 const monthFromTodayDate = monthsMappedToNumbers.find((elem) => elem?.index === todayDate.getMonth())?.elem;
 const formatedTodayDate = ref(`Today, ${todayDate.getDay()}, ${monthFromTodayDate}`)
 
-const temperature = ref(0)
-const feelsLikeTemperature = ref(0)
-const windSpeed = ref(0)
-const humidity = ref(0)
-const pressure = ref(0)
-const uvIndex = ref(0)
-const cloudsPercentage = ref(0)
+const temperature = ref<number|undefined>(0)
+const feelsLikeTemperature = ref<number|undefined>(0)
+const windSpeed = ref<number|undefined>(0)
+const humidity = ref<number|undefined>(0)
+const pressure = ref<number|undefined>(0)
+const uvIndex = ref<number|undefined>(0)
+const cloudsPercentage = ref<number|undefined>(0)
 
-const weatherMainStatus = ref("")
-const weatherDescription = ref("")
-const weatherForecast = useState('weatherForecast', () => [])
+const weatherMainStatus = ref<string|undefined>("")
+const weatherDescription = ref<string|undefined>("")
+const weatherForecast = useState<Array<DailyWeatherType> | undefined>('weatherForecast', () => [])
 const weatherForecastErrorMessage = ref("")
 
 const city = ref<string | undefined>("");

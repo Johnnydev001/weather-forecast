@@ -1,11 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import svgLoader from 'vite-svg-loader';
 export default defineNuxtConfig({
- runtimeConfig: {
-  weatherApiKey: process?.env?.WEATHER_API_KEY || ""
- },
-
- vite: {
+  runtimeConfig: {
+    weatherApiKey: process?.env?.WEATHER_API_KEY || ""
+  },
+  vite: {
     plugins: [
       svgLoader(),
     ],
@@ -18,6 +17,8 @@ export default defineNuxtConfig({
     },
   },
 
- compatibilityDate: '2024-09-03',
- modules: ['@nuxt/image'],
+  compatibilityDate: '2024-09-03',
+  modules: ['@nuxt/image',
+    '@nuxt/test-utils/module'
+  ],
 })

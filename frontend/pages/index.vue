@@ -12,7 +12,7 @@
     </template>
 
     <template #pending>
-      <Overlay/>
+      <Overlay />
     </template>
 
 
@@ -48,19 +48,20 @@ const handleFindLocationByCoordinates = async (lat: number, lon: number): Promis
 }
 
 const handleSetCoordinates = () => {
-  if (navigator?.value?.geolocation) {
-    navigator?.value?.geolocation?.getCurrentPosition(
-      (position) => {
-        latitude.value = position.coords.latitude;
-        longitude.value = position.coords.longitude;
-      },
-      (error) => {
-        console.error("Error fetching location due to:", error);
-      }
-    );
-  } else {
-    console.error("Geolocation is not supported by this browser.");
-  }
+  if (navigator?.value)
+    if (navigator?.value?.geolocation) {
+      navigator?.value?.geolocation?.getCurrentPosition(
+        (position) => {
+          latitude.value = position.coords.latitude;
+          longitude.value = position.coords.longitude;
+        },
+        (error) => {
+          console.error("Error fetching location due to:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
 }
 handleSetCoordinates()
 watch([latitude, longitude], async ([newLatitude, newLongitude]) => {

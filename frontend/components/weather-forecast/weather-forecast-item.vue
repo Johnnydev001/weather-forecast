@@ -60,7 +60,6 @@ const props = defineProps(['item']);
 
 const iconByWeatherStatus = computed(() => getImageUrlByWeatherStatus(props?.item?.weather[0]?.main, true))
 
-
 </script>
 
 <style lang="scss" scoped>

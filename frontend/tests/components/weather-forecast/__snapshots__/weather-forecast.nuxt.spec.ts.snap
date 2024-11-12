@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Weather forecast tests > should match the snapshot 1`] = `
+"<section data-v-83579346="" class="forecast-container">
+  <h4 data-v-83579346="" class="title"> Next 5 days forecast: </h4>
+  <ul data-v-83579346="" class="list">
+    <li data-v-83579346="">
+      <div data-v-7a63726d="" data-v-83579346="" class="forecast-item">
+        <div data-v-7a63726d="" class="summary"><img data-v-7a63726d="" alt="Cloudy" data-nuxt-img="" srcset="/_ipx/_/assets/imgs/cloudy.svg 1x, /_ipx/_/assets/imgs/cloudy.svg 2x" class="weather-illustration" title="Cloudy" src="/_ipx/_/assets/imgs/cloudy.svg">
+          <div data-v-7a63726d="" style="display: flex; column-gap: 0.5rem; align-items: center;"><span data-v-7a63726d="">Day:</span><time data-v-7a63726d="" datetime="Invalid Date">NaN</time></div><span data-v-7a63726d="">WORD</span>
+        </div>
+        <div data-v-7a63726d="" class="condition-container">
+          <div data-v-7a63726d="" class="condition"><span data-v-7a63726d="">Min:</span>
+            <div data-v-7a63726d="" class="value"><span data-v-7a63726d="" style="color: #ffffff; display: flex; column-gap: 0.25rem; font-weight: 800;"><span data-v-7a63726d="">10</span><span data-v-7a63726d="">ºC</span></span></div>
+          </div>
+          <div data-v-7a63726d="" class="condition"><span data-v-7a63726d="">Max:</span>
+            <div data-v-7a63726d="" class="value"><span data-v-7a63726d="" style="color: orange; display: flex; column-gap: 0.25rem; font-weight: 800;"><span data-v-7a63726d="">20</span><span data-v-7a63726d="">ºC</span></span></div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</section>"
+`;
