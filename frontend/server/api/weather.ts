@@ -1,30 +1,23 @@
 import { getCurrentWeather } from "~/services/weather/weather-service";
 import { WeatherRequestType, WeatherResponseType } from "~/types/weather/weather-types";
 import { readBody } from "#imports";
+import { H3Event, EventHandlerRequest } from "h3";
 
 export default defineEventHandler(async (event) => {
 
-    const { weatherType = 'current' } = getQuery(event);
 
-    switch (weatherType) {
-        case 'current':
-            return await callGetCurrentWeather(event);
-
-        default:
-            return await callGetCurrentWeather(event);
-
-    }
+    return await callGetCurrentWeather(event);
 
 })
 
-const callGetCurrentWeather = async (event) => {
+const callGetCurrentWeather = async (event: H3Event<EventHandlerRequest>) => {
 
     const bodyFromRequest: WeatherRequestType = await readBody(event);
 
     try {
         const weatherResponse: WeatherResponseType | undefined | null = await getCurrentWeather(bodyFromRequest);
 
-        if (!Object.entries(weatherResponse).length) {
+        if (!weatherResponse || !Object.entries(weatherResponse).length) {
 
             return createError({
                 status: 404,
@@ -46,7 +39,7 @@ const callGetCurrentWeather = async (event) => {
 
     } catch (error) {
         return createError({
-            status: error?.statusCode || error?.status,
+            status: (error as any)?.statusCode || (error as any)?.status,
             statusMessage: 'Failed to get the weather data'
         })
     }

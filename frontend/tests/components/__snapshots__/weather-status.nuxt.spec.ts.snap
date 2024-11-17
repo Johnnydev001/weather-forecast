@@ -5,7 +5,7 @@ exports[`Weather status tests > should match the snapshot when not redirected 1`
   <section data-v-c02f7a4d="" class="sub-container">
     <aside data-v-c02f7a4d="" role="alert" class="error-msg">Cannot find any path matching /api/weather?weatherType=current.</aside>
     <div data-v-c02f7a4d="" class="location-container">
-      <div data-v-c02f7a4d=""><span data-v-c02f7a4d="" class="location-city"></span><span data-v-c02f7a4d="" class="location-country"></span></div><span data-v-c02f7a4d="" class="date">Today, 2, November</span>
+      <div data-v-c02f7a4d=""><span data-v-c02f7a4d="" class="location-city"></span><span data-v-c02f7a4d="" class="location-country"></span></div><span data-v-c02f7a4d="" class="date">Today, 0, November</span>
     </div><img data-v-c02f7a4d="" alt="" data-nuxt-img="" srcset="/_ipx/_/assets/imgs/sun.svg 1x, /_ipx/_/assets/imgs/sun.svg 2x" class="weather-illustration" title="" src="/_ipx/_/assets/imgs/sun.svg">
     <section data-v-c02f7a4d="" class="summary-container">
       <h3 data-v-c02f7a4d="" title="Temperature. Units - metric: Celsius" class="temperature" style="color: rgb(100, 177, 255);">0º </h3>
