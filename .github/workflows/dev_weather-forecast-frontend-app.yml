@@ -7,8 +7,9 @@ on:
   push:
     branches:
       - dev
-  workflow_dispatch:
-
+    paths:
+      - 'frontend/**'
+      
 jobs:
 
   checkout:
