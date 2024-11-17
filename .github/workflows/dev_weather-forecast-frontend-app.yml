@@ -20,14 +20,6 @@ jobs:
     needs: checkout
 
     steps:
-      - name: print working directory
-        shell: bash
-        run: |
-          echo "test print"
-          ls -a
-          echo "finish print
-          pwd
-          
           
       - name: Set up Node.js version
         uses: actions/setup-node@v3
@@ -38,9 +30,13 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9
+
+      - name: List repository contents
+        run: ls -la
           
       - name: Install dependencies
         run: pnpm install
+        working-directory: ./frontend
     
   build:
     runs-on: ubuntu-latest
