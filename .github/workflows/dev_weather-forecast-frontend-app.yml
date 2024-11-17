@@ -27,6 +27,14 @@ jobs:
       run:
         working-directory: frontend
     steps:
+      - name: print working directory
+        run: |
+          echo "test print"
+          ls -a
+          echo "finish print
+          pwd
+          
+          
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
