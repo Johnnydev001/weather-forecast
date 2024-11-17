@@ -7,8 +7,7 @@ on:
   push:
     branches:
       - dev
-    paths:
-      - 'backend/**'
+      - main
 
 jobs:
   build:
