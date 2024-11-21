@@ -6,11 +6,6 @@ public static class LocationRoutes  {
         string locationReverseApiBaseUrl = configuration["LocationReverseApiUrl"] ?? "Failed to get the location reverse API base url";
         string locationApiKey = configuration["LocationApiKey"] ?? "Failed to get the location API key";
 
-        app.MapGet("/", async () => {
-            return await Task.FromResult("Welcome to the location service");
-        });
-
-
         app.MapGet("/location-by-query", async (string query = "") => {
 
             try

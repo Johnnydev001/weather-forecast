@@ -35,7 +35,14 @@ jobs:
           version: 9
 
       - name: List repository contents
-        run: ls -la
+        run: |
+          ls -la
+          echo "frontend directory contents:"
+          ls -la frontend
+          cd ..
+          echo "frontend directory contents:"
+          ls -la
+
           
       - name: Install dependencies
         run: pnpm install
