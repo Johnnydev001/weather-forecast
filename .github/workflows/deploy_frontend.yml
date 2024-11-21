@@ -29,6 +29,34 @@ jobs:
         working-directory: ./frontend
         run: pnpm install
 
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}  # Cache key based on package-lock.json file
+          restore-keys: |
+              ${{ runner.os }}-node-modules-
+
+  build:
+    runs-on: ubuntu-latest
+    needs: installation 
+
+    steps:
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Build project
+        working-directory: ./frontend
+        run: npm run build 
+
+      - name: Publish artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend
+          path: ./frontend/
+        
+
     # runs-on: ubuntu-latest   # Use the latest version of Ubuntu for the build environment
 
     # steps:
