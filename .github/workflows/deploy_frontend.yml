@@ -46,38 +46,36 @@ jobs:
       - name: Build project
         run: npm run build 
 
+      - name: Zip artifact for deployment
+        run: zip frontend-zip ./output/* -r
+
       - name: Publish artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend
-          path: ./output
-        
+          path: frontend-zip
+    
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-zip
+
+      - name: Unzip artifact
+        run: zip frontend-zip
+
 
     # runs-on: ubuntu-latest   # Use the latest version of Ubuntu for the build environment
 
     # steps:
     #   # Step 1: Checkout code from the repository
     #   - name: Checkout code
-    #     uses: actions/checkout@v2
-
-    #   # Step 2: Set up Node.js
-    #   - name: Set up Node.js
-    #     uses: actions/setup-node@v3
-    #     with:
-    #       node-version: '18'  # Use Node.js version 16 (can change to your preferred version)
-
-    #   # Step 3: Cache node modules to speed up the workflow
-    #   - name: Cache node modules
-    #     uses: actions/cache@v3
-    #     with:
-    #       path: node_modules  # Cache node_modules directory
-    #       key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}  # Cache key based on package-lock.json file
-    #       restore-keys: |
-    #         ${{ runner.os }}-node-modules-
-
-    #   # Step 4: Install dependencies
-    #   - name: Install dependencies
-    #     run: npm install
+    #    
 
     #   # Step 5: Run tests
     #   - name: Run tests
@@ -87,19 +85,7 @@ jobs:
     #   - name: Lint code
     #     run: npm run lint
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   needs: installation
-    
-  #   steps:
-  #     - name: Run tests
-  #       run: npm run test
-
-  #     - name: Build project
-  #       run: npm run build
-
-  #     - name: "List folder contents"
-  #       run: ls -la   
+  # 
 
   #     - name: Zip artifact for deployment
   #       run: zip release.zip ./* -r
