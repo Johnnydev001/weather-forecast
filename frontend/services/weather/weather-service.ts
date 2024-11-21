@@ -28,7 +28,7 @@ export async function getCurrentWeather(queryParams: WeatherRequestType): Promis
     // }
 
     try {
-        const oneCallWeatherRequest = await fetch(`http://localhost:5177/current-weather?lat=${lat}&lon=${lon}&lang=${lang}&units=${units}`, requestData);
+        const oneCallWeatherRequest = await fetch(`http://localhost:80/current-weather?lat=${lat}&lon=${lon}&lang=${lang}&units=${units}`, requestData);
 
         if (oneCallWeatherRequest.status === 200 || oneCallWeatherRequest.ok) {
             return await oneCallWeatherRequest.json();

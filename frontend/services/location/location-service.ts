@@ -18,7 +18,7 @@ export async function getLocationFromLocationQuery(queryParams: LocationRequestT
 
            // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
 
-            const locationResponse = await fetch(`http://localhost:5177/location-by-query?query=${query}`, requestData);
+            const locationResponse = await fetch(`http://localhost:80/location-by-query?query=${query}`, requestData);
 
             if(locationResponse.ok && locationResponse.status == 200){
 
@@ -64,7 +64,7 @@ export async function getLocationFromLocationCoordinates(requestParams: Location
 
        // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
 
-        const locationResponse = await fetch(`http://localhost:5177/location-by-coordinates?lat=${lat}&lon=${lon}`, requestData);
+        const locationResponse = await fetch(`http://localhost:80/location-by-coordinates?lat=${lat}&lon=${lon}`, requestData);
 
         if(locationResponse.ok && locationResponse.status == 200){
 
