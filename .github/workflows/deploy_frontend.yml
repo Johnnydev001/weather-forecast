@@ -13,8 +13,11 @@ on:
       
 jobs:
 
-  installation:
+  build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
 
     steps:
       - name: Checkout code
@@ -37,24 +40,17 @@ jobs:
           restore-keys: |
               ${{ runner.os }}-node-modules-
 
-  build:
-    runs-on: ubuntu-latest
-    needs: installation 
-
-    steps:
-
-      - name: Run tests
+      - name: Run tests     
         run: npm run test
 
       - name: Build project
-        working-directory: ./frontend
         run: npm run build 
 
       - name: Publish artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend
-          path: ./frontend/
+          path: ./output
         
 
     # runs-on: ubuntu-latest   # Use the latest version of Ubuntu for the build environment
