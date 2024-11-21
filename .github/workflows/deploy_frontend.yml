@@ -8,7 +8,7 @@ on:
     branches:
       - dev
     paths:
-      - '.github/workflows/frontend/**'
+      - '.github/workflows/deploy_frontend.yml'
       - 'frontend/**'
       
 jobs:
