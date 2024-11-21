@@ -40,7 +40,10 @@ jobs:
 
       - name: List repository contents
         run: |
-          ls -la
+          ls
+          echo "test"
+          cd ..
+          ls
           
       - name: Install dependencies
         run: npm install
