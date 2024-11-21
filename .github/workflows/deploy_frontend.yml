@@ -24,7 +24,7 @@ jobs:
     needs: checkout
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: ../weather-forecast
 
     steps:
           
