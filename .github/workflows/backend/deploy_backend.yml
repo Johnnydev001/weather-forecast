@@ -8,6 +8,7 @@ on:
     branches:
       - dev
     paths:
+      - '.github/workflows/backend/deploy_backend.yml'
       - 'backend/**'
 
 jobs:
