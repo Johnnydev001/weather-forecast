@@ -16,7 +16,8 @@ jobs:
   checkout:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
   installation:
     runs-on: ubuntu-latest
@@ -24,10 +25,18 @@ jobs:
 
     steps:
           
-      - name: Install Node
-        uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-    
 
       - name: List repository contents
         run: |
@@ -35,6 +44,10 @@ jobs:
           
       - name: Install dependencies
         run: npm install
+
+      - name: List repository contents
+        run: |
+          ls -la
     
   build:
     runs-on: ubuntu-latest
