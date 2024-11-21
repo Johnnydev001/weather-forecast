@@ -47,7 +47,7 @@ jobs:
         run: npm run build 
 
       - name: Zip artifact for deployment
-        run: zip frontend-zip ./output/* -r
+        run: zip frontend-zip ./output -r
 
       - name: Publish artifact
         uses: actions/upload-artifact@v4
