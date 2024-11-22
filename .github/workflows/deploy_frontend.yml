@@ -70,7 +70,7 @@ jobs:
           name: frontend-zip
 
       - name: Unzip artifact
-        run: zip frontend-zip
+        run: unzip frontend-zip
 
 
     # runs-on: ubuntu-latest   # Use the latest version of Ubuntu for the build environment
