@@ -52,8 +52,8 @@ jobs:
       - name: Publish artifact
         uses: actions/upload-artifact@v4
         with:
-          name: frontend
-          path: frontend-zip
+          name: frontend-zip
+          path: .
     
   deploy:
     runs-on: ubuntu-latest
