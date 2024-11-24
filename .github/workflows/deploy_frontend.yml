@@ -70,7 +70,7 @@ jobs:
           name: frontend-zip
 
       - name: Unzip artifact
-        run: unzip frontend-zip
+        run: unzip frontend-zip -o
 
       - name: Login to Azure
         uses: azure/login@v2  
