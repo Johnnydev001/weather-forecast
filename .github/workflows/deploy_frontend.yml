@@ -19,7 +19,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      
+
     defaults:
       run:
         working-directory: ./frontend
@@ -54,9 +54,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2  
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_54A29E3832A44F9A8904DAB65474BD49 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6EAC8D09BCD843C5B0BA205E0C253EF0 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6CE51464584E45E9918623E6057B267C }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_982FC228E4254E4E95E55BE41B5087F1 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
