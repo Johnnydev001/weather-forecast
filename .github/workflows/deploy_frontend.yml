@@ -51,8 +51,14 @@ jobs:
       - name: Run tests     
         run: npm run test
 
+      - name: Listing contents
+        run: ls -R
+
       - name: Build project
         run: npm run build 
+
+      - name: Listing contents before upload
+        run: ls -R
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -60,6 +66,9 @@ jobs:
           name: frontend
           path: .output
     
+      - name: Listing contents after upload
+        run: ls -R
+
       - name: Login to Azure
         uses: azure/login@v2  
         with:
