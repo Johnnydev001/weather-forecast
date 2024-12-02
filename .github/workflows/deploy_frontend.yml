@@ -55,7 +55,7 @@ jobs:
         run: ls -R
 
       - name: Build project
-        run: pnpm run build 
+        run: pnpm run generate 
 
       - name: Listing contents before upload
         run: ls -R
