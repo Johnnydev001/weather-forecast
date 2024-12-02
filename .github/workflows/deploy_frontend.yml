@@ -49,13 +49,13 @@ jobs:
               ${{ runner.os }}-node-modules-
 
       - name: Run tests     
-        run: npm run test
+        run: pnpm run test
 
       - name: Listing contents
         run: ls -R
 
       - name: Build project
-        run: npm run build 
+        run: pnpm run build 
 
       - name: Listing contents before upload
         run: ls -R
