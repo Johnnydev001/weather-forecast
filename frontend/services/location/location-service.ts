@@ -1,5 +1,13 @@
 import type { LocationByCoordinatesRequestType, LocationByCoordinatesResponseType, LocationRequestType, LocationResponseType } from "~/types/location/location-types";
 
+const requestData = {
+    method: 'GET',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    withCredentials: true
+
+}
+
 export async function getLocationFromLocationQuery(queryParams: LocationRequestType): Promise<LocationResponseType | undefined | null>{
 
         try {
@@ -8,19 +16,11 @@ export async function getLocationFromLocationQuery(queryParams: LocationRequestT
                 query = '',
             } = queryParams;
 
-            const requestData = {
-                method: 'GET',
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                withCredentials: true
-
-            }
-
            // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
 
             const locationResponse = await fetch(`http://localhost:80/location-by-query?query=${query}`, requestData);
 
-            if(locationResponse.ok && locationResponse.status == 200){
+            if(locationResponse?.ok && locationResponse?.status == 200){
 
                 const locationResponseJson = await locationResponse.json();
 
@@ -54,19 +54,11 @@ export async function getLocationFromLocationCoordinates(requestParams: Location
             lon = ""
         } = requestParams;
 
-        const requestData = {
-            method: 'GET',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            withCredentials: true
-        
-        }
-
        // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
 
         const locationResponse = await fetch(`http://localhost:80/location-by-coordinates?lat=${lat}&lon=${lon}`, requestData);
 
-        if(locationResponse.ok && locationResponse.status == 200){
+        if(locationResponse?.ok && locationResponse?.status == 200){
 
             return await locationResponse.json();
 

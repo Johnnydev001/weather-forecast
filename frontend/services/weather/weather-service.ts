@@ -1,5 +1,14 @@
 import type { WeatherRequestType, WeatherResponseType } from "~/types/weather/weather-types";
 
+const requestData = {
+    method: 'GET',
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    },
+    withCredentials: true
+}
+
 export async function getCurrentWeather(queryParams: WeatherRequestType): Promise<WeatherResponseType | undefined | null> {
 
     const {
@@ -8,15 +17,6 @@ export async function getCurrentWeather(queryParams: WeatherRequestType): Promis
         lang = 'pt',
         units = 'metric'
     }: WeatherRequestType = queryParams;
-
-    const requestData = {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        withCredentials: true
-    }
 
     // let baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.ONE_CALL_WEATHER_API_URL}?lat=${lat}&lon=${lon}`;
 
@@ -30,8 +30,8 @@ export async function getCurrentWeather(queryParams: WeatherRequestType): Promis
     try {
         const oneCallWeatherRequest = await fetch(`http://localhost:80/current-weather?lat=${lat}&lon=${lon}&lang=${lang}&units=${units}`, requestData);
 
-        if (oneCallWeatherRequest.status === 200 || oneCallWeatherRequest.ok) {
-            return await oneCallWeatherRequest.json();
+        if (oneCallWeatherRequest?.status === 200 || oneCallWeatherRequest?.ok) {
+            return await oneCallWeatherRequest?.json();
         }
 
         return null;
