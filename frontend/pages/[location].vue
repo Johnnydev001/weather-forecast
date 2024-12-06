@@ -1,14 +1,13 @@
 <template>
 
-    <Suspense>
+    <Suspense role="">
 
         <template #default>
             <Hero :locationToFind="routeLocation" />
         </template>
 
-
         <template #fallback>
-            <Overlay/>
+            <Overlay />
         </template>
 
         <template #pending>
@@ -18,7 +17,6 @@
 
     </Suspense>
 
-
 </template>
 
 <script setup lang="ts">
@@ -26,10 +24,9 @@ import Hero from '~/components/hero/hero.vue';
 import Overlay from '~/components/overlay/overlay.vue';
 
 const route = useRoute();
-const routeLocation = computed(() => route?.params?.location);
+const routeLocation: ComputedRef<string | string[]> = computed(() => route?.params?.location);
 
 </script>
-
 
 <style lang="css">
 html,

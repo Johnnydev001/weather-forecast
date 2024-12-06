@@ -46,14 +46,14 @@ import WeatherIcon from "~/public/assets/icons/weather.vue";
 
 const textInput = ref("")
 
-const handleInputChange = (event: { target: { value: string; }; }) => {
-  textInput.value = event.target.value
+const handleInputChange = (event: { target: { value: string; } } | Event | null ) => {
+  textInput.value = event && event?.target && 'value' in event?.target ? event?.target?.value : ''
 }
 
-const handleInputSearch = (event: HTMLFormElement) => {
+const handleInputSearch = (event: HTMLFormElement | Event) => {
   event?.preventDefault();
-  if (textInput.value) {
-    navigateTo(`/${textInput.value}`)
+  if (textInput?.value) {
+    navigateTo(`/${textInput?.value}`)
   }
 }
 
@@ -108,7 +108,6 @@ nav {
     border-radius: 0.25rem;
     overflow: hidden;
     background-color: #f9f9f9;
-
 
     .search-input {
       border: none;
@@ -167,8 +166,6 @@ nav {
 
       }
     }
-
-
   }
 }
 </style>

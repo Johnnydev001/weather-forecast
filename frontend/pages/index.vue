@@ -14,10 +14,7 @@
     <template #pending>
       <Overlay />
     </template>
-
-
   </Suspense>
-
 
 </template>
 
@@ -26,11 +23,11 @@ import Hero from '~/components/hero/hero.vue';
 import Overlay from '~/components/overlay/overlay.vue';
 import type { LocationAddressType } from '~/types/location/location-types';
 
-const locationToFind = ref("")
-const navigator = ref(window?.navigator)
+const locationToFind: Ref<string> = ref("")
+const navigator: Ref<Navigator> = ref(window?.navigator)
 
-const latitude = ref(0);
-const longitude = ref(0);
+const latitude: Ref<number> = ref(0);
+const longitude: Ref<number> = ref(0);
 
 const handleFindLocationByCoordinates = async (lat: number, lon: number): Promise<LocationAddressType | undefined | null> => {
   try {
@@ -48,27 +45,26 @@ const handleFindLocationByCoordinates = async (lat: number, lon: number): Promis
 }
 
 const handleSetCoordinates = () => {
-  if (navigator?.value)
-    if (navigator?.value?.geolocation) {
-      navigator?.value?.geolocation?.getCurrentPosition(
-        (position) => {
-          latitude.value = position.coords.latitude;
-          longitude.value = position.coords.longitude;
-        },
-        (error) => {
-          console.error("Error fetching location due to:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
+  if (navigator?.value && navigator?.value?.geolocation)
+    navigator?.value?.geolocation?.getCurrentPosition(
+      (position) => {
+        latitude.value = position?.coords?.latitude;
+        longitude.value = position?.coords?.longitude;
+      },
+      (error) => {
+        console.error("Error fetching location due to:", error);
+      }
+    );
+  else {
+    console.error("Geolocation is not supported by this browser.");
+  }
 }
 handleSetCoordinates()
-watch([latitude, longitude], async ([newLatitude, newLongitude]) => {
+watch([latitude, longitude], async ([newLatitude, newLongitude]: [number, number]) => {
   const locationByCoordinates = await handleFindLocationByCoordinates(newLatitude, newLongitude);
   if (locationByCoordinates) {
     locationToFind.value = locationByCoordinates?.city || locationByCoordinates?.name || "";
-    navigateTo(`/${locationToFind.value}`)
+    navigateTo(`/${locationToFind?.value}`)
   }
 })
 

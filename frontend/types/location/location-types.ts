@@ -19,3 +19,7 @@ export type LocationByCoordinatesRequestType = {
     lat: string | number;
     lon: string | number;
 }
+
+export type LocationByCoordinatesResponseType = {
+    address: LocationAddressType
+}

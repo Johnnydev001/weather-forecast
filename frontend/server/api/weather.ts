@@ -3,11 +3,8 @@ import { WeatherRequestType, WeatherResponseType } from "~/types/weather/weather
 import { readBody } from "#imports";
 import { H3Event, EventHandlerRequest } from "h3";
 
-export default defineEventHandler(async (event) => {
-
-
+export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
     return await callGetCurrentWeather(event);
-
 })
 
 const callGetCurrentWeather = async (event: H3Event<EventHandlerRequest>) => {

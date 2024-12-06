@@ -1,14 +1,15 @@
 <template>
 
-    <dialog open="true" class="overlay">
+    <dialog role="dialog" open="true" class="overlay" aria-label="generic overlay">
 
-        <h1 class="title">Loading content...</h1>
+        <section aria-label="overlay content" >
+            <h1 class="title">Loading content...</h1>
 
-        <a href="/" class="retry-btn">
-            Retry
+            <a href="/" class="retry-btn" role="button">
+                Retry
 
-        </a>
-
+            </a>
+        </section>
 
     </dialog>
 
@@ -28,7 +29,7 @@
     align-items: center;
     border: none;
 
-    background-color: rgb(255,255,255,0.1);
+    background-color: rgb(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     text-align: 'center';
     color: #ffffff;
@@ -42,12 +43,10 @@
         padding: 0.5rem;
         border: $border;
         border-radius: $radius;
-        background-color: rgb(255,255,255,0.1);
+        background-color: rgb(255, 255, 255, 0.1);
         color: #ffffff;
         text-decoration: none;
 
     }
 }
-
-
 </style>

@@ -1,7 +1,7 @@
 <template>
 
 <p class="copyright">&copy; 
-    <a href="https://www.linkedin.com/in/jo%C3%A3o-saraiva-ab662b197/">
+    <a  role="link" href="https://www.linkedin.com/in/jo%C3%A3o-saraiva-ab662b197/">
         João Saraiva - 2024
     </a>
     

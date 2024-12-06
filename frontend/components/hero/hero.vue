@@ -1,12 +1,12 @@
 <template>
-    <div class="hero-container">
+    <article class="hero-container">
         <WeatherStatus :locationToFind="locationToFind"/>
-    </div>
+    </article>
 </template>
 
 <script setup lang="ts">
 
-const props = defineProps(['locationToFind']);
+const props: {readonly locationToFind?: any} = defineProps(['locationToFind']) ;
 
 const locationToFind = ref(props?.locationToFind);
 

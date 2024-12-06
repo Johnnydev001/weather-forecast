@@ -1,16 +1,20 @@
 import {getLocationFromLocationQuery, getLocationFromLocationCoordinates} from "~/services/location/location-service";
-import { LocationByCoordinatesRequestType, LocationAddressType, LocationResponseType } from "~/types/location/location-types";
+import { LocationByCoordinatesRequestType, LocationAddressType, LocationResponseType, LocationByCoordinatesResponseType } from "~/types/location/location-types";
+import { H3Event, EventHandlerRequest } from "h3";
 
-export default defineEventHandler(async (event) => {
+enum AllowedEventMethods {
+    GET = 'GET',
+    POST = 'POST'
+}
 
-
-    const method = event.method ?? 'GET';
+export default defineEventHandler(async (event: H3Event<EventHandlerRequest> ) => {
+    const method = event?.method ?? AllowedEventMethods.GET;
 
     switch (method) {
-        case 'GET':
+        case AllowedEventMethods.GET:
             return await getLocationFromQuery(event);
 
-        case 'POST':
+        case AllowedEventMethods.POST:
             return await getLocationFromCoordinates(event);
 
         default:
@@ -35,7 +39,7 @@ async function getLocationFromQuery(event: any): Promise<LocationResponseType | 
     }
 
     try {
-        const locationResponse = await getLocationFromLocationQuery({ query: queryFromPath.query });
+        const locationResponse = await getLocationFromLocationQuery({ query: queryFromPath?.query });
 
         if (locationResponse) {
             locationResponseJson.address = {
@@ -71,7 +75,7 @@ async function getLocationFromCoordinates(event: any): Promise<LocationAddressTy
     }
 
     try {
-        const locationResponse = await getLocationFromLocationCoordinates(requestParams );
+        const locationResponse: LocationByCoordinatesResponseType | undefined | null = await getLocationFromLocationCoordinates(requestParams );
 
         if (locationResponse) {
 
