@@ -8,12 +8,12 @@ public class LocationService : LocationInterface
     {
 
         string locationApiFullUrl = $"{locationApiBaseUrl}?key={locationApiKey}&q={query}&limit={1}&dedupe={1}&format=json";
-
         try
         {
-            var response = await httpClient.GetAsync(locationApiFullUrl);
+            var response = await httpClient.GetAsync(locationApiFullUrl.Replace(',', '.'));
 
-            if (response.IsSuccessStatusCode){
+            if (response.IsSuccessStatusCode)
+            {
 
                 List<LocationModel> locationModelList = [];
 
@@ -21,7 +21,7 @@ public class LocationService : LocationInterface
 
                 foreach (LocationModel obj in locationResponse)
                 {
-     
+
                     LocationModel locationModel = new()
                     {
                         address = obj.address,
@@ -50,10 +50,10 @@ public class LocationService : LocationInterface
 
         try
         {
-            var response = await httpClient.GetAsync(locationApiFullUrl);
+            var response = await httpClient.GetAsync(locationApiFullUrl.Replace(',', '.'));
 
-            if (response.IsSuccessStatusCode){
-
+            if (response.IsSuccessStatusCode)
+            {
 
                 return await response.Content.ReadFromJsonAsync<LocationModel>();
 
