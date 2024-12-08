@@ -1,10 +1,10 @@
 import type { LocationByCoordinatesRequestType, LocationByCoordinatesResponseType, LocationRequestType, LocationResponseType } from "~/types/location/location-types";
 
 const requestData = {
-    method: 'GET',
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    withCredentials: true
+  method: 'GET',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  withCredentials: true
 
 }
 
@@ -14,16 +14,16 @@ export async function getLocationFromLocationQuery(
   try {
     const { query = "" } = queryParams;
 
-           // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
+    // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
 
     const locationResponse = await fetch(
       `http://localhost:80/location-by-query?query=${query}`,
       requestData
     );
 
-            if(locationResponse?.ok && locationResponse?.status == 200){
+    if (locationResponse?.ok && locationResponse?.status == 200) {
 
-                const locationResponseJson = await locationResponse.json();
+      const locationResponseJson = await locationResponse.json();
 
       if (locationResponseJson?.length) {
         return (
@@ -54,23 +54,23 @@ export async function getLocationFromLocationCoordinates(
   try {
     const { lat = "", lon = "" } = requestParams;
 
-       // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
+    // const baseEndpoint = `${process?.env?.BASE_URL}/${process?.env?.LOCATION_API_URL}?lat=${lat}&lon=${lon}`;
 
     const locationResponse = await fetch(
       `http://localhost:80/location-by-coordinates?lat=${lat}&lon=${lon}`,
       requestData
     );
 
-        if(locationResponse?.ok && locationResponse?.status == 200){
+    if (locationResponse?.ok && locationResponse?.status == 200) {
 
-            return await locationResponse.json();
+      return await locationResponse.json();
 
-        }
-        return null;
-        
-    } catch(e){
-        console.log("Error fetching the location data by coordinates from the backend")
     }
+    return null;
+
+  } catch (e) {
+    console.log("Error fetching the location data by coordinates from the backend")
+  }
 
 
 
