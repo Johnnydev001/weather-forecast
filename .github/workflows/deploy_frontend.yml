@@ -56,6 +56,12 @@ jobs:
       - name: List files in build directory
         run: ls -R .output
 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuxt-build
+          path: .output
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -63,11 +69,16 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6CE51464584E45E9918623E6057B267C }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_982FC228E4254E4E95E55BE41B5087F1 }}
 
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nuxt-build
+
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: "weather-forecast-frontend-app"
           slot-name: "production"
-          package: "output"
+          package: ./nuxt-build/.output # Adjust based on folder structure
           publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
