@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import svgLoader from 'vite-svg-loader';
+import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
+  nitro: {
+    output: {
+      dir: ".output",
+    },
+  },
   // nitro: {
   //   prerender: {
   //     routes: [
@@ -15,12 +20,10 @@ export default defineNuxtConfig({
   //   '/:location': { prerender: true },
   // },
   runtimeConfig: {
-    weatherApiKey: process?.env?.WEATHER_API_KEY || ""
+    weatherApiKey: process?.env?.WEATHER_API_KEY || "",
   },
   vite: {
-    plugins: [
-      svgLoader(),
-    ],
+    plugins: [svgLoader()],
     css: {
       preprocessorOptions: {
         scss: {
@@ -30,8 +33,6 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2024-09-03',
-  modules: ['@nuxt/image',
-    '@nuxt/test-utils/module'
-  ],
-})
+  compatibilityDate: "2024-09-03",
+  modules: ["@nuxt/image", "@nuxt/test-utils/module"],
+});

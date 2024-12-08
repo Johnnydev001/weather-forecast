@@ -53,6 +53,9 @@ jobs:
       - name: Build project
         run: pnpm run build
 
+      - name: List files in build directory
+        run: ls -R .output
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -66,5 +69,5 @@ jobs:
         with:
           app-name: "weather-forecast-frontend-app"
           slot-name: "production"
-          package: ".output/public"
+          package: "./output"
           publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
