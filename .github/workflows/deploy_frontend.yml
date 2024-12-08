@@ -23,9 +23,9 @@ jobs:
       id-token: write
       contents: read
 
-    # defaults:
-    #   run:
-    #     working-directory: ./frontend
+    defaults:
+      run:
+        working-directory: ./frontend
 
     steps:
       - name: Checkout code
@@ -73,6 +73,10 @@ jobs:
     permissions:
       id-token: write
       contents: read
+
+    defaults:
+      run:
+        working-directory: ./frontend
 
     steps:
       - name: Download artifact from build job
