@@ -37,7 +37,6 @@ jobs:
           version: "9"
 
       - name: Install dependencies
-        working-directory: ./frontend
         run: pnpm install
 
       - name: Cache node modules
@@ -97,5 +96,5 @@ jobs:
         with:
           app-name: "weather-forecast-frontend-app"
           slot-name: "production"
-          package: . # Adjust based on folder structure
+          package: .
           publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
