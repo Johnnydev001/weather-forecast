@@ -6,22 +6,6 @@ export default defineNuxtConfig({
       dir: ".output",
     },
   },
-  // nitro: {
-  //   prerender: {
-  //     routes: [
-  //       '/',
-  //       '/:location'
-  //     ]
-  //   }
-  // },
-  // ssr: true,
-  // routeRules: {
-  //   '/': { prerender: true },
-  //   '/:location': { prerender: true },
-  // },
-  runtimeConfig: {
-    weatherApiKey: process?.env?.WEATHER_API_KEY || "",
-  },
   vite: {
     plugins: [svgLoader()],
     css: {
