@@ -8,16 +8,15 @@ on:
     branches:
       - dev
     paths:
-      - '.github/workflows/deploy_frontend.yml'
-      - 'frontend/**'
-      
-jobs:
+      - ".github/workflows/deploy_frontend.yml"
+      - "frontend/**"
 
+jobs:
   build:
     name: Build and deploy
     runs-on: ubuntu-latest
     environment:
-      name: 'Production'
+      name: "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write
@@ -34,42 +33,44 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: '9'
+          version: "9"
 
       - name: Install dependencies
         working-directory: ./frontend
         run: pnpm install
 
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}  # Cache key based on package-lock.json file
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }} # Cache key based on package-lock.json file
           restore-keys: |
-              ${{ runner.os }}-node-modules-
+            ${{ runner.os }}-node-modules-
 
-      - name: Run tests     
+      - name: Run tests
         run: pnpm run test
 
       - name: Listing contents
         run: ls -R
 
       - name: Build project
-        run: pnpm run generate 
+        run: pnpm run build
+
+      - name: Run server
+        run: pnpm run start
 
       - name: Login to Azure
-        uses: azure/login@v2  
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6EAC8D09BCD843C5B0BA205E0C253EF0 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6CE51464584E45E9918623E6057B267C }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_982FC228E4254E4E95E55BE41B5087F1 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'weather-forecast-frontend-app'
-          slot-name: 'production'
-          package: '.output/public'
+          app-name: "weather-forecast-frontend-app"
+          slot-name: "production"
+          package: ".output/public"
           publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
-     
