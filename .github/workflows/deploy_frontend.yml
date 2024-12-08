@@ -69,5 +69,5 @@ jobs:
         with:
           app-name: "weather-forecast-frontend-app"
           slot-name: "production"
-          package: "./output"
+          package: ".output"
           publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
