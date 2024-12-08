@@ -31,13 +31,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v4
+      - name: Setup NPM
+        uses: actions/setup-node@v4
         with:
-          version: "9"
+          version: "18"
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Cache node modules
         uses: actions/cache@v4
@@ -48,10 +48,10 @@ jobs:
             ${{ runner.os }}-node-modules-
 
       - name: Run tests
-        run: pnpm run test
+        run: npm run test
 
       - name: Build project
-        run: pnpm run build
+        run: npm run build
 
       - name: List files in build directory
         run: ls -R .output
