@@ -9,6 +9,9 @@ The purpose of this project was mainly to improve my knowledge as a full-stack d
 
 A big thank you to [OpenWeather](https://openweathermap.org/api/one-call-3) and [LocationIQ](https://locationiq.com/) to make this possible and so much easier, with their awesome APIs.
 
+![Screenshot](imgs/sun.png)
+![Screenshot](imgs/rain.png)
+
 ## Features:
 
 Responsive UI: A user-friendly interface that works on most devices.
