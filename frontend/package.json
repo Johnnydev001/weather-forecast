@@ -1,0 +1,35 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "NODE_ENV=production nuxt build",
+    "dev": "nuxt dev --host",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "test": "npx vitest -u",
+    "start": "node output/server/index.mjs"
+  },
+  "dependencies": {
+    "@nuxt/image": "^1.8.1",
+    "@nuxt/test-utils": "^3.14.4",
+    "happy-dom": "^15.11.0",
+    "nuxt": "^3.13.0",
+    "playwright-core": "^1.48.2",
+    "vitest": "^2.1.4",
+    "vue": "latest",
+    "vue-spinner": "^1.0.4"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^2.4.6",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.3",
+    "sass": "^1.77.8",
+    "sass-loader": "^16.0.1",
+    "vite-svg-loader": "^5.1.0",
+    "vue-jest": "5.0.0-alpha.10",
+    "nuxt": "npm:nuxt-edge"
+  }
+}
