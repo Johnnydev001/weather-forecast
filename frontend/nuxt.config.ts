@@ -4,6 +4,8 @@ export default defineNuxtConfig({
   nitro: {
     output: {
       dir: ".output",
+      publicDir: ".output/public",
+      serverDir: ".output/server",
     },
   },
   vite: {

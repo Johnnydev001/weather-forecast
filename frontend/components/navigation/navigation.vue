@@ -5,14 +5,17 @@
         <NuxtLink class="app-logo-link" to="/">
           <WeatherIcon />
         </NuxtLink>
-
       </li>
 
       <li key="search-field">
-
         <form class="search-container" @submit="handleInputSearch">
-          <input type="text" placeholder="Search..." :value="textInput" class="search-input"
-            @change="handleInputChange">
+          <input
+            type="text"
+            placeholder="Search..."
+            :value="textInput"
+            class="search-input"
+            @change="handleInputChange"
+          />
           <button class="search-button">
             <SearchIcon />
           </button>
@@ -23,14 +26,16 @@
         <a class="social-media-link" href="https://x.com/JohnnySaraiva00">
           <TwitterIcon />
         </a>
-        <a class="social-media-link" href="https://www.linkedin.com/in/jo%C3%A3o-saraiva-ab662b197/">
+        <a
+          class="social-media-link"
+          href="https://www.linkedin.com/in/jo%C3%A3o-saraiva-ab662b197/"
+        >
           <LinkedinIcon />
         </a>
 
         <a class="social-media-link" href="https://github.com/Johnnydev001">
           <GithubIcon />
         </a>
-
       </li>
     </ul>
   </nav>
@@ -41,33 +46,36 @@ import GithubIcon from "~/public/assets/icons/github.vue";
 import LinkedinIcon from "~/public/assets/icons/linkedin.vue";
 import TwitterIcon from "~/public/assets/icons/twitter.vue";
 import SearchIcon from "~/public/assets/icons/search.vue";
-import { ref } from "vue"
+import { ref } from "vue";
 import WeatherIcon from "~/public/assets/icons/weather.vue";
 
-const textInput = ref("")
+const textInput = ref("");
 
-const handleInputChange = (event: { target: { value: string; } } | Event | null ) => {
-  textInput.value = event && event?.target && 'value' in event?.target ? event?.target?.value : ''
-}
+const handleInputChange = (
+  event: { target: { value: string } } | Event | null
+) => {
+  textInput.value =
+    event && event?.target && "value" in event?.target
+      ? event?.target?.value
+      : "";
+};
 
 const handleInputSearch = (event: HTMLFormElement | Event) => {
   event?.preventDefault();
   if (textInput?.value) {
-    navigateTo(`/${textInput?.value}`)
+    navigateTo(`/${textInput?.value}`);
   }
-}
-
+};
 </script>
-
 
 <style lang="scss">
 nav {
-  background-color: rgb(255,255,255,0.1);
+  background-color: rgb(255, 255, 255, 0.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: #ffffff;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   position: fixed;
   z-index: 1;
   justify-self: center;
@@ -76,7 +84,6 @@ nav {
 }
 
 .nav-list {
-
   list-style: none;
   display: flex;
   align-items: center;
@@ -86,14 +93,13 @@ nav {
   color: inherit;
 
   .app-logo-link {
-
-    >svg {
+    > svg {
       color: #ffffff;
       stroke: #ffffff;
       width: 2rem;
     }
 
-    >svg:hover {
+    > svg:hover {
       cursor: pointer;
       transition-duration: 200ms;
       transform: scale(1.2);
@@ -117,7 +123,7 @@ nav {
       max-width: 130px;
     }
 
-    .search-button>svg {
+    .search-button > svg {
       background: #ffffff;
       color: #000000;
     }
@@ -139,7 +145,7 @@ nav {
     color: inherit;
     font-size: 13px;
 
-    >h1 {
+    > h1 {
       font-weight: 500;
     }
   }
@@ -158,12 +164,11 @@ nav {
       padding: 0;
       margin: 0;
 
-      >svg:hover {
+      > svg:hover {
         cursor: pointer;
         transition-duration: 100ms;
         transform: scale(1.2);
         transition-timing-function: ease-in-out;
-
       }
     }
   }
