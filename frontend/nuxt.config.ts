@@ -18,7 +18,14 @@ export default defineNuxtConfig({
       },
     },
   },
-
+  runtimeConfig: {
+    public: {
+      VITE_BASE_URL: process.env.VITE_BASE_URL,
+      VITE_LOCATION_COORDINATES_URL: process.env.VITE_LOCATION_COORDINATES_URL,
+      VITE_LOCATION_QUERY_URL: process.env.VITE_LOCATION_QUERY_URL,
+      VITE_ONE_CALL_WEATHER_API_URL: process.env.VITE_ONE_CALL_WEATHER_API_URL,
+    },
+  },
   compatibilityDate: "2024-09-03",
   modules: ["@nuxt/image", "@nuxt/test-utils/module"],
 });

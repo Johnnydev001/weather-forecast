@@ -24,7 +24,13 @@ declare module 'nuxt/schema' {
    },
   }
   interface PublicRuntimeConfig {
+   VITE_BASE_URL: string,
 
+   VITE_LOCATION_COORDINATES_URL: string,
+
+   VITE_LOCATION_QUERY_URL: string,
+
+   VITE_ONE_CALL_WEATHER_API_URL: string,
   }
 }
 declare module 'vue' {

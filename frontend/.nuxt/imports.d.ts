@@ -30,4 +30,5 @@ export { withCtx, withDirectives, withKeys, withMemo, withModifiers, withScopeId
 export { injectHead, useHead, useSeoMeta, useHeadSafe, useServerHead, useServerSeoMeta, useServerHeadSafe } from '@unhead/vue';
 export { getImageUrlByWeatherStatus, capitalizeWord } from '../utils/utils';
 export { useImage } from '../node_modules/.pnpm/@nuxt+image@1.8.1/node_modules/@nuxt/image/dist/runtime/composables';
+export { useNuxtDevTools } from '../node_modules/.pnpm/@nuxt+devtools@1.4.1_vite@5.4.2/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
 export { definePageMeta } from '../node_modules/.pnpm/nuxt@3.13.0_sass@1.77.8_vite@5.4.2/node_modules/nuxt/dist/pages/runtime/composables';

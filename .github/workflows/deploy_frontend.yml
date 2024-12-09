@@ -1,8 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - weather-forecast-frontend-app
-
+name: Weather forecast app frontend github workflow
 on:
   push:
     branches:
@@ -36,22 +32,8 @@ jobs:
         with:
           version: "9"
 
-      - name: Clear node cache
-        run: npm cache clean --force
-
-      - name: Debug file permissions
-        run: find . -type d -exec ls -ld {} \;
-
       - name: Install dependencies
         run: pnpm install
-
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }} # Cache key based on package-lock.json file
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
 
       - name: Run tests
         run: pnpm run test
@@ -59,49 +41,8 @@ jobs:
       - name: Build project
         run: pnpm run build
 
-      - name: List files in build directory
-        run: ls -R
-
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: .
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    name: Deploy
-
-    environment:
-      name: "Production"
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write
-      contents: read
-
-    defaults:
-      run:
-        working-directory: ./frontend
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app
-
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6EAC8D09BCD843C5B0BA205E0C253EF0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6CE51464584E45E9918623E6057B267C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_982FC228E4254E4E95E55BE41B5087F1 }}
-
-      - name: "Deploy to Azure Web App"
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: "weather-forecast-frontend-app"
-          slot-name: "production"
-          package: .
-          publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
