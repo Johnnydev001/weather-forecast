@@ -7,11 +7,7 @@ Thanks to a very minimalistic UI, the user can easily check the current weather 
 
 The purpose of this project was mainly to improve my knowledge as a full-stack developer.
 
-It was
-
-was to gain additional and crucial knowledge with new technoloi emprove my full-stack capabilities while creating a simple app with new technologies, such as Vue/Nuxt3, Dotnet and Github Actions/Azure DevOps.
-
-thanks to public APIs such as OneCallAPI from [OpenWeather](https://openweathermap.org/api/one-call-3) and [LocationIQ](https://locationiq.com/).
+A big thank you to [OpenWeather](https://openweathermap.org/api/one-call-3) and [LocationIQ](https://locationiq.com/) to make this possible and so much easier, with their awesome APIs.
 
 ## Features:
 
