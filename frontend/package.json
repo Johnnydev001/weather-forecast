@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "NODE_ENV=production nuxi build",
+    "build": "NODE_ENV=production nuxt build",
     "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -29,6 +29,7 @@
     "sass": "^1.77.8",
     "sass-loader": "^16.0.1",
     "vite-svg-loader": "^5.1.0",
-    "vue-jest": "5.0.0-alpha.10"
+    "vue-jest": "5.0.0-alpha.10",
+    "nuxt": "npm:nuxt-edge"
   }
 }
