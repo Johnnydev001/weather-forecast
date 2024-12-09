@@ -3,9 +3,9 @@ import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
   nitro: {
     output: {
-      dir: ".output",
-      publicDir: ".output/public",
-      serverDir: ".output/server",
+      dir: "output",
+      publicDir: "output/public",
+      serverDir: "output/server",
     },
   },
   vite: {

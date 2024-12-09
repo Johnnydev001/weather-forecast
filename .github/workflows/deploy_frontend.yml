@@ -39,6 +39,9 @@ jobs:
       - name: Clear node cache
         run: npm cache clean --force
 
+      - name: Debug file permissions
+        run: find . -type d -exec ls -ld {} \;
+
       - name: Install dependencies
         run: pnpm install
 
