@@ -36,6 +36,9 @@ jobs:
         with:
           version: "9"
 
+      - name: Clear node cache
+        run: npm cache clean --force
+
       - name: Install dependencies
         run: pnpm install
 
