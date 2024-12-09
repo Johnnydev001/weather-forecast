@@ -53,11 +53,14 @@ jobs:
       - name: Build project
         run: pnpm run build
 
+      - name: List files in build directory
+        run: ls -R
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .output
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
