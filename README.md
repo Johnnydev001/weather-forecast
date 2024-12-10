@@ -27,14 +27,14 @@ DevOps: Azure DevOps and GithubActions (for learning purposes)
 
 ## Execution:
 
-Run the client in the frontend folder, which will be displayed in [localhost](http://localhost:3000/), with the following commands:
+Run the client in the frontend folder, which will be displayed in [localhost:3000](http://localhost:3000/), with the following commands:
 
 ```
 npm i / pnpm i
 npm run dev
 ```
 
-Run the backend in the backend folder, which will listen on [localhost](http://localhost:80), with the following command (for hot-reload):
+Run the backend in the backend folder, which will listen on [localhost:80](http://localhost:80), with the following command (for hot-reload):
 
 ```
 dotnet watch --run
@@ -46,4 +46,4 @@ All kinds of contribution are welcome. For major changes, please open an issue f
 
 ## Licence
 
-This is an open-source project for learning purposes, which can be used by anyone.
+This is an open-source project for learning purposes, which can be used by anyone, so feel free to fork / download.
