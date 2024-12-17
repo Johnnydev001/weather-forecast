@@ -5,7 +5,7 @@
 A minimal full-stack web app that provides accurate weather and location information.
 Thanks to a very minimalistic UI, the user can easily check the current weather conditions for any location, such as temperature, wind speed, humidity, pressure, UV index and weather forecast for the next 5 days.
 
-The purpose of this project was mainly to improve my knowledge as a full-stack developer.
+The purpose of this project was to improve my knowledge as a full-stack developer.
 
 A big thank you to [OpenWeather](https://openweathermap.org/api/one-call-3) and [LocationIQ](https://locationiq.com/) to make this possible and so much easier, with their awesome APIs.
 
@@ -21,9 +21,14 @@ Backend Integration: The .NET backend handles the API requests that come from th
 
 ## Technologies:
 
-Frontend: Vue/Nuxt3 with SCSS.
-Backend: Dotnet C#
-DevOps: Azure DevOps and GithubActions (for learning purposes)
+Frontend: 
+- Vue/Nuxt3
+- SCSS.
+Backend:
+- Dotnet C#
+DevOps:
+- Azure DevOps (for learning purposes but not currently working)
+- GithubActions
 
 ## Execution:
 
@@ -42,8 +47,8 @@ dotnet watch --run
 
 ## Contributing
 
-All kinds of contribution are welcome. For major changes, please open an issue first and create the respective pull-request to the main branch.
+All contributions are welcome. For major changes, please open an issue first and create the respective pull request for the main branch.
 
 ## Licence
 
-This is an open-source project for learning purposes, which can be used by anyone, so feel free to fork / download.
+This is an open-source project for learning purposes. Anyone can use it, so feel free to fork/download it.
